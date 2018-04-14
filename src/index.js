@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import App from './containers/App/App.jsx';
+import Home from './views/Home/Home.jsx';
 
 import './assets/css/bootstrap.min.css';
 import './assets/css/animate.min.css';
@@ -22,6 +23,7 @@ ReactDOM.render((
     <HashRouter>
         <Switch>
             <Route path="/" name="Home" component={App}/>
+ 
         </Switch>
     </HashRouter>
 ),document.getElementById('root'));

@@ -1,4 +1,13 @@
 This project was bootstrapped with Create React App.
 
-Below you will find some information on how to perform common tasks.
-You can find the most recent version of this guide here.
+
+Execução:
+    $   npm install
+    $   npm start
+
+
+
+Resolução de problema encontrado em uma versão do Ubuntu (Erro: Node Sass could not find a binding for your current environment: Linux 64-bit with Node.js 6.x):
+    $   npm rebuild node-sass
+
+
