@@ -23,7 +23,6 @@ ReactDOM.render((
     <HashRouter>
         <Switch>
             <Route path="/" name="Home" component={App}/>
- 
         </Switch>
     </HashRouter>
 ),document.getElementById('root'));

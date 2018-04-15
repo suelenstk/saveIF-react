@@ -4,7 +4,7 @@
 // //
 //
 const groupsArray = [
-    "Algorítimo finalizado","Método declarado", "Agora entendi","Multiplicação", "Algorítimo que consiga multiplicar um número n1"
+    "Algorítimo finalizado","Método declarado", "Agora entendi","Multiplicação", "Algoritimo que consiga multiplicar um número n1"
 ];
     
 

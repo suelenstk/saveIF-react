@@ -1,31 +1,29 @@
 import React, {Component} from 'react';
 import {
-    Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl
+    Grid, Row, Col
 } from 'react-bootstrap';
 
 import {Card} from '../../components/Card/Card.jsx';
 import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
-
-import avatar from "../../assets/img/faces/face-3.jpg";
 import logo from '../../assets/img/logoMaior.png';
+import google from '../../assets/img/sign-in-with-google.svg';
 
 
-class LoginProfile extends Component {
+class Login extends Component {
     render() {
         return (
             <div className="content">
                 <Grid fluid>
                     <Row>
-                        <Col md={7}>
-                            <div className="logo">
+                        <Col md={6} className="logoLogin">
+                            <div>
                                 <a class="navbar-brand" href="">
                                     <img src={logo} className="img-responsive" alt="logo_image"/>
                                 </a>
                             </div>
                         </Col>
-                        <Col md={5}>
+                        <Col md={6} className="formLogin">
                             <Card
                                 title="Login do usuário"
                                 content={
@@ -60,9 +58,7 @@ class LoginProfile extends Component {
                                             </a>
                                             <br/><br/>
                                         </div>
-
                                         <Button
-
                                             bsStyle="danger"
                                             block
                                             pullLeft
@@ -73,26 +69,19 @@ class LoginProfile extends Component {
                                         </Button>
                                         <br/>
                                         <Button
-
                                             bsStyle="default"
                                             block
                                             pullLeft
                                             fill
                                             type="submit"
                                         >
-                                            Login com Google
+                                            <img src={google} className="google"/>Login com Google
                                         </Button>
-
-
                                         <div>
                                             <br/>
-                                            <a href="">
-                                                Não tem conta? Cadastre-se.
-                                            </a>
+                                            Não tem conta? <a href="">Cadastre-se.</a>
                                             <br/><br/>
                                         </div>
-
-                                        <div className="clearfix"></div>
                                     </form>
                                 }
                             />
@@ -104,6 +93,6 @@ class LoginProfile extends Component {
     }
 }
 
-export default LoginProfile;
+export default Login;
 
 
