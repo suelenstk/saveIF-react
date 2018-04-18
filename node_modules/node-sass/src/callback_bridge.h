@@ -107,7 +107,7 @@ T CallbackBridge<T, L>::operator()(std::vector<void*> argv) {
     argv_v8.push_back(Nan::New(wrapper));
 
     return this->post_process_return_value(
-      Nan::Call(*callback, argv_v8.size(), &argv_v8[0]).ToLocalChecked()
+      this->callback->Call(argv_v8.size(), &argv_v8[0])
     );
   } else {
     /*
@@ -151,7 +151,6 @@ void CallbackBridge<T, L>::dispatched_async_uv_callback(uv_async_t *req) {
    * post_process_args().
    */
   Nan::HandleScope scope;
-  Nan::AsyncResource async("sass:CallbackBridge");
   Nan::TryCatch try_catch;
 
   std::vector<v8::Local<v8::Value>> argv_v8 = bridge->pre_process_args(bridge->argv);
@@ -160,7 +159,7 @@ void CallbackBridge<T, L>::dispatched_async_uv_callback(uv_async_t *req) {
   }
   argv_v8.push_back(Nan::New(bridge->wrapper));
 
-  bridge->callback->Call(argv_v8.size(), &argv_v8[0], &async);
+  bridge->callback->Call(argv_v8.size(), &argv_v8[0]);
 
   if (try_catch.HasCaught()) {
     Nan::FatalException(try_catch);

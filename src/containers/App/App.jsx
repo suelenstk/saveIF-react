@@ -16,12 +16,22 @@ import Navbar from "react-bootstrap/es/Navbar";
 import UserRegistration from "../../views/UserRegistration/UserRegistration";
 import logo from '../../assets/img/reactlogo.png';
 import Login from "../../views/Login/Login";
+import ServicoLogin from "../../login/ServicoLogin";
+
 
 class App extends Component {
 
+    constructor(props){
+        super(props);
+        this.state={
+            logado: ServicoLogin.logado()
+        };
+    } 
+
+
     render() {
         // variavel para simular se o usuario esta ou nao logado para alterar a construcao da tela
-        let logado = false;
+        let logado = this.state.logado;
 
         if (!logado) {
             // variavel para simular se a tela eh de login ou cadastro
@@ -45,7 +55,7 @@ class App extends Component {
                     <div className="wrapper">
                         <Navbar className="navbarLogin">
                         </Navbar>
-                        <Login/>
+                        <Login onLogin={()=>this.setState({logado:true})} />
                     </div>
                 );
             }
