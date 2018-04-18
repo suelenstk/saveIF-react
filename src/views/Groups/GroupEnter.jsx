@@ -14,6 +14,25 @@ class GroupEnter extends Component {
         //console.log(this.state.grupo);
     }
 
+    botaoSolicitar(){
+
+        let botoes = [];
+
+        let botao =     
+             <Button
+                bsStyle="danger"
+                pullRight
+                fill
+                type="submit">   
+                     Solicitar Inscrição
+            </Button>      
+
+        botoes.push(botao);
+
+        return botoes;
+
+    }
+
     render() {
 
         if(this.props.location.query)
@@ -44,15 +63,8 @@ class GroupEnter extends Component {
                                             <h5>Participantes</h5>
                                                        
                                         
-
-                                             <Button
-                                                bsStyle="danger"
-                                                pullRight
-                                                fill
-                                                type="submit"                                           
-                                            >   
-                                                Solicitar Inscrição
-                                            </Button>                                                        
+                                            {this.botaoSolicitar()}
+                                                                                                   
                                             <br/><br/>
                                             <hr/>
                                         </Col>

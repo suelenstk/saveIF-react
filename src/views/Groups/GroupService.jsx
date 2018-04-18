@@ -1,4 +1,4 @@
-import ServicoRest from "../../servicos/ServicoRest";
+import ServicoRest from "../../ServicoRest";
 
 export default class GroupService extends ServicoRest{
 
