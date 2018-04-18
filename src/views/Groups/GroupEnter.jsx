@@ -5,8 +5,18 @@ import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 
 class GroupEnter extends Component {
-    /*Criar card necessário para tela de ver solicitar inscrição, o card deve ter título e conteúdo*/
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            grupo: (this.props.location.query)? this.props.location.query.grupo:"Não foi selecionado nenhum grupo"
+        }       
+        //console.log(this.state.grupo);
+    }
+
     render() {
+
+        if(this.props.location.query)
         return (
             <div className="content">
                 <Grid fluid>
@@ -20,16 +30,16 @@ class GroupEnter extends Component {
 
                                         <Col lg={12} md={12} sm={12} xs={12} >
 
-                                            <h5>Nome do Grupo</h5>
+                                            <h5>{}</h5>
 
-                                            <h3>Algoritmos</h3>
+                                            <h3>{this.state.grupo.nome}</h3>
                                             <br/>
                                             <h5>Descricao</h5>
 
-                                            <p>Algoritmo ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                            <p>{this.state.grupo.descricao}</p>
                                             <br/>
                                             <h5>Categorias</h5>
-                                            <p>Programação JAVA</p>
+                                            <p>{this.state.grupo.categoria.nome}</p>
                                             <br/>
                                             <h5>Participantes</h5>
                                                        
@@ -55,6 +65,8 @@ class GroupEnter extends Component {
                 </Grid>
             </div>
         );
+        else
+        return <div className="content">{this.state.grupo}</div>
     }
 }
 
