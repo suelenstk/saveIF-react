@@ -1,50 +1,56 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
-
-import Card from '../../components/Card/Card';
-import {groupsArray} from '../../variables/Variables.jsx';
-import Button from '../../elements/CustomButton/CustomButton.jsx';
+import {Grid} from 'react-bootstrap';
+import GroupService from './GroupService';
+import GroupList from './GroupList';
 
 class Groups extends Component {
+
+    constructor(props){
+
+        super(props);
+        this.state = {
+            pagina: {},
+            grupo:{nome:"teste"}
+        }
+        this.GroupService = new GroupService();
+        this.listar();
+
+    }
+
+    setarItem(paginaResultado) {
+        //console.log(paginaResultado);
+        this.setState({
+            pagina: paginaResultado
+        });
+    }
+
+
+    listar() {
+        this.paginaAtual=0;
+        this.GroupService.listar(0,
+                (resultado) => {
+            console.log(resultado);
+            this.setarItem(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+    }   
+
     render() {
-        return (
-            <div className="content">
+
+        //console.log(this.state.pagina.content);
+        //console.log(this.state.grupo);
+
+        return (            
+            <div className="content">              
                 <Grid fluid>
-                    <Row>
-                        <Col md={12}>
-                            <Card
-                                title="Últimas Postagens"
-                                ctAllGroups
-                            
-                                content={
-                                    <Row>
-                                        {
-                                            groupsArray.map((prop,key) => {
-                                                return (
-                                                    <Col lg={12} md={12} sm={12} xs={12}  key={key}>
-                                                       <h2>{prop}</h2>
-                                                        <h5><span className="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                                        
-                                                        <Button
-                                                            bsStyle="danger"
-                                                            pullRight
-                                                            fill
-                                                            type="submit"                                           
-                                                        >   
-                                                            Ver Mais
-                                                        </Button>                                                        
-                                                        <br/><br/>
-                                                        <hr/>
-                                                    </Col>
-                                                );
-                                            })
-                                        }
-                                    </Row>
-                                }
-                            />
-                        </Col>
-                    </Row>
+
+                    <h1 style={{fontSize: '30px'}}>Outros Grupos</h1>
+                    <GroupList pagina={this.state.pagina}/>
+                    
                 </Grid>
             </div>
         );

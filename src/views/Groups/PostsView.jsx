@@ -4,7 +4,7 @@ import Card from '../../components/Card/Card';
 
 class PostsView extends Component {
     render() {
-      
+
         return (
             <div className="content">
                 <Grid fluid>
