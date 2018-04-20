@@ -10,9 +10,13 @@ export default class GroupList extends React.Component {
 
         let botoes = [];
         //let botao = <Link to={`/GroupEnter`}>
+        //manda o objeto do grupo e o método de confirmar solicitação
         let botao = <Link to={{
             pathname: '/GroupEnter',
-            query: { grupo: grupo }
+            query: { 
+                grupo: grupo,
+                solicitar:this.props.solicitar
+            }
           }}>      
                 <Button
                         bsStyle="danger"

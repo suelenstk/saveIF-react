@@ -12,7 +12,7 @@ const appRoutes = [
     { path: "/user", name: "Meu perfil", icon: "pe-7s-user", component: UserProfile },
     { path: "/notifications", name: "Notificações", icon: "pe-7s-bell" },
     { path: "/groups", name: "Grupos", icon: "pe-7s-share", component: Groups },
-    { path: "/GroupEnter", name: "GroupEnter", icon: "pe-7s-share", component: GroupEnter },
+    { path: "/GroupEnter", name: "Solicitacao", icon: "pe-7s-share", component: GroupEnter },
     { path: "/PostsView", name: "PostsView", icon: "pe-7s-share", component: PostsView },
     { redirect: true, path:"/", to:"/home", name: "Home" }
 ];

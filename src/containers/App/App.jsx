@@ -17,6 +17,7 @@ import UserRegistration from "../../views/UserRegistration/UserRegistration";
 import logo from '../../assets/img/reactlogo.png';
 import Login from "../../views/Login/Login";
 import ServicoLogin from "../../login/ServicoLogin";
+import servicoLogin from '../../login/ServicoLogin';
 
 
 class App extends Component {
@@ -60,6 +61,7 @@ class App extends Component {
                 );
             }
         } else {
+            console.log(servicoLogin.getUsuario());
             return (
                 <div className="wrapper">
                     <Sidebar {...this.props} />
@@ -80,6 +82,17 @@ class App extends Component {
                                                     />}
                                             />
                                         );
+                                        //passar id do usuário
+                                        if (prop.name === "Solicitacao")
+                                        return (
+                                            <Route
+                                                path={prop.path}
+                                                key={key}
+                                                render = {(props) => <prop.component  {...props} user={servicoLogin.getUsuario()}/>}
+                                                user={servicoLogin.getUsuario()}
+                                            />
+                                        );
+
                                     if (prop.redirect)
                                         return (
                                             <Redirect from={prop.path} to={prop.to} key={key}/>

@@ -3,29 +3,47 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
+import {Link} from 'react-router-dom';
 
 class GroupEnter extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            grupo: (this.props.location.query)? this.props.location.query.grupo:"Não foi selecionado nenhum grupo"
+            grupo: (this.props.location.query)? this.props.location.query.grupo:"Não foi selecionado nenhum grupo",
+            solicitar:(this.props.location.query)? this.props.location.query.solicitar:"",
+            idUsuario:this.props.user
         }       
-        //console.log(this.state.grupo);
+        //console.log(this.props.user);
+    }
+    //simulação da solicitação
+    confirmar() {
+        //insere a id do usuário solicitante
+        this.state.grupo.solicitantesGrupo[0] = {id:this.state.idUsuario}
+
+        //alert(this.state.grupo.solicitantesGrupo[0].id);
+        //alert(this.state.solicitar);
+        //manda para atualzar no banco de dados
+        this.state.solicitar(this.state.grupo.id, this.state.grupo);
+
     }
 
     botaoSolicitar(){
 
         let botoes = [];
 
-        let botao =     
+        let botao = <Link to={{
+            pathname: '/Group'}}>
              <Button
                 bsStyle="danger"
                 pullRight
                 fill
-                type="submit">   
+                type="submit"
+                onClick={(evento) => {
+                    this.confirmar()
+                        }}>   
                      Solicitar Inscrição
-            </Button>      
+            </Button></Link>
 
         botoes.push(botao);
 

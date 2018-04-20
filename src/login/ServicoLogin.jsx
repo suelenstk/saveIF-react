@@ -49,6 +49,12 @@ class ServicoLogin {
             return false;
         }
     }
+
+    getUsuario(){
+        let id = this.dados.id;
+        return  id;
+    }
+    
 }
 
 let servicoLogin = new ServicoLogin();

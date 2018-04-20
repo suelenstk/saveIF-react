@@ -8,6 +8,7 @@ class Groups extends Component {
     constructor(props){
 
         super(props);
+        //console.log(this.props.user);
         this.state = {
             pagina: {},
             grupo:{nome:"teste"}
@@ -49,7 +50,18 @@ class Groups extends Component {
                 <Grid fluid>
 
                     <h1 style={{fontSize: '30px'}}>Outros Grupos</h1>
-                    <GroupList pagina={this.state.pagina}/>
+                    <GroupList pagina={this.state.pagina}
+                               solicitar = {(id,grupo)=>{ 
+                                this.GroupService.editar(id, grupo, 
+                                        (item)=>{
+                                            alert("Solicitação efetuada com sucesso!");
+                                        },
+                                        (erro)=>{
+                                            console.log("Erro!");
+                                            console.log(erro);
+                                            }
+                                        );
+                                }}/>
                     
                 </Grid>
             </div>
