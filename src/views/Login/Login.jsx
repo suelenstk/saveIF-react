@@ -39,7 +39,7 @@ class Login extends Component {
                 this.setValor("senha", "");
                 console.log(erro);
                 this.setState({
-                    avisoLogin: "Email ou senha incorretos! Tente novamente."
+                    avisoLogin: "E-mail ou senha incorretos! Tente novamente."
                 });
             }
         );
@@ -75,11 +75,11 @@ class Login extends Component {
                                 }}>
                                     {erroLogin}
                                     <FormGroup controlId="formHorizontalEmail" className="">
-                                        <ControlLabel>Email</ControlLabel>
+                                        <ControlLabel>Prefixo do e-mail</ControlLabel>
                                         <FormControl
-                                            type="email"
+                                            type="text"
                                             value={this.state.login.usuario}
-                                            placeholder="Email"
+                                            placeholder="Ex: pmachado"
                                             onChange={(e) => this.setValor("usuario", e.target.value)}
                                             required
                                         />
@@ -113,7 +113,6 @@ class Login extends Component {
                                     <Button
                                         className="btLoginGoogle"
                                         block
-                                        type="submit"
                                     >
                                         <img src={google} className="google"/>Login com Google
                                     </Button>

@@ -624,6 +624,7 @@ a, p {
     opacity: 1;
     color: #FFFFFF;
     font-size: 12pt;
+    float: right;
 }
 
 .btSaveif:hover, .btSaveif:active, .btSaveif:active:hover {
@@ -666,6 +667,9 @@ a, p {
 }
 
 .logout {
-    /*background-color: #a1e82c;*/
     margin: 16px 0;
+}
+
+#sufixoRestinga {
+    margin-top: 25px;
 }

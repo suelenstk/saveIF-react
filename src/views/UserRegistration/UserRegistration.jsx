@@ -2,11 +2,33 @@ import React, {Component} from 'react';
 import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 
 import {Card} from '../../components/Card/Card.jsx';
-import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 
 
 class UserRegistration extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listaDeCursos: {},
+            avisoLogin: "",
+            usuario: {
+                prefixoEmail: "",
+                nome: "",
+                senha: "",
+                confSenha: "",
+                vinculo: "",
+                curso: "",
+                sobreMim: ""
+            }
+        };
+    }
+
+    setValor(atributo, valor) {
+        this.setState(
+            (estado) => estado.usuario[atributo] = valor
+        );
+    }
+
     render() {
         return (
             <div className="cardCadastro">
@@ -17,68 +39,66 @@ class UserRegistration extends Component {
                                 title="Cadastro de usuário"
                                 content={
                                     <form>
-                                        <FormInputs
-                                            ncols={["col-md-12"]}
-                                            proprieties={[
-                                                {
-                                                    label: "E-mail",
-                                                    type: "email",
-                                                    bsClass: "form-control",
-                                                    placeholder: "E-mail",
-                                                }
-                                            ]}
-                                        />
-                                        <FormInputs
-                                            ncols={["col-md-6", "col-md-6"]}
-                                            proprieties={[
-                                                {
-                                                    label: "Nome",
-                                                    type: "text",
-                                                    bsClass: "form-control",
-                                                    placeholder: "Nome",
-                                                },
-                                                {
-                                                    label: "Sobrenome",
-                                                    type: "text",
-                                                    bsClass: "form-control",
-                                                    placeholder: "Sobrenome",
-                                                }
-                                            ]}
-                                        />
-                                        {/*TODO criar botao para esconder senha*/}
-                                        <FormInputs
-                                            ncols={["col-md-6", "col-md-6"]}
-                                            proprieties={[
-                                                {
-                                                    label: "Senha",
-                                                    type: "text",
-                                                    bsClass: "form-control",
-                                                    placeholder: "Senha",
-                                                },
-                                                {
-                                                    label: "Confirmação de senha",
-                                                    type: "text",
-                                                    bsClass: "form-control",
-                                                    placeholder: "Confirmação de senha",
-                                                }
-                                            ]}
-                                        />
-                                        <FormInputs
-                                            ncols={["col-md-6"]}
-                                            proprieties={[
-                                                {
-                                                    label: "Data de Nascimento",
-                                                    type: "date",
-                                                    bsClass: "form-control",
-                                                    placeholder: "Data de nascimento",
-                                                }
-                                            ]}
-                                        />
-                                        {/*TODO exibir os campos data de nascimento e vínculo na mesma linha*/}
                                         <Row>
-                                            <FormGroup controlId="formControlsSelect" className="col-md-6">
+                                            <FormGroup controlId="formHorizontalPrefixoEmail" className="col-md-6">
+                                                <ControlLabel>Prefixo do e-mail</ControlLabel>
+                                                <FormControl
+                                                    type="text"
+                                                    value={this.state.usuario.prefixoEmail}
+                                                    placeholder="Ex: pmachado"
+                                                    onChange={(e) => this.setValor("prefixoEmail", e.target.value)}
+                                                    required
+                                                />
+                                            </FormGroup>
+                                            <FormGroup controlId="formHorizontalSufixo" className="col-md-6"
+                                                       id="sufixoRestinga">
+                                                <FormControl.Static>@restinga.ifrs.edu.br</FormControl.Static>
+                                            </FormGroup>
+                                        </Row>
+                                        <Row>
+                                            <FormGroup controlId="formHorizontalNome" className="col-md-12">
+                                                <ControlLabel>Nome</ControlLabel>
+                                                <FormControl
+                                                    type="text"
+                                                    value={this.state.usuario.curso}
+                                                    placeholder="Nome"
+                                                    onChange={(e) => this.setValor("nome", e.target.value)}
+                                                    required
+                                                />
+                                            </FormGroup>
+                                        </Row>
+                                        <Row>
+                                            <FormGroup controlId="formHorizontalSenha" className="col-md-6">
+                                                <ControlLabel>Senha</ControlLabel>
+                                                <FormControl
+                                                    type="password"
+                                                    value={this.state.usuario.senha}
+                                                    placeholder="Senha"
+                                                    onChange={(e) => this.setValor("senha", e.target.value)}
+                                                    required
+                                                />
+                                            </FormGroup>
+                                            <FormGroup controlId="formHorizontalConfirmacaoSenha" className="col-md-6">
+                                                <ControlLabel> Confirmação de senha</ControlLabel>
+                                                <FormControl
+                                                    type="password"
+                                                    value={this.state.usuario.confSenha}
+                                                    placeholder="Confirmação de senha"
+                                                    onChange={(e) => this.setValor("confSenha", e.target.value)}
+                                                    required
+                                                />
+                                            </FormGroup>
+                                        </Row>
+                                        <Row>
+                                            <FormGroup controlId="formControlSelectVinculo" className="col-md-6">
                                                 <ControlLabel>Vínculo</ControlLabel>
-                                                <FormControl componentClass="select" placeholder="vinculo">
+                                                <FormControl
+                                                    componentClass="select"
+                                                    placeholder="vinculo"
+                                                    value={this.state.usuario.vinculo}
+                                                    onChange={(evento) => this.setValor("vinculo", evento.target.value)}
+                                                    required>
+                                                    <option value="">-- Selecione --</option>
                                                     <option value="aluno">Aluno</option>
                                                     <option value="professor">Professor</option>
                                                     <option value="servidor">Servidor Técnico</option>
@@ -86,44 +106,19 @@ class UserRegistration extends Component {
                                             </FormGroup>
                                         </Row>
                                         <Row>
-                                            <FormGroup controlId="formControlsSelect" className="col-md-12">
+                                            <FormGroup controlId="formControlSelectCurso" className="col-md-12">
                                                 <ControlLabel>Curso</ControlLabel>
-                                                <FormControl componentClass="select" placeholder="curso">
-                                                    <option value="">Superior de Tecnologia em Análise e Desenvolvimento
-                                                        de
-                                                        Sistemas
-                                                    </option>
-                                                    <option value="">Licenciatura em Letras Português e Espanhol
-                                                    </option>
-                                                    <option value="">Superior de Tecnologia em Gestão Desportiva e de
-                                                        Lazer
-                                                    </option>
-                                                    <option value="">Superior de Tecnologia em Eletrônica Industrial
-                                                    </option>
-                                                    <option value="">Técnico em Redes de Computadores - Modalidade
-                                                        Concomitante
-                                                    </option>
-                                                    <option value="">Técnico em Eletrônica Integrado ao Ensino Médio
-                                                    </option>
-                                                    <option value="">Técnico em Informática Integrado ao Ensino Médio
-                                                    </option>
-                                                    <option value="">Técnico em Lazer Integrado ao Ensino Médio</option>
-                                                    <option value="">Técnico em Informática para Internet Integrado ao
-                                                        Ensino Médio
-                                                    </option>
-                                                    <option value="">Técnico em Comércio Integrado ao Ensino Médio
-                                                        modalidade Proeja
-                                                    </option>
-                                                    <option value="">Técnico em Agroecologia Integrado ao Ensino Médio
-                                                        modalidade Proeja
-                                                    </option>
-                                                    <option value="">Técnico em Recursos Humanos Integrado ao Ensino
-                                                        Médio
-                                                        modalidade Proeja
-                                                    </option>
-                                                    <option value="">Técnico em Guia de Turismo Subsequente ao Ensino
-                                                        Médio
-                                                    </option>
+                                                <FormControl
+                                                    componentClass="select"
+                                                    placeholder="curso"
+                                                    value={this.state.usuario.curso}
+                                                    onChange={(evento) => this.setValor("curso", evento.target.value)}
+                                                    required>
+                                                    <option value="">-- Selecione --</option>
+                                                    {/*{this.props.listaDeCursos.content.map((curso) => {*/}
+                                                    {/*return <option value={curso.id}>{curso.nome}</option>*/}
+                                                    {/*})}*/}
+
                                                 </FormControl>
                                             </FormGroup>
                                         </Row>
@@ -131,22 +126,22 @@ class UserRegistration extends Component {
                                             <Col md={12}>
                                                 <FormGroup controlId="formControlsTextarea">
                                                     <ControlLabel>Sobre mim</ControlLabel>
-                                                    <FormControl rows="5" componentClass="textarea"
-                                                                 bsClass="form-control"
-                                                                 placeholder="Fale um pouco sobre você..."/>
+                                                    <FormControl
+                                                        rows="5" componentClass="textarea"
+                                                        bsClass="form-control"
+                                                        placeholder="Fale um pouco sobre você..."
+                                                    />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
                                         <Button
-                                            bsStyle="danger"
                                             className="btSaveif"
-                                            pullRight
                                             fill
                                             type="submit"
                                         >
                                             Cadastrar
                                         </Button>
-                                        <div className="clearfix"></div>
+                                        <div className="clearfix"/>
                                     </form>
                                 }
                             />

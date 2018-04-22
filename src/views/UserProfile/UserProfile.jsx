@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl
-} from 'react-bootstrap';
+import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 
 import {Card} from '../../components/Card/Card.jsx';
 import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
@@ -27,7 +24,7 @@ class UserProfile extends Component {
                                             proprieties={[
                                                 {
                                                     label: "E-mail",
-                                                    type: "email",
+                                                    type: "prefixoEmail",
                                                     bsClass: "form-control",
                                                     placeholder: "E-mail",
                                                     defaultValue: "mandrew@restinga.ifrs.edu.br",
