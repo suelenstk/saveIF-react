@@ -1,8 +1,8 @@
 import ServicoRest from "../../ServicoRest";
 
-export default class PostService extends ServicoRest{
+export default class PostService extends ServicoRest {
 
-    constructor(){
+    constructor() {
         super("api/posts");
     }
 

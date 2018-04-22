@@ -1,25 +1,20 @@
 import React, {Component} from 'react';
-import { NavItem, Nav } from 'react-bootstrap';
+import {Nav, NavItem} from 'react-bootstrap';
 
 
-class HeaderLinks extends Component{
-    render(){
-       
+class HeaderLinks extends Component {
+
+    render() {
         return (
             <div>
                 <Nav>
-                   
                     <NavItem eventKey={3} href="#">
-                        <i className="fa fa-search"></i>
+                        <i className="fa fa-search"/>
                         <p className="hidden-lg hidden-md">Search</p>
                     </NavItem>
-                   
-
                 </Nav>
-                <Nav pullRight>
-                    
-
-                    <NavItem eventKey={3} href="#">Log out</NavItem>
+                <Nav pullRight className="logout">
+                    <a href="/">Log out</a>
                 </Nav>
             </div>
         );

@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl
-} from 'react-bootstrap';
+import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 
 import {Card} from '../../components/Card/Card.jsx';
 import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
@@ -142,6 +139,7 @@ class UserRegistration extends Component {
                                         </Row>
                                         <Button
                                             bsStyle="danger"
+                                            className="btSaveif"
                                             pullRight
                                             fill
                                             type="submit"

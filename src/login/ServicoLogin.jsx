@@ -1,4 +1,3 @@
-import ServicoRest from "../ServicoRest";
 import base64 from "base-64/base64.js";
 
 class ServicoLogin {
@@ -50,11 +49,11 @@ class ServicoLogin {
         }
     }
 
-    getUsuario(){
+    getUsuario() {
         let id = this.dados.id;
-        return  id;
+        return id;
     }
-    
+
 }
 
 let servicoLogin = new ServicoLogin();

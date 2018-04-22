@@ -1,5 +1,3 @@
-
-import base64 from "base-64/base64.js";
 import servicoLogin from "./login/ServicoLogin";
 
 export default class ServicoRest {
@@ -9,21 +7,21 @@ export default class ServicoRest {
     }
 
     apagar(id, sucesso, erro) {
-         fetch(`${this.url}/${id}`,{
-             headers: new Headers({
-                'Authorization':servicoLogin.getAuthorization()
-            }),
-            method:"DELETE"
-        }
-        ).then((resposta)=>{
-           if(resposta.ok) {
-               sucesso();
-           } else {
-               resposta.json().then(erro);              
-           }
-               
-        } );
-        
+        fetch(`${this.url}/${id}`, {
+                headers: new Headers({
+                    'Authorization': servicoLogin.getAuthorization()
+                }),
+                method: "DELETE"
+            }
+        ).then((resposta) => {
+            if (resposta.ok) {
+                sucesso();
+            } else {
+                resposta.json().then(erro);
+            }
+
+        });
+
     }
 
     inserir(item, sucesso, erro) {
@@ -40,7 +38,7 @@ export default class ServicoRest {
                 resultado.json().then(sucesso)
             } else {
                 resultado.json().then(
-                        (resultadoErro) => erro(resultadoErro)
+                    (resultadoErro) => erro(resultadoErro)
                 )
             }
 
@@ -61,7 +59,7 @@ export default class ServicoRest {
                 sucesso();
             } else {
                 resultado.json().then(
-                        (resultadoErro) => erro(resultadoErro)
+                    (resultadoErro) => erro(resultadoErro)
                 )
             }
 
@@ -78,19 +76,18 @@ export default class ServicoRest {
                 resultado.json().then(sucesso)
             } else {
                 resultado.json().then(
-                        (resultadoErro) => erro(resultadoErro)
+                    (resultadoErro) => erro(resultadoErro)
                 )
             }
         };
 
         fetch(this.url + "?pagina=" + pagina, {
-                        headers: new Headers({
+            headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
-              
+
             }),
             method: "GET"
         }).then(trataFetch);
-
     }
-    
+
 }

@@ -5,13 +5,13 @@
 2 info using npm@3.10.10
 3 info using node@v6.11.3
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info lifecycle light-bootstrap-dashboard-react@1.1.0~prestart: light-bootstrap-dashboard-react@1.1.0
-6 silly lifecycle light-bootstrap-dashboard-react@1.1.0~prestart: no script for prestart, continuing
-7 info lifecycle light-bootstrap-dashboard-react@1.1.0~start: light-bootstrap-dashboard-react@1.1.0
-8 verbose lifecycle light-bootstrap-dashboard-react@1.1.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle light-bootstrap-dashboard-react@1.1.0~start: PATH: D:\node.js\node_modules\npm\bin\node-gyp-bin;D:\NetBeansProjects\saveIF-react\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;D:\node.js\;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk1.8.0_25\bin;C:\Users\062013\AppData\Roaming\npm;D:\Microsoft VS Code\bin
-10 verbose lifecycle light-bootstrap-dashboard-react@1.1.0~start: CWD: D:\NetBeansProjects\saveIF-react
-11 silly lifecycle light-bootstrap-dashboard-react@1.1.0~start: Args: [ '/d /s /c', 'npm-run-all -p watch-css start-js' ]
+5 info lifecycle saveif-react~prestart: saveif-react
+6 silly lifecycle saveif-react~prestart: no script for prestart, continuing
+7 info lifecycle saveif-react~start: saveif-react
+8 verbose lifecycle saveif-react~start: unsafe-perm in lifecycle true
+9 verbose lifecycle saveif-react~start: PATH: D:\node.js\node_modules\npm\bin\node-gyp-bin;D:\NetBeansProjects\saveIF-react\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;D:\node.js\;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk1.8.0_25\bin;C:\Users\062013\AppData\Roaming\npm;D:\Microsoft VS Code\bin
+10 verbose lifecycle saveif-react~start: CWD: D:\NetBeansProjects\saveIF-react
+11 silly lifecycle saveif-react~start: Args: [ '/d /s /c', 'npm-run-all -p watch-css start-js' ]
 12 verbose stack Error: kill ENOSYS
 12 verbose stack     at exports._errnoException (util.js:1020:11)
 12 verbose stack     at process.kill (internal/process.js:190:13)

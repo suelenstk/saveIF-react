@@ -550,8 +550,12 @@
     text-align: center;
 }
 
-a, a:hover {
-    color: #F34239;
+a {
+    color: #ED3846;
+}
+
+a:hover {
+    color: #C0313C;
 }
 
 a, p {
@@ -612,10 +616,9 @@ a, p {
     color: #000000;
 }
 
-.btSaveif, .btSaveif:hover, .btSaveif:active, .btSaveif:active:hover, .btSaveif:focus {
-    background-color: #ee2d20;
-    border-color: #ee2d20;
-    width: 100%;
+.btSaveif, .btSaveif:focus {
+    background-color: #ED3846;
+    border-color: #ED3846;
     margin-bottom: 20px;
     font-weight: bold;
     opacity: 1;
@@ -623,7 +626,13 @@ a, p {
     font-size: 12pt;
 }
 
-.btLoginGoogle, .btLoginGoogle:hover, .btLoginGoogle:active, .btLoginGoogle:active:hover, .btLoginGoogle:focus {
+.btSaveif:hover, .btSaveif:active, .btSaveif:active:hover {
+    background-color: #C0313C;
+    color: #FFFFFF;
+    border-color: #C0313C;
+}
+
+.btLoginGoogle, .btLoginGoogle:focus {
     background-color: #FFFFFF;
     border-color: #FFFFFF;
     width: 100%;
@@ -632,5 +641,31 @@ a, p {
     font-size: 12pt;
 }
 
+.btLoginGoogle:hover, .btLoginGoogle:active, .btLoginGoogle:active:hover {
+    background-color: #F0F0F0;
+    border-color: #F0F0F0;
+}
 
+.help-block {
+    width: 100%;
+    text-align: center;
+    background-Color: #fed8de;
+    border: 1px solid #C0313C;
+    color: #C0313C;
+    border-radius: 4px;
+    padding: 15px 20px;
+}
 
+.logout a {
+    font-size: 14pt;
+    color: #ED3846;
+}
+
+.logout a:hover {
+    color: #C0313C;
+}
+
+.logout {
+    /*background-color: #a1e82c;*/
+    margin: 16px 0;
+}

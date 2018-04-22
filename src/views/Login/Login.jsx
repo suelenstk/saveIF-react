@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-import {
-    Grid, Row, Col
-} from 'react-bootstrap';
-
-import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
+import {Col, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import logo from '../../assets/img/logoMaior.png';
 import google from '../../assets/img/sign-in-with-google.svg';
 import servicoLogin from "../../login/ServicoLogin";
-import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap';
+import ControlLabel from "react-bootstrap/es/ControlLabel";
+import HelpBlock from "react-bootstrap/es/HelpBlock";
 
 
 class Login extends Component {
@@ -24,7 +21,6 @@ class Login extends Component {
     }
 
     setValor(atributo, valor) {
-
         this.setState(
             (estado) => estado.login[atributo] = valor
         );
@@ -40,26 +36,32 @@ class Login extends Component {
                 this.props.onLogin();
             },
             (erro) => {
+                this.setValor("senha", "");
                 console.log(erro);
                 this.setState({
-                    avisoLogin: erro.message
+                    avisoLogin: "Email ou senha incorretos! Tente novamente."
                 });
             }
         );
 
     }
 
-    
-
-
     render() {
+        let erroLogin = "";
+        if (this.state.avisoLogin !== "") {
+            erroLogin =
+                <div>
+                    <HelpBlock>{this.state.avisoLogin}</HelpBlock>
+                </div>
+        }
+
         return (
             <div className="content">
                 <Grid fluid>
                     <Row>
                         <Col md={6} className="logoLogin">
                             <div>
-                                <a class="navbar-brand" href="">
+                                <a className="navbar-brand" href="">
                                     <img src={logo} className="img-responsive" alt="logo_image"/>
                                 </a>
                             </div>
@@ -67,44 +69,41 @@ class Login extends Component {
                         <Col md={6} className="formLogin">
                             <div>
                                 <h4>Login do usuário</h4>
-                                <form onSubmit={(event)=>{event.preventDefault(); this.login()}}>
-                                    
-                                    <FormGroup controlId="formHorizontalPassword" >
+                                <form onSubmit={(event) => {
+                                    event.preventDefault();
+                                    this.login()
+                                }}>
+                                    {erroLogin}
+                                    <FormGroup controlId="formHorizontalEmail" className="">
+                                        <ControlLabel>Email</ControlLabel>
                                         <FormControl
                                             type="email"
                                             value={this.state.login.usuario}
                                             placeholder="Email"
                                             onChange={(e) => this.setValor("usuario", e.target.value)}
+                                            required
                                         />
                                     </FormGroup>
-
                                     <FormGroup controlId="formHorizontalPassword">
+                                        <ControlLabel>Senha</ControlLabel>
                                         <FormControl
                                             type="password"
                                             value={this.state.login.senha}
                                             placeholder="Senha"
                                             onChange={(e) => this.setValor("senha", e.target.value)}
+                                            required
                                         />
-                                    
                                     </FormGroup>
-        
-                                  
                                     <div>
                                         <a href="">
                                             Esqueceu sua senha?
                                         </a>
                                         <br/><br/>
                                     </div>
-
-                                    <div>
-                                    <HelpBlock>{this.state.avisoLogin}</HelpBlock>
-                                    </div>
-
                                     <Button
-                                        // bsStyle="danger"
+                                        style={{width: "100%"}}
                                         className="btSaveif"
                                         block
-                                        pullLeft
                                         fill
                                         type="submit"
                                     >
@@ -112,11 +111,8 @@ class Login extends Component {
                                     </Button>
                                     <br/>
                                     <Button
-                                        // bsStyle="default"
                                         className="btLoginGoogle"
                                         block
-                                        pullLeft
-                                        // fill
                                         type="submit"
                                     >
                                         <img src={google} className="google"/>Login com Google

@@ -1,8 +1,8 @@
 import ServicoRest from "../../ServicoRest";
 
-export default class GroupService extends ServicoRest{
+export default class GroupService extends ServicoRest {
 
-    constructor(){
+    constructor() {
         super("api/grupos");
     }
 

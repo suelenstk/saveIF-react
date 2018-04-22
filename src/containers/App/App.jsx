@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
-import {
-    Route,
-    Switch,
-    Redirect
-} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
 
 import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 
@@ -17,7 +12,7 @@ import UserRegistration from "../../views/UserRegistration/UserRegistration";
 import logo from '../../assets/img/reactlogo.png';
 import Login from "../../views/Login/Login";
 import ServicoLogin from "../../login/ServicoLogin";
-import servicoLogin from '../../login/ServicoLogin';
+import servicoLogin from "../../login/ServicoLogin";
 
 
 class App extends Component {
@@ -92,7 +87,6 @@ class App extends Component {
                                                 user={servicoLogin.getUsuario()}
                                             />
                                         );
-
                                     if (prop.redirect)
                                         return (
                                             <Redirect from={prop.path} to={prop.to} key={key}/>
@@ -103,7 +97,7 @@ class App extends Component {
                                 })
                             }
                         </Switch>
-                        <Footer/>
+                        {/*<Footer/>*/}
                     </div>
                 </div>
             );
