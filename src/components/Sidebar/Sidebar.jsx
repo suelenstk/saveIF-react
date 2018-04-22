@@ -6,7 +6,7 @@ import HeaderLinks from '../Header/HeaderLinks.jsx';
 import imagine from '../../assets/img/sidebar-3.jpg';
 import logo from '../../assets/img/reactlogo.png';
 
-import appRoutes from '../../routes/app.jsx';
+import sideBarRoutes from '../../routes/sideBar';
 
 class Sidebar extends Component{
     constructor(props){
@@ -41,7 +41,7 @@ class Sidebar extends Component{
                     <ul className="nav">
                         { this.state.width <= 991 ? (<HeaderLinks />):null }
                         {
-                            appRoutes.map((prop,key) => {
+                            sideBarRoutes.map((prop,key) => {
                                 if(!prop.redirect)
                                     return (
                                         <li className={prop.upgrade ? "active active-pro":this.activeRoute(prop.path)} key={key}>
