@@ -16,7 +16,7 @@ const appRoutes = [
     { path: "/user", name: "Meu perfil", icon: "pe-7s-user", component: UserProfile },
     { path: "/notifications", name: "Notificações", icon: "pe-7s-bell" },
     { path: "/groups", name: "Grupos", icon: "pe-7s-share", component: Groups },
-    { path: "/GroupEnter", name: "Solicitacao", icon: "pe-7s-share", component: GroupEnter },
+
     { path: "/NewPost", name: "Novo Post", icon: "pe-7s-file", component: NewPost },
     { path: "/CreateGroupPage1", name: "CreateGroupPage1", icon: "pe-7s-file", component: CreateGroupPage1 },
     { path: "/CreateGroupPage2", name: "CreateGroupPage2", icon: "pe-7s-file", component: CreateGroupPage2 },
