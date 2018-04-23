@@ -60,7 +60,7 @@ class UserRegistration extends Component {
                                                 <ControlLabel>Nome</ControlLabel>
                                                 <FormControl
                                                     type="text"
-                                                    value={this.state.usuario.nome}
+                                                    value={this.state.usuario.curso}
                                                     placeholder="Nome"
                                                     onChange={(e) => this.setValor("nome", e.target.value)}
                                                     required
