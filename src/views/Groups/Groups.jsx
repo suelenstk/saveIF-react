@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Grid} from 'react-bootstrap';
 import GroupService from './GroupService';
-import GroupList from './GroupList';
+import GroupRoute from './GroupRoute';
 
 class Groups extends Component {
 
@@ -46,11 +46,12 @@ class Groups extends Component {
         //console.log(this.state.grupo);
 
         return (            
-            <div className="content">              
+            <div className="content">    
+       
                 <Grid fluid>
 
                     <h1 style={{fontSize: '30px'}}>Outros Grupos</h1>
-                    <GroupList pagina={this.state.pagina}
+                    <GroupRoute pagina={this.state.pagina}
                                solicitar = {(id,grupo)=>{ 
                                 this.GroupService.editar(id, grupo, 
                                         (item)=>{
@@ -61,8 +62,9 @@ class Groups extends Component {
                                             console.log(erro);
                                             }
                                         );
-                                }}/>
-                    
+                                }}
+                                user={this.props.user}/>
+
                 </Grid>
             </div>
         );

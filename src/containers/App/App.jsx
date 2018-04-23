@@ -78,7 +78,7 @@ class App extends Component {
                                             />
                                         );
                                         //passar id do usuário
-                                        if (prop.name === "Solicitacao")
+                                        if (prop.name === "Grupos")
                                         return (
                                             <Route
                                                 path={prop.path}

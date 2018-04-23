@@ -1,23 +1,21 @@
-import React from "react";
+import React, { Component } from 'react';
 import {Row, Col } from 'react-bootstrap';
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {Route,Switch} from 'react-router-dom';
+import GroupEnter from './GroupEnter';
 
-export default class GroupList extends React.Component {
+export default class GroupList extends Component {
     
     botaoVerMais(grupo){
 
         let botoes = [];
         //let botao = <Link to={`/GroupEnter`}>
         //manda o objeto do grupo e o método de confirmar solicitação
-        let botao = <Link to={{
-            pathname: '/GroupEnter',
-            query: { 
-                grupo: grupo,
-                solicitar:this.props.solicitar
-            }
-          }}>      
+        <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link>
+        let botao = 
+        <Link to={{ pathname: `/groups/${grupo.id}/view`, query: { grupo: grupo } }}>      
                 <Button
                         bsStyle="danger"
                         pullRight
@@ -35,7 +33,7 @@ export default class GroupList extends React.Component {
     
     
     render() {
-        
+        //alert(this.props.pagina);
         if (!this.props.pagina.content) {
 
             return <div>Não há grupos cadastrados!</div>;
@@ -43,7 +41,7 @@ export default class GroupList extends React.Component {
         } else {
             return  <Row>
             <Col md={12}>
-            {this.props.pagina.content.map((grupo) => {
+            {this.props.pagina.content.map((grupo) => {             
                return <Card                                
                     ctAllGroups
                 
@@ -69,6 +67,7 @@ export default class GroupList extends React.Component {
                     />
             })}
             </Col>
+
         </Row>
 
         }

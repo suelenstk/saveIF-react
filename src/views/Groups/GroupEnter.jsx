@@ -10,8 +10,8 @@ class GroupEnter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            grupo: (this.props.location.query)? this.props.location.query.grupo:"Não foi selecionado nenhum grupo",
-            solicitar:(this.props.location.query)? this.props.location.query.solicitar:"",
+            grupo:  this.props.grupo,
+            solicitar: this.props.solicitar,
             idUsuario:this.props.user
         }       
         //console.log(this.props.user);
@@ -33,7 +33,7 @@ class GroupEnter extends Component {
         let botoes = [];
 
         let botao = <Link to={{
-            pathname: '/Group'}}>
+            pathname: '/groups'}}>
              <Button
                 bsStyle="danger"
                 pullRight
@@ -53,7 +53,10 @@ class GroupEnter extends Component {
 
     render() {
 
-        if(this.props.location.query)
+        //console.log(this.props.user);
+        //console.log(this.props.solicitar);
+        //console.log(this.state.grupo);
+        if(this.state.grupo != "")
         return (
             <div className="content">
                 <Grid fluid>
@@ -64,7 +67,6 @@ class GroupEnter extends Component {
                             
                                 content={
                                     <Row>
-
                                         <Col lg={12} md={12} sm={12} xs={12} >
 
                                             <h5>{}</h5>
@@ -86,7 +88,6 @@ class GroupEnter extends Component {
                                             <br/><br/>
                                             <hr/>
                                         </Col>
-                                        
                                     </Row>
                                 }
                             />
@@ -95,8 +96,6 @@ class GroupEnter extends Component {
                 </Grid>
             </div>
         );
-        else
-        return <div className="content">{this.state.grupo}</div>
     }
 }
 
