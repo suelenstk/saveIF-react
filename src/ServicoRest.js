@@ -44,6 +44,25 @@ export default class ServicoRest {
 
         });
     }
+    inserirSemAutorizacao(item, sucesso, erro) {
+        console.log(item);
+        fetch(this.url, {
+            method: "POST",
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(item)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
 
     editar(id, item, sucesso, erro) {
         console.log(item);

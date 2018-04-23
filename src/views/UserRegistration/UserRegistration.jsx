@@ -3,25 +3,28 @@ import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootst
 
 import {Card} from '../../components/Card/Card.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
+import UserService from '../../services/UserService';
 
 
-class UserRegistration extends Component {
+class UserRegistration extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listaDeCursos: {},
-            avisoLogin: "",
+            avisoUsuario: "",
+            confirmaSenha: "",
             usuario: {
-                prefixoEmail: "",
+                email: "",
                 nome: "",
-                senha: "",
-                confSenha: "",
-                vinculo: "",
-                curso: "",
-                sobreMim: ""
+                novaSenha: "",
+                tipoVinculo: "",
+                //curso: "",
+                sobreUsuario: ""
             }
-        };
+        }
+        this.UserService = new UserService();
+
     }
+
 
     setValor(atributo, valor) {
         this.setState(
@@ -29,8 +32,22 @@ class UserRegistration extends Component {
         );
     }
 
+    inserirUsuario() {
+        let usuario = this.state.usuario;
+        this.UserService.inserirSemAutorizacao(usuario,
+            (sucesso) => {
+                alert("Usuário cadastrado com sucesso!");
+            },
+            (erro) => {
+                console.log("Erro!");
+                console.log(erro);
+            }
+        )
+        
+    }
+
     render() {
-        return (
+    return (
             <div className="cardCadastro">
                 <Grid fluid>
                     <Row>
@@ -38,15 +55,18 @@ class UserRegistration extends Component {
                             <Card
                                 title="Cadastro de usuário"
                                 content={
-                                    <form>
+                                    <form onSubmit={(event) => { 
+                                        event.preventDefault();
+                                        this.inserirUsuario()
+                                    }}>
                                         <Row>
                                             <FormGroup controlId="formHorizontalPrefixoEmail" className="col-md-6">
                                                 <ControlLabel>Prefixo do e-mail</ControlLabel>
                                                 <FormControl
                                                     type="text"
-                                                    value={this.state.usuario.prefixoEmail}
+                                                    value={this.state.usuario.email}
                                                     placeholder="Ex: pmachado"
-                                                    onChange={(e) => this.setValor("prefixoEmail", e.target.value)}
+                                                    onChange={(e) => this.setValor("email", e.target.value)}
                                                     required
                                                 />
                                             </FormGroup>
@@ -72,9 +92,9 @@ class UserRegistration extends Component {
                                                 <ControlLabel>Senha</ControlLabel>
                                                 <FormControl
                                                     type="password"
-                                                    value={this.state.usuario.senha}
+                                                    value={this.state.usuario.novaSenha}
                                                     placeholder="Senha"
-                                                    onChange={(e) => this.setValor("senha", e.target.value)}
+                                                    onChange={(e) => this.setValor("novaSenha", e.target.value)}
                                                     required
                                                 />
                                             </FormGroup>
@@ -82,21 +102,21 @@ class UserRegistration extends Component {
                                                 <ControlLabel> Confirmação de senha</ControlLabel>
                                                 <FormControl
                                                     type="password"
-                                                    value={this.state.usuario.confSenha}
+                                                    value={this.state.usuario.confirmaSenha}
                                                     placeholder="Confirmação de senha"
-                                                    onChange={(e) => this.setValor("confSenha", e.target.value)}
-                                                    required
+                                                    onChange={(e) => this.setValor("confirmaSenha", e.target.value)}
+                                                    
                                                 />
                                             </FormGroup>
                                         </Row>
                                         <Row>
-                                            <FormGroup controlId="formControlSelectVinculo" className="col-md-6">
+                                            <FormGroup controlId="formControlSelectVinculo" className="col-md-12">
                                                 <ControlLabel>Vínculo</ControlLabel>
                                                 <FormControl
                                                     componentClass="select"
                                                     placeholder="vinculo"
-                                                    value={this.state.usuario.vinculo}
-                                                    onChange={(evento) => this.setValor("vinculo", evento.target.value)}
+                                                    value={this.state.usuario.tipoVinculo}
+                                                    onChange={(evento) => this.setValor("tipoVinculo", evento.target.value)}
                                                     required>
                                                     <option value="">-- Selecione --</option>
                                                     <option value="aluno">Aluno</option>
@@ -105,19 +125,21 @@ class UserRegistration extends Component {
                                                 </FormControl>
                                             </FormGroup>
                                         </Row>
+                                        
                                         <Row>
                                             <FormGroup controlId="formControlSelectCurso" className="col-md-12">
                                                 <ControlLabel>Curso</ControlLabel>
                                                 <FormControl
                                                     componentClass="select"
                                                     placeholder="curso"
-                                                    value={this.state.usuario.curso}
-                                                    onChange={(evento) => this.setValor("curso", evento.target.value)}
-                                                    required>
+                                                    value=""
+                                                    onChange=""
+                                                  >
                                                     <option value="">-- Selecione --</option>
                                                     {/*{this.props.listaDeCursos.content.map((curso) => {*/}
                                                     {/*return <option value={curso.id}>{curso.nome}</option>*/}
                                                     {/*})}*/}
+                                               
 
                                                 </FormControl>
                                             </FormGroup>
@@ -130,6 +152,8 @@ class UserRegistration extends Component {
                                                         rows="5" componentClass="textarea"
                                                         bsClass="form-control"
                                                         placeholder="Fale um pouco sobre você..."
+                                                        value={this.state.usuario.sobreUsuario}
+                                                        onChange={(e) => this.setValor("sobreUsuario", e.target.value)}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -143,6 +167,7 @@ class UserRegistration extends Component {
                                         </Button>
                                         <div className="clearfix"/>
                                     </form>
+                                    
                                 }
                             />
                         </Col>
@@ -154,5 +179,3 @@ class UserRegistration extends Component {
 }
 
 export default UserRegistration;
-
-
