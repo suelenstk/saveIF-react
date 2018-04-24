@@ -3,8 +3,6 @@ import {Row, Col } from 'react-bootstrap';
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
-import {Route,Switch} from 'react-router-dom';
-import GroupEnter from './GroupEnter';
 
 export default class GroupList extends Component {
     
@@ -12,10 +10,11 @@ export default class GroupList extends Component {
 
         let botoes = [];
         //let botao = <Link to={`/GroupEnter`}>
-        //manda o objeto do grupo e o método de confirmar solicitação
-        <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link>
+        //Verificar rota certa
+        let rota = (this.props.rota === "MyGroups")? "MyGroups":"groups";
+
         let botao = 
-        <Link to={{ pathname: `/groups/${grupo.id}/view`, query: { grupo: grupo } }}>      
+        <Link to={{ pathname: `/${rota}/${grupo.id}/view`, query: { grupo: grupo } }}>      
                 <Button
                         bsStyle="danger"
                         pullRight

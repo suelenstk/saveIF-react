@@ -48,7 +48,7 @@ class Groups extends Component {
         return (            
             <div className="content">    
        
-                <Grid fluid>
+                <Grid fluid> 
 
                     <h1 style={{fontSize: '30px'}}>Outros Grupos</h1>
                     <GroupRoute pagina={this.state.pagina}
@@ -63,7 +63,8 @@ class Groups extends Component {
                                             }
                                         );
                                 }}
-                                user={this.props.user}/>
+                                user={this.props.user}
+                                rota="groups" />
 
                 </Grid>
             </div>

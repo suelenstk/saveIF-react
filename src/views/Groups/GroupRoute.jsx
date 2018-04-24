@@ -9,7 +9,7 @@ import {
 
 class RotaLista extends Component {
   render() {
-    console.log(this.props.pagina);
+    //console.log(this.props.pagina);
    return <GroupList pagina={this.props.pagina}/>;
   }
  }
@@ -31,8 +31,8 @@ export default class GroupRoute extends Component {
 
    return <div>
     <Switch>
-     <Route exact path="/groups" render = {(props) => <RotaLista  {...props} pagina={this.props.pagina} />}
-                                                 pagina={this.props.pagina} />
+     <Route exact path="/groups" render = {(props) => <RotaLista  {...props} pagina={this.props.pagina} rota={this.props.rota}/>}
+                                                 pagina={this.props.pagina} rota={this.props.rota}/>
      <Route path="/groups/:id/view" render = {(props) => <RotaSolicitacao  {...props} 
                   solicitar={this.props.solicitar}  user={this.props.user}/>}
                   solicitar={this.props.solicitar}  user={this.props.user}/>/>

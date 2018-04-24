@@ -10,9 +10,9 @@ class GroupEnter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            grupo:  this.props.grupo,
+            grupo: this.props.grupo,
             solicitar: this.props.solicitar,
-            idUsuario:this.props.user
+            idUsuario: this.props.user
         }       
         //console.log(this.props.user);
     }
@@ -28,26 +28,42 @@ class GroupEnter extends Component {
 
     }
 
+    verificarSolicitante(id,solicitantesGrupo){
+
+        for(let i = 0; i < solicitantesGrupo.length; i++){
+            if(id === solicitantesGrupo[i].id){
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
     botaoSolicitar(){
 
-        let botoes = [];
+        if(this.verificarSolicitante(this.state.idUsuario,
+            this.state.grupo.solicitantesGrupo)){
+        
+            let botoes = [];
 
-        let botao = <Link to={{
-            pathname: '/groups'}}>
-             <Button
-                bsStyle="danger"
-                pullRight
-                fill
-                type="submit"
-                onClick={(evento) => {
-                    this.confirmar()
-                        }}>   
-                     Solicitar Inscrição
-            </Button></Link>
+            let botao = <Link to={{
+                pathname: '/groups'}}>
+                <Button
+                    bsStyle="danger"
+                    pullRight
+                    fill
+                    type="submit"
+                    onClick={(evento) => {
+                        this.confirmar()
+                            }}>   
+                        Solicitar Inscrição
+                </Button></Link>
 
-        botoes.push(botao);
+            botoes.push(botao);
 
-        return botoes;
+            return botoes;
+        }
 
     }
 
@@ -56,7 +72,7 @@ class GroupEnter extends Component {
         //console.log(this.props.user);
         //console.log(this.props.solicitar);
         //console.log(this.state.grupo);
-        if(this.state.grupo != "")
+        if(this.state.grupo !== "")
         return (
             <div className="content">
                 <Grid fluid>
