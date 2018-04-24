@@ -6,6 +6,7 @@ import google from '../../assets/img/sign-in-with-google.svg';
 import servicoLogin from "../../login/ServicoLogin";
 import ControlLabel from "react-bootstrap/es/ControlLabel";
 import HelpBlock from "react-bootstrap/es/HelpBlock";
+import Navbar from "react-bootstrap/es/Navbar";
 
 
 class Login extends Component {
@@ -56,78 +57,82 @@ class Login extends Component {
         }
 
         return (
-            <div className="content">
-                <Grid fluid>
-                    <Row>
-                        <Col md={6} className="logoLogin">
-                            <div>
-                                <a className="navbar-brand" href="">
-                                    <img src={logo} className="img-responsive" alt="logo_image"/>
-                                </a>
-                            </div>
-                        </Col>
-                        <Col md={6} className="formLogin">
-                            <div>
-                                <h4>Login do usuário</h4>
-                                <form onSubmit={(event) => {
-                                    event.preventDefault();
-                                    this.login()
-                                }}>
-                                    {erroLogin}
-                                    <FormGroup controlId="formHorizontalEmail" className="">
-                                        <ControlLabel>Prefixo do e-mail</ControlLabel>
-                                        <FormControl
-                                            type="text"
-                                            value={this.state.login.usuario}
-                                            placeholder="Ex: pmachado"
-                                            onChange={(e) => this.setValor("usuario", e.target.value)}
-                                            required
-                                        />
-                                    </FormGroup>
-                                    <FormGroup controlId="formHorizontalPassword">
-                                        <ControlLabel>Senha</ControlLabel>
-                                        <FormControl
-                                            type="password"
-                                            value={this.state.login.senha}
-                                            placeholder="Senha"
-                                            onChange={(e) => this.setValor("senha", e.target.value)}
-                                            required
-                                        />
-                                    </FormGroup>
-                                    <div>
-                                        <a href="">
-                                            Esqueceu sua senha?
-                                        </a>
-                                        <br/><br/>
-                                    </div>
-                                    <Button
-                                        style={{width: "100%"}}
-                                        className="btSaveif"
-                                        block
-                                        fill
-                                        type="submit"
-                                    >
-                                        Entrar
-                                    </Button>
-                                    <br/>
-                                    <Button
-                                        className="btLoginGoogle"
-                                        block
-                                    >
-                                        <img src={google} className="google"/>Login com Google
-                                    </Button>
-                                    <div>
+            <div className="wrapper">
+                <Navbar className="navbarLogin">
+                </Navbar>
+                <div className="content">
+                    <Grid fluid>
+                        <Row>
+                            <Col md={6} className="logoLogin">
+                                <div>
+                                    <a className="navbar-brand" href="">
+                                        <img src={logo} className="img-responsive" alt="logo_image"/>
+                                    </a>
+                                </div>
+                            </Col>
+                            <Col md={6} className="formLogin">
+                                <div>
+                                    <h4>Login do usuário</h4>
+                                    <form onSubmit={(event) => {
+                                        event.preventDefault();
+                                        this.login()
+                                    }}>
+                                        {erroLogin}
+                                        <FormGroup controlId="formHorizontalEmail" className="">
+                                            <ControlLabel>Prefixo do e-mail</ControlLabel>
+                                            <FormControl
+                                                type="text"
+                                                value={this.state.login.usuario}
+                                                placeholder="Ex: pmachado"
+                                                onChange={(e) => this.setValor("usuario", e.target.value)}
+                                                required
+                                            />
+                                        </FormGroup>
+                                        <FormGroup controlId="formHorizontalPassword">
+                                            <ControlLabel>Senha</ControlLabel>
+                                            <FormControl
+                                                type="password"
+                                                value={this.state.login.senha}
+                                                placeholder="Senha"
+                                                onChange={(e) => this.setValor("senha", e.target.value)}
+                                                required
+                                            />
+                                        </FormGroup>
+                                        <div>
+                                            <a href="">
+                                                Esqueceu sua senha?
+                                            </a>
+                                            <br/><br/>
+                                        </div>
+                                        <Button
+                                            style={{width: "100%"}}
+                                            className="btSaveif"
+                                            block
+                                            fill
+                                            type="submit"
+                                        >
+                                            Entrar
+                                        </Button>
                                         <br/>
-                                        <p>
-                                            Não tem conta? <a href="">Cadastre-se.</a>
-                                        </p>
-                                        <br/><br/>
-                                    </div>
-                                </form>
-                            </div>
-                        </Col>
-                    </Row>
-                </Grid>
+                                        <Button
+                                            className="btLoginGoogle"
+                                            block
+                                        >
+                                            <img src={google} className="google"/>Login com Google
+                                        </Button>
+                                        <div>
+                                            <br/>
+                                            <p>
+                                                Não tem conta? <a href="">Cadastre-se.</a>
+                                            </p>
+                                            <br/><br/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Grid>
+                </div>
             </div>
         );
     }

@@ -28,7 +28,7 @@ class Groups extends Component {
 
     listar() {
         this.paginaAtual=0;
-        this.GroupService.listarPaginado(0,
+        this.GroupService.listar(0,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);

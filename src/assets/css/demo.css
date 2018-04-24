@@ -657,19 +657,46 @@ a, p {
     padding: 15px 20px;
 }
 
-.logout a {
-    font-size: 14pt;
-    color: #ED3846;
-}
-
-.logout a:hover {
-    color: #C0313C;
-}
-
-.logout {
-    margin: 16px 0;
+.navbar-default .navbar-nav > li > a:not(.btn):hover{
+    color: #777777;
 }
 
 #sufixoRestinga {
     margin-top: 25px;
+}
+
+.input-group-addon {
+    background-color: #F2F2F2;
+}
+
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    height: 50px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 50px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.closebtn {
+    padding-left: 10px;
+    color: #888;
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: #000;
 }

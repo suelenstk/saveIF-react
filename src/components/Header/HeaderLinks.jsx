@@ -13,8 +13,10 @@ class HeaderLinks extends Component {
                         <p className="hidden-lg hidden-md">Search</p>
                     </NavItem>
                 </Nav>
-                <Nav pullRight className="logout">
-                    <a href="/">Log out</a>
+                <Nav pullRight >
+                    <NavItem eventKey={3} href="/" className="logout">
+                        <p>Log out</p>
+                    </NavItem>
                 </Nav>
             </div>
         );

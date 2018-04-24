@@ -229,7 +229,6 @@ int GetResult(sass_context_wrapper* ctx_w, Sass_Context* ctx, bool is_sync = fal
 
 void MakeCallback(uv_work_t* req) {
   Nan::HandleScope scope;
-  Nan::AsyncResource async("sass:MakeCallback");
 
   Nan::TryCatch try_catch;
   sass_context_wrapper* ctx_w = static_cast<sass_context_wrapper*>(req->data);
@@ -246,7 +245,7 @@ void MakeCallback(uv_work_t* req) {
 
   if (status == 0 && ctx_w->success_callback) {
     // if no error, do callback(null, result)
-    ctx_w->success_callback->Call(0, 0, &async);
+    ctx_w->success_callback->Call(0, 0);
   }
   else if (ctx_w->error_callback) {
     // if error, do callback(error)
@@ -254,7 +253,7 @@ void MakeCallback(uv_work_t* req) {
     v8::Local<v8::Value> argv[] = {
       Nan::New<v8::String>(err).ToLocalChecked()
     };
-    ctx_w->error_callback->Call(1, argv, &async);
+    ctx_w->error_callback->Call(1, argv);
   }
   if (try_catch.HasCaught()) {
     Nan::FatalException(try_catch);
