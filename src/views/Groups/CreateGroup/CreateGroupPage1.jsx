@@ -109,8 +109,7 @@ class CreateGroupPage1 extends Component {
                                                 }             
                                             ]}
                                             
-                                            value={this.state.group.nome}
-                                            onChange={(evento)=>this.setNome(evento.target.value)}                            
+                                                             
                                         />
                                         
                                         <Row>

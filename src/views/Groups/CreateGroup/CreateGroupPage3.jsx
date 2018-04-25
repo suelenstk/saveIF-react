@@ -58,9 +58,13 @@ class CreateGroupPage3 extends Component {
                                         <FormGroup controlId="formControlsConvidados" className="col-md-12">
                                         <ControlLabel>Convites enviados para:</ControlLabel><br/>
                                         
-                                        <div className="participante">
-                                        <img id="avatar" src={avatar}/>
-                                        <p id="name">Mike Andrew<a href=""><img src={cancelar} width="30px" height="30px"/></a></p>
+                                        <div className="chip" style={{width: '200px'}}
+                                        
+                                        >
+                                        <img src={avatar} alt="Person" width="96" height="96"/>
+                                            
+                                            John Doe
+             
                                         </div>
                                         
                                         </FormGroup> 
