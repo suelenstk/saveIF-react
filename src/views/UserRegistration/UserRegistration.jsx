@@ -6,6 +6,8 @@ import Button from '../../elements/CustomButton/CustomButton.jsx';
 import UserService from '../../services/UserService';
 import Navbar from "react-bootstrap/es/Navbar";
 import logo from '../../assets/img/reactlogo.png';
+import HelpBlock from "react-bootstrap/es/HelpBlock";
+import courseService from "../../services/CourseService";
 
 
 class UserRegistration extends React.Component {
@@ -14,19 +16,34 @@ class UserRegistration extends React.Component {
         this.state = {
             avisoUsuario: "",
             confirmaSenha: "",
+            listaCurso: "",
             usuario: {
                 email: "",
                 nome: "",
                 novaSenha: "",
                 tipoVinculo: "",
-                //curso: "",
+                curso: null,
                 sobreUsuario: ""
             }
         };
+
         this.UserService = new UserService();
 
+        this.setState({
+            listaCurso: (
+                courseService.listarNaoPaginado(
+                    (sucesso) => {
+                        this.setState({listaCurso: sucesso});
+                        console.log("Sucesso");
+                        console.log(this.state.listaCurso);
+                    },
+                    (erro) => {
+                        console.log(erro);
+                    }
+                )
+            )
+        });
     }
-
 
     setValor(atributo, valor) {
         this.setState(
@@ -43,9 +60,11 @@ class UserRegistration extends React.Component {
             (erro) => {
                 console.log("Erro!");
                 console.log(erro);
+                this.setState({
+                    avisoUsuario: "Erro inesperado no cadastro:\n" + erro.message + "\nInforme ao administrador do sistema."
+                });
             }
         )
-
     }
 
     confirmar() {
@@ -53,49 +72,69 @@ class UserRegistration extends React.Component {
         let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
 
         if (this.state.usuario.email && this.state.usuario.nome && this.state.usuario.novaSenha && this.state.confirmaSenha && this.state.usuario.tipoVinculo) {
-            if (regexEmail.test(this.state.usuario.email)) {
-                if (regexNome.test(this.state.usuario.nome)) {
-                    if (this.state.usuario.novaSenha === this.state.confirmaSenha) {
-                        this.inserirUsuario();
+            if (this.state.usuario.tipoVinculo !== "aluno" || (this.state.usuario.tipoVinculo === "aluno" && this.state.usuario.curso !== "")) {
+                if (regexEmail.test(this.state.usuario.email)) {
+                    if (regexNome.test(this.state.usuario.nome)) {
+                        if (this.state.usuario.novaSenha === this.state.confirmaSenha) {
+                            // TODO set null quando for != aluno
+                            // if (this.state.usuario.tipoVinculo !== "aluno" && this.state.usuario.curso !== "") {
+                            //     this.setState({curso: ""});
+                            // }
+                            this.inserirUsuario();
+                        } else {
+                            alert("As senhas digitadas não coincidem!");
+                            this.setState({confirmaSenha: ""});
+                        }
                     } else {
-                        alert("As senhas digitadas não coincidem!");
-                        this.setState({confirmaSenha: ""});
+                        alert("Nome inválido! Não são aceitos números ou caracteres especiais.");
                     }
                 } else {
-                    alert("Nome inválido! Não são aceitos números ou caracteres especiais.");
+                    alert("Prefixo de Email inválido!");
                 }
             } else {
-                alert("Prefixo de Email inválido!");
+                alert("Preencha o campo 'CURSO'!");
             }
         } else {
             alert("Preencha todos os campos obrigatórios!");
         }
     }
 
+
     render() {
-        let curso = null;
+        let campoCurso = null;
+        let erroCadastro = "";
 
         if (this.state.usuario.tipoVinculo === "aluno") {
-            curso =
+            campoCurso =
                 <Row>
                     <FormGroup controlId="formControlSelectCurso" className="col-md-12">
                         <ControlLabel>Curso</ControlLabel>
                         <FormControl
                             componentClass="select"
                             placeholder="curso"
-                            value=""
-                            onChange=""
+                            value={this.state.usuario.curso}
+                            onChange={(e) => this.setValor("curso", e.target.value)}
+                            required
                         >
                             <option value="">-- Selecione --</option>
-                            {/*{this.props.listaDeCursos.content.map((curso) => {*/}
-                            {/*return <option value={curso.id}>{curso.nome}</option>*/}
-                            {/*})}*/}
-
+                            {this.state.listaCurso.map((curso) => {
+                                return <option
+                                    value={curso.id}
+                                    key={curso.id}
+                                >{curso.nome}</option>
+                            })}
                         </FormControl>
                     </FormGroup>
                 </Row>
         } else {
-            curso = "";
+            campoCurso = "";
+        }
+
+        if (this.state.avisoUsuario !== "") {
+            erroCadastro =
+                <div>
+                    <HelpBlock>{this.state.avisoUsuario}</HelpBlock>
+                </div>
         }
 
         return (
@@ -116,6 +155,7 @@ class UserRegistration extends React.Component {
                                             event.preventDefault();
                                             this.confirmar()
                                         }}>
+                                            {erroCadastro}
                                             <Row>
                                                 <FormGroup controlId="formHorizontalPrefixoEmail" className="col-md-6">
                                                     <ControlLabel>Prefixo do e-mail</ControlLabel>
@@ -183,11 +223,11 @@ class UserRegistration extends React.Component {
                                                     </FormControl>
                                                 </FormGroup>
                                             </Row>
-                                            {curso}
+                                            {campoCurso}
                                             <Row>
                                                 <Col md={12}>
                                                     <FormGroup controlId="formControlsTextarea">
-                                                        <ControlLabel>Sobre mim</ControlLabel>
+                                                        <ControlLabel>Sobre mim (opcional)</ControlLabel>
                                                         <FormControl
                                                             rows="5" componentClass="textarea"
                                                             bsClass="form-control"

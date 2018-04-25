@@ -21,8 +21,9 @@ class App extends Component {
     }
 
     render() {
-        // variavel para simular se o usuario esta ou nao logado para alterar a construcao da tela
+
         let logado = this.state.logado;
+
 
         if (!logado) {
             // variavel para simular se a tela eh de login ou cadastro

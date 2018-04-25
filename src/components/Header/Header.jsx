@@ -23,7 +23,7 @@ class Header extends Component {
         }
         e.preventDefault();
         document.documentElement.classList.toggle('nav-open');
-        var node = document.createElement('div');
+        let node = document.createElement('div');
         node.id = 'bodyClick';
         node.onclick = function () {
             this.parentElement.removeChild(this);
@@ -33,7 +33,7 @@ class Header extends Component {
     }
 
     getBrand() {
-        var name;
+        let name;
         appRoutes.map((prop, key) => {
             if (prop.collapse) {
                 prop.views.map((prop, key) => {
