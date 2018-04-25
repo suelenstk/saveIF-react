@@ -700,3 +700,21 @@ a, p {
 .closebtn:hover {
     color: #000;
 }
+
+.circle {
+background:#E8E8E8;
+color:#777;
+width:60px;
+height:60px;
+line-height:60px;
+vertical-align:middle;
+text-align:center;
+font-size:30px;
+float: left;
+
+border-radius:50%;
+-moz-border-radius:50%;
+-webkit-border-radius:50%;
+}
+
+

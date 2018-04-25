@@ -5,9 +5,9 @@ import Home from '../views/Home/Home';
 import UserRegistration from "../views/UserRegistration/UserRegistration";
 import PostsView from '../views/Posts/PostsView';
 import NewPost from '../views/NewPost/NewPost';
-import CreateGroupPage1 from '../views/CreateGroup/CreateGroupPage1';
-import CreateGroupPage2 from '../views/CreateGroup/CreateGroupPage2';
-import CreateGroupPage3 from '../views/CreateGroup/CreateGroupPage3';
+import CreateGroupPage1 from '../views/Groups/CreateGroup/CreateGroupPage1';
+import CreateGroupPage2 from '../views/Groups/CreateGroup/CreateGroupPage2';
+import CreateGroupPage3 from '../views/Groups/CreateGroup/CreateGroupPage3';
 
 //Arquivo para rotas da barra lateral
  
