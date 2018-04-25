@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 
-
 import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
-
 import appRoutes from '../../routes/app.jsx';
-import Navbar from "react-bootstrap/es/Navbar";
 import UserRegistration from "../../views/UserRegistration/UserRegistration";
-import logo from '../../assets/img/reactlogo.png';
 import Login from "../../views/Login/Login";
 import ServicoLogin from "../../login/ServicoLogin";
 import servicoLogin from "../../login/ServicoLogin";
@@ -17,13 +13,12 @@ import servicoLogin from "../../login/ServicoLogin";
 
 class App extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             logado: ServicoLogin.logado()
         };
-    } 
-
+    }
 
     render() {
         // variavel para simular se o usuario esta ou nao logado para alterar a construcao da tela
@@ -35,24 +30,12 @@ class App extends Component {
             if (cadastro) {
                 // tela de cadastro de usuario
                 return (
-                    <div className="wrapper">
-                        {/* TODO fixar navbar no topo*/}
-                        <Navbar className="navbarLogin">
-                            <Navbar.Brand className="logoInicial">
-                                <img src={logo} className="imgNavbar" alt="logo_image"/>
-                            </Navbar.Brand>
-                        </Navbar>
-                        <UserRegistration/>
-                    </div>
+                    <UserRegistration/>
                 );
             } else {
                 // tela de login
                 return (
-                    <div className="wrapper">
-                        <Navbar className="navbarLogin">
-                        </Navbar>
-                        <Login onLogin={()=>this.setState({logado:true})} />
-                    </div>
+                    <Login onLogin={() => this.setState({logado: true})}/>
                 );
             }
         } else {
@@ -77,13 +60,14 @@ class App extends Component {
                                                     />}
                                             />
                                         );
-                                        //passar id do usuário
-                                        if (prop.name === "Grupos")
+                                    //passar id do usuário
+                                    if (prop.name === "Grupos")
                                         return (
                                             <Route
                                                 path={prop.path}
                                                 key={key}
-                                                render = {(props) => <prop.component  {...props} user={servicoLogin.getUsuario()}/>}
+                                                render={(props) => <prop.component  {...props}
+                                                                                    user={servicoLogin.getUsuario()}/>}
                                                 user={servicoLogin.getUsuario()}
                                             />
                                         );

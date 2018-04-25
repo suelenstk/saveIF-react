@@ -7,28 +7,69 @@ import UserService from '../../services/UserService';
 import Navbar from "react-bootstrap/es/Navbar";
 import logo from '../../assets/img/reactlogo.png';
 
-class UserRegistration extends Component {
+
+class UserRegistration extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listaDeCursos: {},
-            avisoLogin: "",
+            avisoUsuario: "",
+            confirmaSenha: "",
             usuario: {
-                prefixoEmail: "",
+                email: "",
                 nome: "",
-                senha: "",
-                confSenha: "",
-                vinculo: "",
-                curso: "",
-                sobreMim: ""
+                novaSenha: "",
+                tipoVinculo: "",
+                //curso: "",
+                sobreUsuario: ""
             }
         };
+        this.UserService = new UserService();
+
     }
+
 
     setValor(atributo, valor) {
         this.setState(
             (estado) => estado.usuario[atributo] = valor
         );
+    }
+
+    inserirUsuario() {
+        let usuario = this.state.usuario;
+        this.UserService.inserirSemAutorizacao(usuario,
+            (sucesso) => {
+                alert("Usuário cadastrado com sucesso!");
+            },
+            (erro) => {
+                console.log("Erro!");
+                console.log(erro);
+            }
+        )
+
+    }
+
+    confirmar() {
+        let regexEmail = /^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*/;
+        let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
+
+        if (this.state.usuario.email && this.state.usuario.nome && this.state.usuario.novaSenha && this.state.confirmaSenha && this.state.usuario.tipoVinculo) {
+            if (regexEmail.test(this.state.usuario.email)) {
+                if (regexNome.test(this.state.usuario.nome)) {
+                    if (this.state.usuario.novaSenha === this.state.confirmaSenha) {
+                        this.inserirUsuario();
+                    } else {
+                        alert("As senhas digitadas não coincidem!");
+                        this.setState({confirmaSenha: ""});
+                    }
+                } else {
+                    alert("Nome inválido! Não são aceitos números ou caracteres especiais.");
+                }
+            } else {
+                alert("Prefixo de Email inválido!");
+            }
+        } else {
+            alert("Preencha todos os campos obrigatórios!");
+        }
     }
 
     render() {
@@ -49,6 +90,7 @@ class UserRegistration extends Component {
                             {/*{this.props.listaDeCursos.content.map((curso) => {*/}
                             {/*return <option value={curso.id}>{curso.nome}</option>*/}
                             {/*})}*/}
+
                         </FormControl>
                     </FormGroup>
                 </Row>
@@ -121,7 +163,7 @@ class UserRegistration extends Component {
                                                         value={this.state.confirmaSenha}
                                                         placeholder="Confirmação de senha"
                                                         onChange={(e) => this.setState({confirmaSenha: e.target.value})}
-                                                        required
+
                                                     />
                                                 </FormGroup>
                                             </Row>
@@ -145,7 +187,7 @@ class UserRegistration extends Component {
                                             <Row>
                                                 <Col md={12}>
                                                     <FormGroup controlId="formControlsTextarea">
-                                                        <ControlLabel>Sobre mim (opcional)</ControlLabel>
+                                                        <ControlLabel>Sobre mim</ControlLabel>
                                                         <FormControl
                                                             rows="5" componentClass="textarea"
                                                             bsClass="form-control"
@@ -177,5 +219,3 @@ class UserRegistration extends Component {
 }
 
 export default UserRegistration;
-
-
