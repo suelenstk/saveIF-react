@@ -4,16 +4,25 @@ import {
     FormGroup, ControlLabel, FormControl
 } from 'react-bootstrap';
 
-import {Card} from '../../components/Card/Card.jsx';
-import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
-import {UserCard} from '../../components/UserCard/UserCard.jsx';
-import Button from '../../elements/CustomButton/CustomButton.jsx';
+import {Card} from '../../../components/Card/Card.jsx';
+import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
+import {UserCard} from '../../../components/UserCard/UserCard.jsx';
+import Button from '../../../elements/CustomButton/CustomButton.jsx';
 
-import cancelar from "../../assets/img/ic_highlight_off_black_48px.svg";
-import avatar from "../../assets/img/faces/face-3.jpg";
+import cancelar from "../../../assets/img/ic_highlight_off_black_48px.svg";
+import avatar from "../../../assets/img/faces/face-3.jpg";
 
 
-class CreateGroupPage2 extends Component {
+class CreateGroupPage2 extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {chip: true};
+        console.log(this.state.chip);
+    }
+    
+    fechaChip = () => this.setState({chip: false});
+
     render() {
         return (
             <div className="content">
@@ -58,9 +67,28 @@ class CreateGroupPage2 extends Component {
                                         <FormGroup controlId="formControlsConvidados" className="col-md-12">
                                         <ControlLabel>Convidados</ControlLabel><br/>
                                         
-                                        <div className="participante">
-                                        <img id="avatar" src={avatar}/>
-                                        <p id="name">Mike Andrew<a href=""><img src={cancelar} width="30px" height="30px"/></a></p>
+                                        <div className="chip" style={{width: '200px'}}
+                                        chip={this.state.chip}
+                                        docked={false}
+                                        onRequestChange={(chip) => this.setState({chip})}
+                                        >
+                                        <img src={avatar} alt="Person" width="96" height="96"/>
+                                            
+                                            John Doe
+             
+                                        <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
+                                        </div>
+                                        
+                                        <div className="chip" style={{width: '200px'}}
+                                        chip={this.state.chip}
+                                        docked={false}
+                                        onRequestChange={(chip) => this.setState({chip})}
+                                        >
+                                        <img src={avatar} alt="Person" width="96" height="96"/>
+                                            
+                                            John Doe
+             
+                                        <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
                                         </div>
                                         
                                         </FormGroup> 
@@ -77,15 +105,14 @@ class CreateGroupPage2 extends Component {
                                         
                                         <Button
                                             bsStyle="danger"
-                                            pullRight
+                                            pu czllRight
                                        
                                             type="submit"
                                             href="/CreateGroupPage2"
                                         >
                                             Voltar
                                         </Button>
-                                    
-                                        
+                                                                            
                                         <div className="clearfix"></div>
                                 </form>
                                 }
@@ -96,7 +123,7 @@ class CreateGroupPage2 extends Component {
                             <Card
                                 content={
                                
-                                <FormGroup controlId="formControlsConvidados" className="col-md-12">
+                                        <div>
                                         <ControlLabel>Participantes</ControlLabel><br/>
                                         <FormInputs
                                             ncols = {["col-md-12"]}
@@ -109,41 +136,57 @@ class CreateGroupPage2 extends Component {
                                             ]}
                                             
                                         />
-                                        <div className="participante">
-                                        <img id="avatar" src={avatar}/>
-                                        <p id="name">Mike Andrew<a href=""><img src={cancelar} width="30px" height="30px"/></a></p>
+
+                                        <div className="chip" style={{width: '200px'}}
+                                        chip={this.state.chip}
+                                        docked={false}
+                                        onRequestChange={(chip) => this.setState({chip})}
+                                        >
+                                        <img src={avatar} alt="Person" width="96" height="96"/>
+                                            
+                                            John Doe
+             
+                                        <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
                                         </div>
-                                        <div className="participante">
-                                        <img id="avatar" src={avatar}/>
-                                        <p id="name">Mike Andrew<a href=""><img src={cancelar} width="30px" height="30px"/></a></p>
+                                        <br/><br/>
+                                        <div className="chip" style={{width: '200px'}}
+                                        chip={this.state.chip}
+                                        docked={false}
+                                        onRequestChange={(chip) => this.setState({chip})}
+                                        >
+                                        <img src={avatar} alt="Person" width="96" height="96"/>
+                                            
+                                            John Doe
+             
+                                        <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
                                         </div>
                                         
-                                        </FormGroup> 
+                                        </div> 
                            
                                 
                                 }
                             />
                             
-                <a href="" style={{color: 'red'}}> Pular esta etapa </a>
+                <a href="" style={{color: 'red'}}> Pular esta etapa &gt;&gt;</a>
                             
                         </Col>
                     </Row>
-                    <div style={{ display: 'table' }}>
-                        <div style={{ display: 'table', float: 'left' }}>
-                            <div className="circle" style={{ marginRight: '300px', marginLeft: '50px' }}>1</div>
-                            <h4 style={{ padding: '0px 10px 0px 0px' }}>Crie o Grupo</h4>
-                        </div>
-
-                        <div style={{ display: 'table', float: 'left' }}>
-                            <div className="circle" style={{ backgroundColor: 'red', color: 'white', marginRight: '300px', marginLeft: '80px' }}>2</div>
-                            <h4 style={{ padding: '0px 10px 0px 10px' }}>Convide Participantes</h4>
-                        </div>
-
-                        <div style={{ display: 'table', float: 'left' }}>
-                            <div className="circle" style={{ marginRight: '300px', marginLeft: '30px' }}>3</div>
-                            <h4 style={{ padding: '0px 10px 0px 10px' }}>Pronto</h4>
-                        </div>
-                    </div>
+                    <div style={{display: 'table'}}>
+                            <div style={{display: 'table', float: 'left'}}>
+                            <div className="circle">1</div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Crie o Grupo</h4>
+                            </div>
+                            
+                            <div style={{display: 'table', float: 'left'}}>
+                            <div className="circle" style={{backgroundColor: 'red', color: 'white'}}>2</div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Convide Participantes</h4>
+                            </div>
+                            
+                            <div style={{display: 'table', float: 'left'}}>
+                            <div className="circle">3</div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Pronto</h4>
+                            </div>
+                            </div>
                 </Grid>
             </div>
         );
