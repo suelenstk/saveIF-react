@@ -5,7 +5,7 @@ import Home from '../views/Home/Home';
 import UserRegistration from "../views/UserRegistration/UserRegistration";
 import PostsView from '../views/Posts/PostsView';
 import NewPost from '../views/NewPost/NewPost';
-import CreateGroupPage1 from '../views/Groups/CreateGroup/CreateGroupPage1';
+import CreateGroup from '../views/Groups/CreateGroup/CreateGroup';
 import CreateGroupPage2 from '../views/Groups/CreateGroup/CreateGroupPage2';
 import CreateGroupPage3 from '../views/Groups/CreateGroup/CreateGroupPage3';
 
@@ -18,7 +18,7 @@ const appRoutes = [
     { path: "/groups", name: "Grupos", icon: "pe-7s-share", component: Groups },
     { path: "/MyGroups", name: "MyGroups", icon: "pe-7s-share", component: MyGroups },
     { path: "/NewPost", name: "Novo Post", icon: "pe-7s-file", component: NewPost },
-    { path: "/CreateGroupPage1", name: "CreateGroupPage1", icon: "pe-7s-file", component: CreateGroupPage1 },
+    { path: "/CreateGroup", name: "CreateGroup", icon: "pe-7s-file", component: CreateGroup },
     { path: "/CreateGroupPage2", name: "CreateGroupPage2", icon: "pe-7s-file", component: CreateGroupPage2 },
     { path: "/CreateGroupPage3", name: "CreateGroupPage3", icon: "pe-7s-file", component: CreateGroupPage3 },
     { path: "/Posts", name: "Posts", icon: "pe-7s-share", component: PostsView },

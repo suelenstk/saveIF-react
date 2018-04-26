@@ -26,6 +26,7 @@ export default class ServicoRest {
 
     inserir(item, sucesso, erro) {
         console.log(item);
+        console.log ("Aqui");
         fetch(this.url, {
             method: "POST",
             headers: new Headers({
