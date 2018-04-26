@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Image } from 'react-bootstrap';
 
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
+import grupoImage from '../../img/grupo.png';
 
 class GroupEnter extends Component {
 
@@ -75,19 +76,20 @@ class GroupEnter extends Component {
         if(this.state.grupo !== "")
         return (
             <div className="content">
-                <Grid fluid>
+                             
+                <Grid fluid>                    
                     <Row>
                         <Col md={12}>
+                            
                             <Card
                                 ctAllGroups
                             
                                 content={
                                     <Row>
+                                        <Image src={grupoImage} responsive width="1024" />
                                         <Col lg={12} md={12} sm={12} xs={12} >
-
-                                            <h5>{}</h5>
-
-                                            <h3>{this.state.grupo.nome}</h3>
+                                                                                                                                   
+                                            <h2>{this.state.grupo.nome}</h2>
                                             <br/>
                                             <h5>Descricao</h5>
 
@@ -103,7 +105,9 @@ class GroupEnter extends Component {
                                                                                                    
                                             <br/><br/>
                                             <hr/>
+                                            
                                         </Col>
+                                        
                                     </Row>
                                 }
                             />

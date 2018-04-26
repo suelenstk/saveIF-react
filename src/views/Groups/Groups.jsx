@@ -3,6 +3,7 @@ import {Grid} from 'react-bootstrap';
 import GroupService from './GroupService';
 import GroupRoute from './GroupRoute';
 
+
 class Groups extends Component {
 
     constructor(props){
@@ -28,7 +29,7 @@ class Groups extends Component {
 
     listar() {
         this.paginaAtual=0;
-        this.GroupService.listar(0,
+        this.GroupService.listarPaginado(0,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -50,7 +51,7 @@ class Groups extends Component {
        
                 <Grid fluid> 
 
-                    <h1 style={{fontSize: '30px'}}>Outros Grupos</h1>
+                    <h1 style={{fontSize: '30px'}}>Grupos</h1>
                     <GroupRoute pagina={this.state.pagina}
                                solicitar = {(id,grupo)=>{ 
                                 this.GroupService.editar(id, grupo, 

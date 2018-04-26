@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {Row, Col } from 'react-bootstrap';
+import {Row, Col, Image } from 'react-bootstrap';
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
+import grupoImage from '../../img/grupo.png';
 
 export default class GroupList extends Component {
     
@@ -47,9 +48,10 @@ export default class GroupList extends Component {
                     content={
                         <Row>
                                                                        
-                                
+                            <Image src={grupoImage} responsive width="1024" />
+                            
                             <Col lg={12} md={12} sm={12} xs={12}>
-                                        
+                                                                                                
                                 <h2>{grupo.nome}</h2>
 
                                 <p>{grupo.descricao}</p>

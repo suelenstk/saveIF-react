@@ -29,6 +29,7 @@ class MyGroups extends Component {
 
     listar() {
         this.paginaAtual=0;
+        console.log(this.props.user);
         this.GroupService.listarGrupoIntegrantes(this.props.user,0,
                 (resultado) => {
             console.log(resultado);
