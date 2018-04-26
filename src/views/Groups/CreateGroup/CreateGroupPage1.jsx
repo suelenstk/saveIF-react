@@ -10,16 +10,17 @@ import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx'
 import {UserCard} from '../../../components/UserCard/UserCard.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 
-
-class CreateGroupPage1 extends Component {
+class CreateGroupPage1 extends React.Component {
     
 
     constructor(props) {
 
     super(props);
     this.state={
-                group:this.props.group,
-            };  
+                group:this.props.group
+                
+            };
+   
     }
         
         componentWillReceiveProps(proximoEstado){
@@ -72,19 +73,12 @@ class CreateGroupPage1 extends Component {
         }
         
         createGroup(){
-             
-            if(this.state.group.nome){
-                    if(this.state.solicitacao.id){
-                       
-                        this.props.editar(this.state.group.id, this.state.group);
-                    }
-                    else {     
-                        this.props.inserir(this.state.group);                       
-                        }
-                    } else {
-                        alert("Preencha todos os campos!");
-                    }  
 
+           console.log ("Grupo: ");
+           console.log (this.state.group);
+                   
+                    this.props.inserir(this.state.group);
+        
     }
 
     render() {
@@ -97,35 +91,37 @@ class CreateGroupPage1 extends Component {
                                 title="Criar Grupo"                   
                                 content={ 
                                 <form>
-                                <FormInputs
-                                
-                                            ncols = {["col-md-12"]}
-                                            proprieties = {[
-                                                {
-                                                 label : "Nome do Grupo",
-                                                 type : "text",
-                                                 bsClass : "form-control",
-                                                 placeholder : "Nome",                                   
-                                                }             
-                                            ]}
-                                            
-                                                             
-                                        />
+                                    
+                                <FormGroup controlId="formControlsText">
+                                            <ControlLabel>Nome</ControlLabel>
+                                            <FormControl
+                                                type="text"                                               
+                                                placeholder="Nome do Grupo"
+                                                value={this.state.group.nome}
+                                                onChange={(e) => this.setNome(e.target.value)}
+                                            />
+                                        </FormGroup>
                                         
                                         <Row>
                                             <Col md={12}>
                                                 <FormGroup controlId="formControlsTextarea">
                                                 
                                                     <ControlLabel>Descrição</ControlLabel>
-                                                    <FormControl rows="5" componentClass="textarea" bsClass="form-control" placeholder="Descreva seu grupo"/>
+                                                    <FormControl rows="5" componentClass="textarea" bsClass="form-control" placeholder="Descreva seu grupo"
+                                                    value={this.state.group.descricao}
+                                                    onChange={(e) => this.setDescricao(e.target.value)}
+                                                    />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
                                         
                                         <FormGroup controlId="formControlsSelect" className="col-md-12">
                                             
-                                            <ControlLabel>Categorias</ControlLabel>
-                                            <FormControl componentClass="select" placeholder="categoria">
+                                            <ControlLabel>Categoria</ControlLabel>
+                                            <FormControl componentClass="select" placeholder="categoria"
+                                            value={this.state.group.categoria}
+                                            onChange={(e) => this.setCategoria(e.target.value)}
+                                            >
                                                 <option value="Desenvolvimento de Sistemas Web">Desenvolvimento de Sistemas Web</option>
                                                 <option value="Aplicações Android">Aplicações Android</option>
                                                 <option value="Java">Java</option>                         
@@ -135,6 +131,10 @@ class CreateGroupPage1 extends Component {
                                     <FormGroup>
                                     <ControlLabel>Privacidade</ControlLabel><br/>
                                     
+                                    <FormControl componentClass="radio"
+                                        value={this.state.group.privacidade}
+                                        onChange={(e) => this.setPrivacidade(e.target.value)}
+                                            >
                                         <Radio name="radioGroup" inline value="aberto">
                                             Aberto
                                         </Radio>
@@ -144,15 +144,17 @@ class CreateGroupPage1 extends Component {
                                         <Radio name="radioGroup" inline value="privado">
                                             Privado
                                         </Radio>
-                                     
+                                    </FormControl>
                                     </FormGroup>
                                     
                                         <Button
                                             bsStyle="danger"
                                             pullRight
                                             fill
-                                            type="submit"
-                                           
+                                        
+                                            onClick={(e) => {
+                                                this.createGroup()
+                                            }}
                                         >   
                                             Criar grupo
                                         </Button>

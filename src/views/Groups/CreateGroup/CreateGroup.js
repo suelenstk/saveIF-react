@@ -1,6 +1,6 @@
 import React from 'react';
-import GroupService from '../GroupService';
 import CreateGroupPage1 from './CreateGroupPage1';
+import GroupService from '../GroupService.jsx';
 
 
 export default class CreateGroup extends React.Component {
@@ -12,15 +12,9 @@ export default class CreateGroup extends React.Component {
 
             group:{}
         }
-        this.GroupService = new GroupService();
+        
+     this.groupService = new GroupService();
 
-    }
-
-    novoGrupo(){
-        this.setState({
-      
-            group:{}
-        });
     }
 
     render() {
@@ -28,7 +22,7 @@ export default class CreateGroup extends React.Component {
         return  <CreateGroupPage1
         
                     inserir ={(group)=>{ 
-                    this.GroupService.inserir(group, 
+                    this.groupService.inserir(group, 
                             (grupo)=>{
                                 
                                 alert("Grupo criado com sucesso!");
@@ -42,8 +36,6 @@ export default class CreateGroup extends React.Component {
                     }}
                           
                 group={this.state.group} />
-            
-        
 
     }
 }
