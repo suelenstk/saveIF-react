@@ -113,7 +113,7 @@ class UserRegistration extends React.Component {
                             componentClass="select"
                             placeholder="curso"
                             value={this.state.usuario.curso}
-                            onChange={(e) => this.setValor("curso", e.target.value)}
+                            onSubmit={(e) => this.setValor("curso", e.target.value)}
                             required
                         >
                             <option value="">-- Selecione --</option>
@@ -239,7 +239,7 @@ class UserRegistration extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Button
-                                                className="btSaveif"
+                                                className="btnSaveif"
                                                 fill
                                                 type="submit"
                                             >

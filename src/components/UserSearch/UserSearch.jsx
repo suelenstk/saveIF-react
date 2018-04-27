@@ -1,13 +1,14 @@
 import React from 'react';
 
-import {Col,FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
+import {Col, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 import InputGroup from "react-bootstrap/es/InputGroup";
 import {Card} from '../../components/Card/Card.jsx';
 import UserService from '../../services/UserService';
 import listUserService from "../../services/ListUserService";
-import { UserChip } from '../../elements/UserChip/UserChip';
+import {UserChip} from '../../elements/UserChip/UserChip';
 
 import avatar from "../../assets/img/default-avatar.png";
+import Button from "react-bootstrap/es/Button";
 
 
 class UserSearch extends React.Component {
@@ -43,34 +44,31 @@ class UserSearch extends React.Component {
     }
 
 
-
-
     render() {
         let campoUsuario = null;
 
         if (this.state.listaUsuario) {
             campoUsuario =
-            <div>
-                {this.state.listaUsuario.map((usuario) => {
-                    return <UserChip
-                        value={usuario.id}
-                        key={usuario.id}
-                        nome={usuario.nome}
-                        avatar={avatar}
-                        alt={usuario.nome}
-                    ></UserChip>
-                })}
-         
-            </div>
-        } 
+                <div>
+                    {this.state.listaUsuario.map((usuario) => {
+                        return <UserChip
+                            value={usuario.id}
+                            key={usuario.id}
+                            nome={usuario.nome}
+                            avatar={avatar}
+                            alt={usuario.nome}
+                        ></UserChip>
+                    })}
 
+                </div>
+        }
 
 
         return (
             <div className="content">
                 <Grid fluid>
                     <Row>
-                        <Col md={6} className="formLogin">
+                        <Col md={4} className="searchUsers">
                             <Card
                                 title="Pesquisar usuários"
                                 content={
@@ -78,7 +76,11 @@ class UserSearch extends React.Component {
                                         <form>
                                             <FormGroup>
                                                 <InputGroup>
-                                                    <InputGroup.Addon><i className="fa fa-search"/></InputGroup.Addon>
+                                                    <InputGroup.Button>
+                                                        <Button className="btnSearch">
+                                                            <i className="fa fa-search"/>
+                                                        </Button>
+                                                    </InputGroup.Button>
                                                     <FormControl
                                                         type="text"
                                                         placeholder="Pesquisar"
@@ -86,12 +88,9 @@ class UserSearch extends React.Component {
                                                 </InputGroup>
                                             </FormGroup>
                                         </form>
-                                        
                                         <FormGroup>
                                             <FormControl.Static>
-                                            
-                                            {campoUsuario}
-                                            
+                                                {campoUsuario}
                                             </FormControl.Static>
                                         </FormGroup>
                                     </div>
