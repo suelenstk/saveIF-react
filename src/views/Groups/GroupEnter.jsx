@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Image } from 'react-bootstrap';
-
+import ListParticipants from './ListParticipants.jsx';
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
 import grupoImage from '../../img/grupo.png';
+import GroupService from './GroupService';
 
 class GroupEnter extends Component {
 
@@ -13,10 +14,38 @@ class GroupEnter extends Component {
         this.state = {
             grupo: this.props.grupo,
             solicitar: this.props.solicitar,
-            idUsuario: this.props.user
+            idUsuario: this.props.user,
+            pagina: {}
         }       
         //console.log(this.props.user);
+        this.GroupService = new GroupService();
+        this.listarParticipantes();
+
     }
+
+    setarItem(paginaResultado) {
+        //console.log(paginaResultado);
+        this.setState({
+            pagina: paginaResultado
+        });
+    }
+
+
+    listarParticipantes() {
+        this.paginaAtual=0;
+        console.log(this.state.grupo.id);
+        this.GroupService.listarParticipantes(this.state.grupo.id,0,
+                (resultado) => {
+            console.log(resultado);
+            this.setarItem(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+    }   
+
     //simulação da solicitação
     confirmar() {
         //insere a id do usuário solicitante
@@ -72,7 +101,7 @@ class GroupEnter extends Component {
 
         //console.log(this.props.user);
         //console.log(this.props.solicitar);
-        //console.log(this.state.grupo);
+        //console.log(this.state.pagina);
         if(this.state.grupo !== "")
         return (
             <div className="content">
@@ -98,7 +127,9 @@ class GroupEnter extends Component {
                                             <h5>Categorias</h5>
                                             <p>{this.state.grupo.categoria.nome}</p>
                                             <br/>
+
                                             <h5>Participantes</h5>
+                                            <ListParticipants pagina={this.state.pagina}/>
                                                        
                                             <p>{this.state.grupo.integrantesGrupo}</p>           
                                             {this.botaoSolicitar()}

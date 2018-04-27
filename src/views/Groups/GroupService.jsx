@@ -30,4 +30,27 @@ export default class GroupService extends ServicoRest {
         }).then(trataFetch);
     }
 
+    listarParticipantes(id,pagina, sucesso, erro) {
+
+
+        let trataFetch = (resultado) => {
+
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`api/usuario/participantes/${id}?pagina=` + pagina, {
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+
+            }),
+            method: "GET"
+        }).then(trataFetch);
+    }
+
 }
