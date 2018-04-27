@@ -106,7 +106,7 @@ class Login extends Component {
                                         </div>
                                         <Button
                                             style={{width: "100%"}}
-                                            className="btSaveif"
+                                            className="btnSaveif"
                                             block
                                             fill
                                             type="submit"
@@ -115,7 +115,7 @@ class Login extends Component {
                                         </Button>
                                         <br/>
                                         <Button
-                                            className="btLoginGoogle"
+                                            className="btnLoginGoogle"
                                             block
                                         >
                                             <img src={google} className="google"/>Login com Google

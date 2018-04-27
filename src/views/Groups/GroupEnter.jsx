@@ -100,7 +100,7 @@ class GroupEnter extends Component {
                                             <br/>
                                             <h5>Participantes</h5>
                                                        
-                                        
+                                            <p>{this.state.grupo.integrantesGrupo}</p>           
                                             {this.botaoSolicitar()}
                                                                                                    
                                             <br/><br/>
