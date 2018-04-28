@@ -1,4 +1,4 @@
-import ServicoRest from "../../ServicoRest";
+import ServicoRest from "../../../ServicoRest";
 
 export default class PostService extends ServicoRest {
 

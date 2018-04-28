@@ -33,7 +33,7 @@ export default class MyGroupsRoute extends Component {
     <Switch>
      <Route exact path="/MyGroups" render = {(props) => <RotaLista  {...props} pagina={this.props.pagina} rota={this.props.rota} />}
                                                  pagina={this.props.pagina} rota={this.props.rota}/>
-     <Route path="/MyGroups/:id/view" render = {(props) => <RotaVisualizacao  {...props} 
+     <Route path="/MyGroups/:id" render = {(props) => <RotaVisualizacao  {...props} 
                   user={this.props.user}/>}
                   user={this.props.user}/>/>
     </Switch>

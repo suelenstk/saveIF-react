@@ -3,7 +3,7 @@ import Groups from '../views/Groups/Groups';
 import MyGroups from '../views/MyGroups/MyGroups';
 import Home from '../views/Home/Home';
 import UserRegistration from "../views/UserRegistration/UserRegistration";
-import PostsView from '../views/Posts/PostsView';
+import PostsView from '../views/Groups/Posts/PostsView';
 import NewPost from '../views/NewPost/NewPost';
 import CreateGroup from '../views/Groups/CreateGroup/CreateGroup';
 import CreateGroupPage2 from '../views/Groups/CreateGroup/CreateGroupPage2';
@@ -16,12 +16,12 @@ const appRoutes = [
     { path: "/user", name: "Meu perfil", icon: "pe-7s-user", component: UserProfile },
     { path: "/notifications", name: "Notificações", icon: "pe-7s-bell" },
     { path: "/groups", name: "Grupos", icon: "pe-7s-share", component: Groups },
-    { path: "/MyGroups", name: "MyGroups", icon: "pe-7s-share", component: MyGroups },
+    { path: "/groups/posts", name: "Postagens", icon: "pe-7s-share", component: PostsView },
+    { path: "/MyGroups", name: "Meus grupos", icon: "pe-7s-share", component: MyGroups },
     { path: "/NewPost", name: "Novo Post", icon: "pe-7s-file", component: NewPost },
     { path: "/CreateGroup", name: "CreateGroup", icon: "pe-7s-file", component: CreateGroup },
     { path: "/CreateGroupPage2", name: "CreateGroupPage2", icon: "pe-7s-file", component: CreateGroupPage2 },
-    { path: "/CreateGroupPage3", name: "CreateGroupPage3", icon: "pe-7s-file", component: CreateGroupPage3 },
-    { path: "/Posts", name: "Posts", icon: "pe-7s-share", component: PostsView }
+    { path: "/CreateGroupPage3", name: "CreateGroupPage3", icon: "pe-7s-file", component: CreateGroupPage3 }
 ];
 
 export default appRoutes;

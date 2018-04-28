@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from 'react-bootstrap';
 import PostService from './PostsService';
 import PostList from './PostList';
+import PostRoute from './PostRoute';
 
 class PostsView extends Component {
 
@@ -47,7 +48,7 @@ class PostsView extends Component {
 
                 <Grid fluid>
                     
-                    <PostList posts={this.state.pagina}/>
+                    <PostRoute pagina={this.state.pagina}/>
 
                 </Grid>
                 

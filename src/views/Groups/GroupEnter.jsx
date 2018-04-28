@@ -102,7 +102,7 @@ class GroupEnter extends Component {
         //console.log(this.props.user);
         //console.log(this.props.solicitar);
         //console.log(this.state.pagina);
-        if(this.state.grupo !== "")
+        if(typeof this.state.grupo.nome !== "undefined")
         return (
             <div className="content">
                              
@@ -147,6 +147,8 @@ class GroupEnter extends Component {
                 </Grid>
             </div>
         );
+        else
+            return <div></div>
     }
 }
 

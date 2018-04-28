@@ -3,7 +3,6 @@ import Groups from '../views/Groups/Groups';
 import MyGroups from '../views/MyGroups/MyGroups';
 import Home from '../views/Home/Home';
 import UserRegistration from "../views/UserRegistration/UserRegistration";
-import PostsView from '../views/Posts/PostsView';
 import NewPost from '../views/NewPost/NewPost';
 import CreateGroup from '../views/Groups/CreateGroup/CreateGroup';
 import CreateGroupPage2 from '../views/Groups/CreateGroup/CreateGroupPage2';
@@ -21,7 +20,6 @@ const appRoutes = [
     { path: "/CreateGroup", name: "CreateGroup", icon: "pe-7s-file", component: CreateGroup },
     { path: "/CreateGroupPage2", name: "CreateGroupPage2", icon: "pe-7s-file", component: CreateGroupPage2 },
     { path: "/CreateGroupPage3", name: "CreateGroupPage3", icon: "pe-7s-file", component: CreateGroupPage3 },
-    { path: "/Posts", name: "Posts", icon: "pe-7s-share", component: PostsView },
     { redirect: true, path:"/", to:"/home", name: "Home" }
 ];
 

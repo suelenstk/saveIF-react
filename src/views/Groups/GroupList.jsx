@@ -15,7 +15,7 @@ export default class GroupList extends Component {
         let rota = (this.props.rota === "MyGroups")? "MyGroups":"groups";
 
         let botao = 
-        <Link to={{ pathname: `/${rota}/${grupo.id}/view`, query: { grupo: grupo } }}>      
+        <Link to={{ pathname: `/${rota}/${grupo.id}`, query: { grupo: grupo } }}>      
                 <Button
                         bsStyle="danger"
                         pullRight

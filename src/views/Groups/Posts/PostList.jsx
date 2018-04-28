@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import Card from '../../components/Card/Card';
+import Card from '../../../components/Card/Card';
+import {Link} from 'react-router-dom';
 
 export default class PostList extends React.Component{
 
@@ -26,8 +27,15 @@ export default class PostList extends React.Component{
                             <Row>
                         
                                 <Col lg={12} md={12} sm={12} xs={12}>
+
                                     <h5><span className="glyphicon glyphicon-time"></span> Post by {post.autorPost.nome}, {post.dataPostagem}.</h5>
-                                    <p>{post.texto}</p>
+
+                                    <Link to={{ pathname: `/groups/posts/${post.id}`, query: { post: post } }}>
+                                        
+                                        Ver mais
+
+                                    </Link>
+
                                 </Col>
                         
                             </Row>
