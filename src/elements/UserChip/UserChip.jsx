@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 export class UserChip extends Component {
     render() {
         return (
-            <div className="chip"
+            <div className="chip" style={{width: this.props.largura}}
                 // chip={this.state.chip}
                 // docked={false}
                 // onRequestChange={(chip) => this.setState({chip})}
@@ -14,9 +14,9 @@ export class UserChip extends Component {
                 {this.props.nome}
 
                 <span
-                    className="addUserbtn"
+                    className= {this.props.nomeBtn}
                     // onClick={this.fechaChip}
-                ><i className="pe-7s-add-user"/></span>
+                ><i className={this.props.icone}/></span>
             </div>
 
         );

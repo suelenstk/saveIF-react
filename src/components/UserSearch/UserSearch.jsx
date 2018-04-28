@@ -57,6 +57,9 @@ class UserSearch extends React.Component {
                             nome={usuario.nome}
                             avatar={avatar}
                             alt={usuario.nome}
+                            nomeBtn="addUserbtn"
+                            icone="pe-7s-add-user"
+                            largura="100%"
                         ></UserChip>
                     })}
 
