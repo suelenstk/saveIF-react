@@ -9,7 +9,7 @@ import UserRegistration from "../../views/UserRegistration/UserRegistration";
 import Login from "../../views/Login/Login";
 import ServicoLogin from "../../login/ServicoLogin";
 import servicoLogin from "../../login/ServicoLogin";
-
+import noAutenticationRoutes from '../../routes/noAutentication';
 
 class App extends Component {
 
@@ -23,22 +23,41 @@ class App extends Component {
     render() {
 
         let logado = this.state.logado;
+        const id = servicoLogin.logado().id;
+        const usuario = servicoLogin.logado();
 
 
         if (!logado) {
-            // variavel para simular se a tela eh de login ou cadastro
-            let cadastro = false;
-            if (cadastro) {
-                // tela de cadastro de usuario
-                return (
-                    <UserRegistration/>
-                );
-            } else {
-                // tela de login
-                return (
-                    <Login onLogin={() => this.setState({logado: true})}/>
-                );
-            }
+            return (
+                <div className="wrapper">
+               
+                <div className="content">
+                    <Switch> {
+                        noAutenticationRoutes.map((prop, key) => {
+                    
+                            if (prop.name === "Cadastro"){
+                                return (
+                                    <Route
+                                    path="/cadastro"
+                                    key={key}
+                                    render={() => <UserRegistration cadastro={true} />}
+                                />
+                                
+                                );
+                            }
+      
+                            return (
+                                <Route path={prop.path} component={prop.component} key={key}
+                                render={() => <Login cadastro={false} onLogin={() => this.setState({logado: true})}/>}
+                                />
+                            );
+
+                        })
+                    }
+                    </Switch>
+                </div>
+            </div>
+)
         } else {
             console.log(servicoLogin.getUsuario());
             return (

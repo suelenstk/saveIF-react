@@ -8,6 +8,7 @@ import Navbar from "react-bootstrap/es/Navbar";
 import logo from '../../assets/img/reactlogo.png';
 import HelpBlock from "react-bootstrap/es/HelpBlock";
 import courseService from "../../services/CourseService";
+import {Redirect} from "react-router-dom";
 
 
 class UserRegistration extends React.Component {
@@ -15,8 +16,10 @@ class UserRegistration extends React.Component {
         super(props);
         this.state = {
             avisoUsuario: "",
+            sucesso:"",
             confirmaSenha: "",
             listaCurso: "",
+            cadastro: true,
             usuario: {
                 email: "",
                 nome: "",
@@ -28,6 +31,7 @@ class UserRegistration extends React.Component {
         };
 
         this.UserService = new UserService();
+
 
         this.setState({
             listaCurso: (
@@ -55,7 +59,10 @@ class UserRegistration extends React.Component {
         let usuario = this.state.usuario;
         this.UserService.inserirSemAutorizacao(usuario,
             (sucesso) => {
+                this.setState({cadastro: false })
                 alert("Usuário cadastrado com sucesso!");
+                this.setState({sucesso: <Redirect to="/" />})
+
             },
             (erro) => {
                 console.log("Erro!");
@@ -137,7 +144,14 @@ class UserRegistration extends React.Component {
                 </div>
         }
 
+        if (this.state.sucesso)
+            return this.state.sucesso;
+        else
+
+
         return (
+
+            
             <div className="wrapper">
                 <Navbar className="navbarLogin">
                     <Navbar.Brand className="logoInicial">
