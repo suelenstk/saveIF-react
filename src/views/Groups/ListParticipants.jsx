@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {Card} from '../../components/Card/Card.jsx';
-import {UserCard} from '../../components/UserCard/UserCard.jsx';
 import avatar from "../../assets/img/faces/face-3.jpg";
+import UserChip from "../../elements/UserChip/UserChip"
 
 class ListParticipants extends Component {
 
@@ -16,18 +15,18 @@ class ListParticipants extends Component {
         if (this.props.pagina.content) {
 
             return <div className="content"> 
-            {this.props.pagina.content.map((usuario) => {             
-               return <div className="chip" style={{width: '260px'}}
-               chip={this.state.chip}
-               docked={false}
-               onRequestChange={(chip) => this.setState({chip})}
-               >
-               <img src={avatar} alt="Person" width="96" height="96"/>
-                   
-                   {usuario.nome}
-
-               </div>
-            })}
+                {this.props.pagina.content.map((usuario) => {             
+                return <UserChip
+                value={usuario.id}
+                key={usuario.id}
+                nome={usuario.nome}
+                avatar={avatar}
+                alt={usuario.nome}
+                //nomeBtn="addUserbtn"
+                //icone="pe-7s-add-user"
+                largura="30%"
+            ></UserChip>
+                })}
             </div>
 
         }else{
