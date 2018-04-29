@@ -81,11 +81,11 @@ class Login extends Component {
                                         }}>
                                             {erroLogin}
                                             <FormGroup controlId="formHorizontalEmail" className="">
-                                                <ControlLabel>Prefixo do e-mail</ControlLabel>
+                                                <ControlLabel>E-mail</ControlLabel>
                                                 <FormControl
                                                     type="text"
                                                     value={this.state.login.usuario}
-                                                    placeholder="Ex: pmachado"
+                                                    placeholder="Ex: pmachado@restinga.ifrs.edu.br"
                                                     onChange={(e) => this.setValor("usuario", e.target.value)}
                                                     required
                                                 />

@@ -75,12 +75,12 @@ class UserRegistration extends React.Component {
     }
 
     confirmar() {
-        let regexEmail = /^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*/;
+        let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
 
         if (this.state.usuario.email && this.state.usuario.nome && this.state.usuario.novaSenha && this.state.confirmaSenha && this.state.usuario.tipoVinculo) {
             if (this.state.usuario.tipoVinculo !== "aluno" || (this.state.usuario.tipoVinculo === "aluno" && this.state.usuario.curso !== "")) {
-                if (regexEmail.test(this.state.usuario.email)) {
+                if (regexEmail.test(this.state.usuario.email+"@restinga.ifrs.edu.br")) {
                     if (regexNome.test(this.state.usuario.nome)) {
                         if (this.state.usuario.novaSenha === this.state.confirmaSenha) {
                             // TODO set null quando for != aluno
