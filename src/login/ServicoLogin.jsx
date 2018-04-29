@@ -1,9 +1,9 @@
 import base64 from "base-64/base64.js";
 
 class ServicoLogin {
-    constructor() {
+    //constructor() {
         //super("api/login");
-    }
+    //}
 
     login(usuario, senha, sucesso, erro) {
         this.usuario = usuario;

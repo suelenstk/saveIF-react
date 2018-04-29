@@ -23,8 +23,6 @@ class App extends Component {
     render() {
 
         let logado = this.state.logado;
-        const id = servicoLogin.logado().id;
-        const usuario = servicoLogin.logado();
 
 
         if (!logado) {

@@ -2,7 +2,6 @@ import UserProfile from '../views/UserProfile/UserProfile';
 import Groups from '../views/Groups/Groups';
 import MyGroups from '../views/MyGroups/MyGroups';
 import Home from '../views/Home/Home';
-import UserRegistration from "../views/UserRegistration/UserRegistration";
 import PostsView from '../views/Groups/Posts/PostsView';
 import NewPost from '../views/NewPost/NewPost';
 import CreateGroup from '../views/Groups/CreateGroup/CreateGroup';

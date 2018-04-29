@@ -120,7 +120,7 @@ class Login extends Component {
                                                 className="btnLoginGoogle"
                                                 block
                                             >
-                                                <img src={google} className="google"/>Login com Google
+                                                <img src={google} alt="Logo google" className="google"/>Login com Google
                                             </Button>
                                             <div>
                                                 <br/>

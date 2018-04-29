@@ -1,6 +1,4 @@
 class CourseService {
-    constructor() {
-    }
 
     listarNaoPaginado(sucesso, erro) {
 
