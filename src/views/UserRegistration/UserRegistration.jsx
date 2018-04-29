@@ -120,7 +120,7 @@ class UserRegistration extends React.Component {
                             componentClass="select"
                             placeholder="curso"
                             value={this.state.usuario.curso}
-                            onSubmit={(e) => this.setValor("curso", e.target.value)}
+                            onChange={(e) => this.setValor("curso", e.target.value)}
                             required
                         >
                             <option value="">-- Selecione --</option>
