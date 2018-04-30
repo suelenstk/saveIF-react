@@ -15,11 +15,11 @@ import avatar from "../../../assets/img/faces/face-3.jpg";
 
 export default class NovoPost extends React.Component {
     
-    constructor(props) {
-    super(props);
+    constructor(props, context) {
+    super(props, context);
 
     this.state = {   
-      post:this.props.post,
+      post:this.props.post
     };
   }
   
@@ -66,6 +66,8 @@ export default class NovoPost extends React.Component {
     if (this.state.post.titulo&&
                 this.state.post.texto) {  
                     this.props.inserir(this.state.post);
+    }else {
+        alert ("Preencha os campos Título e Descrição");
     }
     }
 
@@ -91,7 +93,7 @@ export default class NovoPost extends React.Component {
                                             <FormControl
                                                 type="text"                                               
                                                 placeholder="Título"
-                                                
+                                                value={this.state.post.titulo}
                                                 onChange={(e) => this.setTitulo(e.target.value)}
                                             />
                                         </FormGroup>
@@ -104,7 +106,7 @@ export default class NovoPost extends React.Component {
                           <FormControl rows="4" componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Descrição" 
-                            
+                            value={this.state.post.texto}
                             onChange={(e) => this.setTexto(e.target.value)}
                             />
                         </FormGroup>
