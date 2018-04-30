@@ -1,32 +1,30 @@
 import React, {Component} from 'react';
 import {
     Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl
+    FormGroup, ControlLabel, FormControl, Modal
 } from 'react-bootstrap';
 
-import {Card} from '../../components/Card/Card.jsx';
-import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
-import {UserCard} from '../../components/UserCard/UserCard.jsx';
-import Button from '../../elements/CustomButton/CustomButton.jsx';
-import PostsService from '../Posts/PostsService.jsx';
-import servicoLogin from "../../login/ServicoLogin";
+import {Card} from '../../../components/Card/Card.jsx';
+import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
+import {UserCard} from '../../../components/UserCard/UserCard.jsx';
+import Button from '../../../elements/CustomButton/CustomButton.jsx';
+import PostsService from '../../Posts/PostsService.jsx';
+import servicoLogin from "../../../login/ServicoLogin";
 
-import avatar from "../../assets/img/faces/face-3.jpg";
+import avatar from "../../../assets/img/faces/face-3.jpg";
 
-class NovoPost extends Component {
+export default class NovoPost extends React.Component {
     
-  constructor(props) {
-        super(props);
-        this.state = {  
-            update:0,
-            post:{},
-            arquivo: {}
-        };
+    constructor(props) {
+    super(props);
 
-        this.postsService = new PostsService();
-
-    }
-
+    this.state = {   
+      post:this.props.post,
+      update:0,
+      arquivo: {}
+    };
+  }
+  
     componentWillReceiveProps(proximoEstado) {
         this.setState({post: proximoEstado.produto});
 
@@ -34,8 +32,7 @@ class NovoPost extends Component {
 
     setTitulo(valor) {
         this.setState(
-                (anterior) =>
-        {
+                (anterior) => {     
             anterior.post.titulo = valor;
             return anterior;
         }
@@ -66,23 +63,9 @@ class NovoPost extends Component {
     
     confirmar(form) {
         
- 
+    this.props.inserir(this.state.post);
     console.log ("Post: ");
     console.log (this.state.post);
-        
-        
-    
-        this.postsService.inserir(this.state.post, 
-                            (grupo)=>{
-                                
-                                alert("Post criado com sucesso!");
-                                                   
-                            },
-                            (erro)=>{
-                                console.log("Erro!");
-                                console.log(erro);
-                                }
-                            );
                     
         let formData = new FormData(form);
         fetch("/api/posts/" + this.state.post.arquivo + "/arquivo", {
@@ -117,20 +100,25 @@ class NovoPost extends Component {
 
   render() {
     return (
-      <div className="content">
-        <Grid fluid>
-          <Row>
-            <Col md={8}>
-              <Card
-                title="Novo Post"
-                content={
-                  <form>
+      <Modal
+          show={this.props.show}
+          onHide={this.props.voltar}
+          container={this}
+          aria-labelledby="contained-modal-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title">
+              Contained Modal
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
                   <FormGroup controlId="formControlsText">
                                             <ControlLabel>Título</ControlLabel>
                                             <FormControl
                                                 type="text"                                               
                                                 placeholder="Título"
-                                                value={this.state.post.titulo}
+                                                
                                                 onChange={(e) => this.setTitulo(e.target.value)}
                                             />
                                         </FormGroup>
@@ -143,7 +131,7 @@ class NovoPost extends Component {
                           <FormControl rows="4" componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Descrição" 
-                            value={this.state.post.texto}
+                         
                             onChange={(e) => this.setTexto(e.target.value)}
                             />
                         </FormGroup>
@@ -165,9 +153,15 @@ class NovoPost extends Component {
                       ]}
                     />
 
-                    <Button
+                    
+                    <div className="clearfix"></div>
+                  </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.props.voltar}>Voltar</Button>
+            <Button
                       onClick={(e) => {
-                        this.confirmar(this.state.arquivo)}}
+                        this.confirmar()}}
                       bsStyle="danger"
                       pullRight
                       fill
@@ -175,17 +169,8 @@ class NovoPost extends Component {
                     >
                       Postar
                 </Button>
-                    <div className="clearfix"></div>
-                  </form>
-                }
-              />
-
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-
+          </Modal.Footer>
+        </Modal>
     );
   }
 }
-export default NovoPost;

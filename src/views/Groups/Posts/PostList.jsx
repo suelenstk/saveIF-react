@@ -5,8 +5,8 @@ import {Link} from 'react-router-dom';
 
 export default class PostList extends React.Component{
 
-
-
+    
+    
 
     render() {
         
@@ -17,6 +17,7 @@ export default class PostList extends React.Component{
         }else{
 
             return <Row>
+                      
                 <Col md={12}>
                 {this.props.posts.content.map((post) => {
 

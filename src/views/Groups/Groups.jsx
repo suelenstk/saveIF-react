@@ -14,7 +14,7 @@ class Groups extends Component {
             pagina: {},
             grupo:{nome:"teste"}
         }
-        this.GroupService = new GroupService();
+        this.groupService = new GroupService();
         this.listar();
 
     }
@@ -29,7 +29,7 @@ class Groups extends Component {
 
     listar() {
         this.paginaAtual=0;
-        this.GroupService.listarPaginado(0,
+        this.groupService.listarPaginado(0,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -54,7 +54,7 @@ class Groups extends Component {
                     <h1 style={{fontSize: '30px'}}>Grupos</h1>
                     <GroupRoute pagina={this.state.pagina}
                                solicitar = {(id, grupo)=>{ 
-                                this.GroupService.solicitar(id, grupo, 
+                                this.groupService.solicitar(id, grupo, 
                                         (item)=>{
                                             alert("Solicitação efetuada com sucesso!");
                                         },

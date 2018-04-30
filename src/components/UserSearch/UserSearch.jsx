@@ -68,10 +68,7 @@ class UserSearch extends React.Component {
 
 
         return (
-            <div className="content">
-                <Grid fluid>
-                    <Row>
-                        <Col md={4} className="searchUsers">
+            
                             <Card
                                 title="Pesquisar usuários"
                                 content={
@@ -99,10 +96,7 @@ class UserSearch extends React.Component {
                                     </div>
                                 }
                             />
-                        </Col>
-                    </Row>
-                </Grid>
-            </div>
+                       
         );
     }
 }
