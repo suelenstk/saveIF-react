@@ -52,5 +52,28 @@ export default class GroupService extends ServicoRest {
             method: "GET"
         }).then(trataFetch);
     }
+    
+    solicitar(id, item, sucesso, erro) {
+        console.log(item);
+        fetch(`api/grupos/solicitar/${id}`, {
+            method: "POST",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(item)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
+    
+    
 
 }

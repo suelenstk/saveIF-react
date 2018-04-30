@@ -53,8 +53,8 @@ class Groups extends Component {
 
                     <h1 style={{fontSize: '30px'}}>Grupos</h1>
                     <GroupRoute pagina={this.state.pagina}
-                               solicitar = {(id,grupo)=>{ 
-                                this.GroupService.editar(id, grupo, 
+                               solicitar = {(id, grupo)=>{ 
+                                this.GroupService.solicitar(id, grupo, 
                                         (item)=>{
                                             alert("Solicitação efetuada com sucesso!");
                                         },
