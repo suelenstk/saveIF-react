@@ -81,7 +81,7 @@ export default class NovoPost extends React.Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title">
-              Contained Modal
+              Novo Post
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
