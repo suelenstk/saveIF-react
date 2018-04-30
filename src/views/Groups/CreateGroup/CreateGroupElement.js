@@ -9,7 +9,6 @@ import {
     Grid, Row, Col,
     FormGroup, ControlLabel, FormControl, Radio, Checkbox
 } from 'react-bootstrap';
-import {Link} from 'react-router-dom'
 
 import {Card} from '../../../components/Card/Card.jsx';
 import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
@@ -28,10 +27,7 @@ export default class CreateGroupElement extends React.Component {
     super(props);
     this.state={
                 group:this.props.group,
-                page2: false,
-                disabled: false,
-                privacy: "",
-                search: "",                
+                page2: false,             
                 listarCategorias:""
             };
             
@@ -50,8 +46,6 @@ export default class CreateGroupElement extends React.Component {
             )
         });
     }
-    
-    disabledOption = () => this.setState({disabled: !this.state.disabled});
         
         componentWillReceiveProps(proximoEstado){
             this.setState({group:proximoEstado.group});

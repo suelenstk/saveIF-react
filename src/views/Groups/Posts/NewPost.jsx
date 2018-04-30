@@ -20,36 +20,36 @@ export default class NovoPost extends React.Component {
 
     this.state = {   
       post:this.props.post,
-      update:0,
-      arquivo: {}
     };
   }
   
     componentWillReceiveProps(proximoEstado) {
-        this.setState({post: proximoEstado.produto});
+        this.setState({post: proximoEstado.post});
 
     }
 
-    setTitulo(valor) {
-        this.setState(
-                (anterior) => {     
-            anterior.post.titulo = valor;
-            return anterior;
+    setTitulo(valor){
+            this.setState(
+                    (anterior)=>
+                            {
+                            anterior.post.titulo=valor;
+                            return anterior;
+                            }
+                    );
+            
         }
-        );
-
-    }
-
-    setTexto(valor) {
-        this.setState(
-                (anterior) => {
-            anterior.post.texto = valor;
-            return valor;
-        }
-
-        );
-
-    }
+        
+    setTexto(valor){
+            this.setState(
+                    (anterior)=>
+                            {
+                            anterior.post.texto=valor;
+                            return anterior;
+                            }
+                    );
+            
+        }    
+        
     
     setArquivo(valor) {
         this.setState(
@@ -61,39 +61,12 @@ export default class NovoPost extends React.Component {
         );
     }
     
-    confirmar(form) {
+    confirmar() {
         
-    this.props.inserir(this.state.post);
-    console.log ("Post: ");
-    console.log (this.state.post);
-                    
-        let formData = new FormData(form);
-        fetch("/api/posts/" + this.state.post.arquivo + "/arquivo", {
-            method: "POST",
-
-            headers: new Headers({
-                'Authorization': servicoLogin.getAuthorization()
-
-            }),
-            body: formData
-        }).then((resultado) => {
-            if (resultado.ok) {
-                this.setState(
-                (anterior) =>
-        {
-            anterior.update = anterior.update+1;
-            console.log("Mudou!");
-            return anterior;
-        }
-        );         
-            } else {
-                resultado.json().then(
-                        (resultadoErro) => console.log(resultadoErro)
-                )
-            }
-
-        });
-
+    if (this.state.post.titulo&&
+                this.state.post.texto) {  
+                    this.props.inserir(this.state.post);
+    }
     }
 
    
@@ -131,7 +104,7 @@ export default class NovoPost extends React.Component {
                           <FormControl rows="4" componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Descrição" 
-                         
+                            
                             onChange={(e) => this.setTexto(e.target.value)}
                             />
                         </FormGroup>
