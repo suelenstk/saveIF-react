@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Grid } from 'react-bootstrap';
+import { Grid, Col, Row } from 'react-bootstrap';
+import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
 import PostList from './PostList';
-import PostRoute from './PostRoute';
 import NewPost from './NewPost';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 
@@ -51,11 +51,23 @@ class PostsView extends Component {
     }   
 
     render() {
-
+            //<PostList posts={this.state.pagina}/>
         return (
             <div className="content">
 
                 <Grid fluid>
+                    <Row>
+                
+                        <Col md={8}>
+                            <Card 
+                                title="Postagens"
+                                
+                                content={
+                                
+                                <from>
+                                    <PostList posts ={this.state.pagina}/>
+                      
+                        
                                         <Button
                                             bsStyle="danger"
                                             pullRight
@@ -68,9 +80,35 @@ class PostsView extends Component {
                                         >   
                                             Novo Post
                                         </Button>
+                                        <div className="clearfix"></div>
+                                        </from>
+
+                         }
+                    />
+                    </Col>
                     
-                    <PostRoute pagina={this.state.pagina}/>
+                    <Col md={3}>
+                        <Card
+                            title="Tópicos"
                             
+                            content={
+                            <form>
+                            <Button
+                            bsStyle="danger"
+                            pullRight
+                            fill
+                            block
+                            >
+                            Novo Tópico
+                            </Button>
+                            <div className="clearfix"></div>
+                            </form>
+                                }
+                            
+                          />
+                    </Col>
+                    
+            </Row>
                     <NewPost 
                     voltar={()=>{this.setState({show:false});}}
                     show={this.state.show}

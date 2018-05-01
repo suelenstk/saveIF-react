@@ -6,71 +6,87 @@ import {Link} from 'react-router-dom';
 import grupoImage from '../../img/grupo.png';
 
 export default class GroupList extends Component {
-    
-    botaoVerMais(grupo){
+   
+   botaoVerMais(grupo){
 
-        let botoes = [];
-        //let botao = <Link to={`/GroupEnter`}>
-        //Verificar rota certa
-        let rota = (this.props.rota === "MyGroups")? "MyGroups":"groups";
+       let botoes = [];
+       //let botao = <Link to={`/GroupEnter`}>
+       //Verificar rota certa
+       let rota = (this.props.rota === "MyGroups" || this.verificarIntegrante(this.props.user,grupo.solicitantesGrupo))? 
+           `MyGroups/${grupo.id}/posts`:`groups/${grupo.id}/view`;
 
-        let botao = 
-        <Link to={{ pathname: `/${rota}/${grupo.id}`, query: { grupo: grupo } }}>      
-                <Button
-                        bsStyle="danger"
-                        pullRight
-                        fill
-                        type="submit"                                          
-                    >   
-                            Ver Mais
-                </Button></Link>
+       let botao = 
+       <Link to={{ pathname: `/${rota}`, query: { grupo: grupo } }}>      
+               
+               <Button
+                       bsStyle="danger"
+                       pullRight
+                       fill
+                       type="submit"                                          
+                   >   
+                           Ver Mais
+               </Button></Link>
 
-        botoes.push(botao);
+       botoes.push(botao);
 
-        return botoes;
+       return botoes;
 
-    }
-    
-    
-    render() {
-        //alert(this.props.pagina);
-        if (!this.props.pagina.content) {
+   }
 
-            return <div>Não há grupos cadastrados!</div>;
+   verificarIntegrante(id,solicitantesGrupo){
+       
+       for(let i = 0; i < solicitantesGrupo.length; i++){
+           //console.log(id);
+           if(id === solicitantesGrupo[i].id){               
+               return true;
+           }
+       }
 
-        } else {
-            return  <Row>
-            <Col md={12}>
-            {this.props.pagina.content.map((grupo) => {             
-               return <Card                                
-                    ctAllGroups
-                
-                    content={
-                        <Row>
-                                                                       
-                            <Image src={grupoImage} responsive width="1024" />
-                            
-                            <Col lg={12} md={12} sm={12} xs={12}>
-                                                                                                
-                                <h2>{grupo.nome}</h2>
+       return false;
 
-                                <p>{grupo.descricao}</p>
-                                            
-                                {this.botaoVerMais(grupo)}
+   }
+   
+   
+   render() {
+       //alert(this.props.pagina);
+       if (!this.props.pagina.content) {
 
-                                <br/><br/>
-                                <hr/>
-                            </Col>
-                                   
-                            
-                            </Row>
-                         }
-                    />
-            })}
-            </Col>
+           return <div>Não há grupos cadastrados!</div>;
 
-        </Row>
+       } else {
+           return  <Row>
+           <h1 style={{fontSize: '30px'}}>{(this.props.rota === "MyGroups")? "Meus Grupos":"Outros Grupos"}</h1>
+           <Col md={12}>
+           {this.props.pagina.content.map((grupo) => {             
+              return <Card                                
+                   ctAllGroups
+               
+                   content={
+                       <Row>
+                                                                      
+                           <Image src={grupoImage} responsive width="1024" />
+                           
+                           <Col lg={12} md={12} sm={12} xs={12}>
+                                                                                               
+                               <h2>{grupo.nome}</h2>
 
-        }
-    }
+                               <p>{grupo.descricao}</p>
+                                           
+                               {this.botaoVerMais(grupo)}
+
+                               <br/><br/>
+                               <hr/>
+                           </Col>
+                                  
+                           
+                           </Row>
+                        }
+                   />
+           })}
+           </Col>
+
+       </Row>
+
+       }
+   }
 }
