@@ -8,15 +8,13 @@ import {Card} from '../../../components/Card/Card.jsx';
 import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
 import {UserCard} from '../../../components/UserCard/UserCard.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
-import PostsService from '../../Posts/PostsService.jsx';
-import servicoLogin from "../../../login/ServicoLogin";
 
 import avatar from "../../../assets/img/faces/face-3.jpg";
 
-export default class NovoPost extends React.Component {
+export default class NewPost extends React.Component {
     
-    constructor(props, context) {
-    super(props, context);
+    constructor(props) {
+    super(props);
 
     this.state = {   
       post:this.props.post
@@ -93,7 +91,7 @@ export default class NovoPost extends React.Component {
                                             <FormControl
                                                 type="text"                                               
                                                 placeholder="Título"
-                                                
+                                                value={this.state.titulo}
                                                 onChange={(e) => this.setTitulo(e.target.value)}
                                             />
                                         </FormGroup>
@@ -106,7 +104,7 @@ export default class NovoPost extends React.Component {
                           <FormControl rows="4" componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Descrição" 
-                            
+                            value={this.state.texto}
                             onChange={(e) => this.setTexto(e.target.value)}
                             />
                         </FormGroup>

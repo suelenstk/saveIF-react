@@ -44,7 +44,7 @@ export default class PostList extends React.Component{
 
                                    <div style={imgStyle}>
                                        <Image src={anexoTeste} responsive/>
-                                       <p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>
+                                       {/*<p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>*/}
                                    </div>
 
                                    <h5>Por {post.autorPost.nome}, {this.data(post.dataPostagem)}.</h5>

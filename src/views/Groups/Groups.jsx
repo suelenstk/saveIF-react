@@ -52,7 +52,7 @@ class Groups extends Component {
                <Grid fluid> 
 
                    <GroupRoute pagina={this.state.pagina}
-                              solicitar = {(id, grupo)=>{ 
+                               solicitar = {(id, grupo)=>{ 
                                this.groupService.solicitar(id, grupo, 
                                        (item)=>{
                                            alert("Solicitação efetuada com sucesso!");

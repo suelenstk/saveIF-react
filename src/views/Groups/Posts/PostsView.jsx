@@ -4,6 +4,7 @@ import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
 import PostList from './PostList';
 import NewPost from './NewPost';
+import NewTopic from './NewTopic';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 
 class PostsView extends Component {
@@ -15,7 +16,9 @@ class PostsView extends Component {
         this.state = {
             show: false,
             pagina:{},
-            post:{titulo:"teste"}
+            post:{titulo:"teste"},
+            topico:{},
+            
         }
 
         this.postService = new PostService();
@@ -87,26 +90,7 @@ class PostsView extends Component {
                     />
                     </Col>
                     
-                    <Col md={3}>
-                        <Card
-                            title="Tópicos"
-                            
-                            content={
-                            <form>
-                            <Button
-                            bsStyle="danger"
-                            pullRight
-                            fill
-                            block
-                            >
-                            Novo Tópico
-                            </Button>
-                            <div className="clearfix"></div>
-                            </form>
-                                }
-                            
-                          />
-                    </Col>
+                    <NewTopic />
                     
             </Row>
                     <NewPost 

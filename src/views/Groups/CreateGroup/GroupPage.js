@@ -28,13 +28,15 @@ constructor (props){
         page1: "red",
         page2: "",
         page3: "",
-        group:{}
+        group:{},
+    
     }
 
     this.groupService = new GroupService();
 
-}
+  
 
+}
 
 render() {
 
@@ -119,6 +121,7 @@ render() {
                             />                     
                         </Col>
                     </Row>
+
                     
                 <div style={{display: 'table'}}>
                         <div style={{display: 'table', float: 'left'}}>
