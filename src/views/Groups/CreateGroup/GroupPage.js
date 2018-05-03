@@ -31,11 +31,7 @@ constructor (props){
         group:{},
     
     }
-
     this.groupService = new GroupService();
-
-  
-
 }
 
 render() {

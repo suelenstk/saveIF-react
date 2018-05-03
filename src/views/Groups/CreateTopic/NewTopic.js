@@ -1,40 +1,40 @@
 import React, {Component} from 'react';
         import {
         Grid, Row, Col,
-                FormGroup, ControlLabel, FormControl
+                FormGroup, ControlLabel, FormControl, Table
         } from 'react-bootstrap';
         import {Card} from '../../../components/Card/Card.jsx';
         import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
         import {UserCard} from '../../../components/UserCard/UserCard.jsx';
         import Button from '../../../elements/CustomButton/CustomButton.jsx';
-        import PostsService from '../../Posts/PostsService.jsx';
-        import servicoLogin from "../../../login/ServicoLogin";
         import done from "../../../assets/img/done.png";
         
         
         export default class NewTopic extends React.Component {
 
         constructor(props) {
-        super(props);
+                super(props);
                 this.state = {
+                topic: this.props.topic,
                 campoNomeTopico:"none",
                 adicionarTopico: "Novo Tópico",
-                campoTopico: false
+                campoTopico: false,            
                 };
         }
 
         componentWillReceiveProps(proximoEstado) {
-        this.setState({post: proximoEstado.post});
+        this.setState({topic: proximoEstado.topic});
         }
 
         setNome(valor){
-        this.setState(
-                (anterior) =>
-        {
-        anterior.post.nome = valor;
-                return anterior;
-        }
-        );
+            this.setState(
+                    (anterior)=>
+                            {                                
+                            anterior.topic.nome=valor;
+                            return anterior;
+                            }
+                    );
+            
         }
         
         setConfigNovoTopico(){
@@ -59,15 +59,14 @@ import React, {Component} from 'react';
 
         confirmar() {
 
-        if (this.state.post.titulo &&
-                this.state.post.texto) {
-        this.props.inserir(this.state.post);
+        if (this.state.topic.nome) {
+                this.props.inserir(this.state.topic);
+                this.setConfigNovoTopico();
+                this.setNome("");
         } else {
-        alert ("Preencha os campos Título e Descrição");
+                alert ("Preencha o nome do tópico");
         }
         }
-
-
 
         render() {
         return (
@@ -77,8 +76,7 @@ import React, {Component} from 'react';
                             
                             content={
                             <form>
-                                <table class="table table-sm">
-                                    <tbody>
+                                <Table responsive>                                  
                                         <tr>
                                         <td style={{display: this.state.campoNomeTopico}}>
                                         <FormGroup controlId="formControlsText">
@@ -87,15 +85,14 @@ import React, {Component} from 'react';
                                         <FormControl
                                             type="text"                                               
                                             placeholder="Nome do Tópico"
-                                
-                                            onChange={(e) => this.setNome(e.target.value)}                       
+                                            value={this.state.topic.nome}
+                                            onChange={(e) => this.setNome(e.target.value)}                     
                                             />
                                         </FormGroup>
                                         </td>
-                                        <td><Button style={{borderStyle: "none", display: this.state.campoNomeTopico}} onClick={(e) => {this.setConfigNovoTopico();}}><img src={done} width="25px" height="20px"/></Button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        <td><Button style={{borderStyle: "none", display: this.state.campoNomeTopico}} onClick={(e) => {this.confirmar();}}><img src={done} width="25px" height="20px"/></Button></td>
+                                        </tr>                                 
+                                </Table>
              
                             <Button
                             bsStyle="danger"

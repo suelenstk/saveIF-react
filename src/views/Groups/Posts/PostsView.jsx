@@ -4,7 +4,7 @@ import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
 import PostList from './PostList';
 import NewPost from './NewPost';
-import NewTopic from './NewTopic';
+import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 
 class PostsView extends Component {
@@ -16,9 +16,8 @@ class PostsView extends Component {
         this.state = {
             show: false,
             pagina:{},
-            post:{titulo:"teste"},
-            topico:{},
-            adicionarTopico: "Novo Tópico"
+            post:{titulo:"teste"}
+            
         }
 
         this.postService = new PostService();
@@ -54,6 +53,8 @@ class PostsView extends Component {
     }   
 
     render() {
+        
+        
             //<PostList posts={this.state.pagina}/>
         return (
             <div className="content">
@@ -69,7 +70,7 @@ class PostsView extends Component {
                                 
                                 <from>
                                     <PostList posts ={this.state.pagina}/>
-                      
+                                    
                         
                                         <Button
                                             bsStyle="danger"
@@ -77,8 +78,7 @@ class PostsView extends Component {
                                             fill
                                         
                                             onClick={(e) => {
-                                                this.abrirNovoPost();
-                                                
+                                                this.abrirNovoPost();                               
                                             }}
                                         >   
                                             Novo Post
@@ -90,7 +90,7 @@ class PostsView extends Component {
                     />
                     </Col>
                     
-                    <NewTopic />
+                    <TopicCard/>;
                     
             </Row>
                     <NewPost 
@@ -108,6 +108,7 @@ class PostsView extends Component {
                             }
                         );
                 }}
+                post={this.state.post} 
                     />
 
                 </Grid>

@@ -27,9 +27,8 @@ class RotaSolicitacao extends Component {
 class RotaPosts extends Component {
 
  render() {
-   return <PostsView />;
- }
-
+   return <PostsView/>;
+}
 }
 
 
