@@ -18,7 +18,7 @@ class PostsView extends Component {
             pagina:{},
             post:{titulo:"teste"},
             topico:{},
-            
+            adicionarTopico: "Novo Tópico"
         }
 
         this.postService = new PostService();

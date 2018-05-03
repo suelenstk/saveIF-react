@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
         import {
         Grid, Row, Col,
-                FormGroup, ControlLabel, FormControl, Modal
+                FormGroup, ControlLabel, FormControl
         } from 'react-bootstrap';
         import {Card} from '../../../components/Card/Card.jsx';
         import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
@@ -9,7 +9,7 @@ import React, {Component} from 'react';
         import Button from '../../../elements/CustomButton/CustomButton.jsx';
         import PostsService from '../../Posts/PostsService.jsx';
         import servicoLogin from "../../../login/ServicoLogin";
-        import avatar from "../../../assets/img/faces/face-3.jpg";
+        import done from "../../../assets/img/done.png";
         
         
         export default class NewTopic extends React.Component {
@@ -17,7 +17,9 @@ import React, {Component} from 'react';
         constructor(props) {
         super(props);
                 this.state = {
-                campoNomeTopico:"none"
+                campoNomeTopico:"none",
+                adicionarTopico: "Novo Tópico",
+                campoTopico: false
                 };
         }
 
@@ -35,11 +37,25 @@ import React, {Component} from 'react';
         );
         }
         
-        abreCampoNome (){
+        setConfigNovoTopico(){
             this.setState({
-            campoNomeTopico: ""
-        });
+            campoTopico: !this.state.campoTopico
+            }); 
+            
+            if (!this.state.campoTopico){
+            this.setState({
+                campoNomeTopico: "",
+                adicionarTopico: "Cancelar",             
+            });  
+        }else {
+           this.setState({
+                campoNomeTopico: "none",
+                adicionarTopico: "Novo Tópico"
+            }); 
         }
+        }
+        
+  
 
         confirmar() {
 
@@ -55,31 +71,42 @@ import React, {Component} from 'react';
 
         render() {
         return (
-                <Col md={3}>
+                <Col md={4}>
                         <Card
                             title="Tópicos"
                             
                             content={
                             <form>
-                            <FormGroup controlId="formControlsText" style={{display: this.state.campoNomeTopico}}>
-                                <ControlLabel>Nome</ControlLabel>
-                            <FormControl
-                                type="text"                                               
-                                placeholder="Nome do Tópico"
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr>
+                                        <td style={{display: this.state.campoNomeTopico}}>
+                                        <FormGroup controlId="formControlsText">
+                                            <ControlLabel>Nome</ControlLabel>
                                 
-                                onChange={(e) => this.setNome(e.target.value)}
-                                />
-                            </FormGroup>
+                                        <FormControl
+                                            type="text"                                               
+                                            placeholder="Nome do Tópico"
+                                
+                                            onChange={(e) => this.setNome(e.target.value)}                       
+                                            />
+                                        </FormGroup>
+                                        </td>
+                                        <td><Button style={{borderStyle: "none", display: this.state.campoNomeTopico}} onClick={(e) => {this.setConfigNovoTopico();}}><img src={done} width="25px" height="20px"/></Button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+             
                             <Button
                             bsStyle="danger"
                             pullRight
                             fill
                             block
                             onClick={(e) => {
-                                            this.abreCampoNome();                                            
+                                            this.setConfigNovoTopico ();
                                             }}
                             >
-                            Novo Tópico
+                            {this.state.adicionarTopico}
                             </Button>
                             <div className="clearfix"></div>
                             </form>
