@@ -7,7 +7,7 @@ import NewPost from './NewPost';
 import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 
-class PostsView extends Component {
+class GroupView extends Component {
 
     constructor(props){
 
@@ -50,6 +50,7 @@ class PostsView extends Component {
             console.log(erro);
         }
         );
+
     }   
 
     render() {
@@ -69,6 +70,7 @@ class PostsView extends Component {
                                 content={
                                 
                                 <from>
+                                    
                                     <PostList posts ={this.state.pagina}/>
                                     
                         
@@ -84,7 +86,8 @@ class PostsView extends Component {
                                             Novo Post
                                         </Button>
                                         <div className="clearfix"></div>
-                                        </from>
+                                        
+                                </from>
 
                          }
                     />
@@ -119,4 +122,4 @@ class PostsView extends Component {
     
 }
 
-export default PostsView;
+export default GroupView;

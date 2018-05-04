@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GroupEnter from './GroupEnter';
 import GroupList from './GroupList';
-import PostsView from './Posts/PostsView';
+import GroupView from './Posts/GroupView';
 
 import {
 Route,
@@ -27,7 +27,7 @@ class RotaSolicitacao extends Component {
 class RotaPosts extends Component {
 
  render() {
-   return <PostsView/>;
+   return <GroupView/>;
 }
 }
 
