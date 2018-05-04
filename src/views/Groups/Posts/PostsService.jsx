@@ -4,6 +4,6 @@ export default class PostService extends ServicoRest {
 
     constructor() {
         super("api/posts");
-    }
+    }   
 
 }
