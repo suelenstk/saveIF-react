@@ -90,7 +90,7 @@ class PostsView extends Component {
                     />
                     </Col>
                     
-                    <TopicCard/>;
+                    <TopicCard/>
                     
             </Row>
                     <NewPost 
@@ -99,7 +99,7 @@ class PostsView extends Component {
                     inserir ={(post)=>{ 
                                     this.postService.inserir(post, 
                                     (post)=>{
-                                        alert("Post criado com sucesso!");
+                                        alert("Post criado com sucesso!"+post.id);
                                         this.setState({show: false});                            
                                 },
                                 (erro)=>{

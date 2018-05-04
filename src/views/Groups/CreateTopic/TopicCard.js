@@ -14,7 +14,8 @@ export default class TopicCard extends Component {
         super(props);
 
         this.state = {           
-            topic:{}        
+            topic:{},
+            lista: {}
         }
 
         this.topicService = new TopicService();
@@ -25,7 +26,6 @@ export default class TopicCard extends Component {
         return (
 
                     <NewTopic 
-                        page={this.state.pagina}
                         inserir ={(topic)=>{ 
                                     this.topicService.inserir(topic, 
                                     (topico)=>{

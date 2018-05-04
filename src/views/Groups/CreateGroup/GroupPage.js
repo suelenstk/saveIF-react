@@ -50,9 +50,8 @@ render() {
                                voltar={()=>{this.setState({privacy:"", disabled:false, information: "", search: "none", invite: "none", page1: "red", page2: "", page3: "", photo: "none"});}}
                                
                                confirmar={()=>{this.setState({privacy:"none", disabled:true, information: "none", search: "none", invite: "none", page1: "", page2: "", page3: "red", photo: ""});}}
-                               
+                              
                                inserir ={(group)=>{ 
-
                                     this.groupService.inserir(group, 
                                     (grupo)=>{
                                         alert("Grupo criado com sucesso!");
