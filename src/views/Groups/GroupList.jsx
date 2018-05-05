@@ -13,7 +13,7 @@ export default class GroupList extends Component {
        //let botao = <Link to={`/GroupEnter`}>
        //Verificar rota certa
        let rota = (this.props.rota === "MyGroups" || this.verificarIntegrante(this.props.user,grupo.solicitantesGrupo))? 
-           `MyGroups/${grupo.id}/posts`:`groups/${grupo.id}/view`;
+           `MyGroups/${grupo.id}/geral`:`groups/${grupo.id}/view`;
 
        let botao = 
        <Link to={{ pathname: `/${rota}`, query: { grupo: grupo } }}>      

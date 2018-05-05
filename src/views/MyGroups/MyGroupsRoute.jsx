@@ -11,14 +11,14 @@ Switch
 class RotaLista extends Component {
  render() {
    //console.log(this.props.pagina);
-  return <GroupList pagina={this.props.pagina}
+    return <GroupList pagina={this.props.pagina}
                     rota={this.props.rota}/>;
  }
 }
 
 class RotaVisualizacao extends Component {
  render() {
-  return <GroupEnter user={this.props.user}
+    return <GroupEnter user={this.props.user}
                      grupo={(this.props.location.query)?this.props.location.query.grupo:""}/>;
  }
 }
@@ -26,7 +26,8 @@ class RotaVisualizacao extends Component {
 class RotaPosts extends Component {
 
  render() {
-   return <GroupView />;
+    //console.log(this.props.match.params.id);
+    return <GroupView id={this.props.match.params.id}/>;
  }
 
 }
@@ -36,7 +37,7 @@ export default class MyGroupsRoute extends Component {
 
  render() {
 
-  console.log(this.props.pagina);
+  //console.log(this.props.pagina);
 
   return <div>
    <Switch>
@@ -44,7 +45,7 @@ export default class MyGroupsRoute extends Component {
     <Route exact path="/MyGroups" render = {(props) => <RotaLista  {...props} pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>}
                                                 pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>
     
-    <Route path="/MyGroups/:id/posts" component={RotaPosts} />
+    <Route path="/MyGroups/:id/geral" component={RotaPosts} />
     
     <Route path="/MyGroups/:id/View" render = {(props) => <RotaVisualizacao  {...props} 
                  user={this.props.user}/>}

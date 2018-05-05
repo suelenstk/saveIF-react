@@ -15,8 +15,9 @@ class GroupView extends Component {
 
         this.state = {
             show: false,
-            pagina:{},
-            post:{titulo:"teste"}
+            pagina:"",
+            post:{titulo:"teste"},
+            grupo:{id:this.props.id}
             
         }
 
@@ -40,7 +41,8 @@ class GroupView extends Component {
 
     listar() {
         this.paginaAtual=0;
-        this.postService.listarPaginado(0,
+        console.log(this.state.grupo.id);
+        this.postService.listarPostGeral(this.state.grupo.id,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -71,7 +73,7 @@ class GroupView extends Component {
                                 
                                 <from>
                                     
-                                    <PostList posts ={this.state.pagina}/>
+                                    <PostList posts={this.state.pagina}/>
                                     
                         
                                         <Button

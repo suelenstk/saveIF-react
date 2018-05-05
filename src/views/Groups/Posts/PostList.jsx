@@ -10,29 +10,25 @@ const imgStyle = {
 };
 
 export default class PostList extends React.Component{
-        
+
     data(date){
-    console.log(date);
+        console.log(date);
 
-    let dateString = date;
-    let dateParts = dateString.split("-");
+        let dateString = date;
+        let dateParts = dateString.split("-");
 
-    return dateParts[2] +"/"+ dateParts[1] +"/"+ dateParts[0];
+        return dateParts[2] +"/"+ dateParts[1] +"/"+ dateParts[0];
     }
 
 
    render() {
-       
-       if (!this.props.posts.content) {
-
-           return <div>Não há posts disponíveis!</div>;
-
-       }else{
-
+    console.log(this.props.posts);
+       if (this.props.posts) {
+     
            return <Row>
                      
                <Col md={12}>
-               {this.props.posts.content.map((post) => {
+               {this.props.posts.map((post) => {
 
                    return <Card
                        title={post.titulo}
@@ -60,6 +56,12 @@ export default class PostList extends React.Component{
                })}
                </Col>
            </Row>
+
+       }else{
+
+            return <div></div>
+
+
        }
 
    }
