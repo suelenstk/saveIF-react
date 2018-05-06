@@ -72,7 +72,7 @@ class UserSearch extends React.Component {
                             <Card
                                 title="Pesquisar usuários"
                                 content={
-                                    <div>
+                                    <div style={{overflow: "auto", height: "500px"}}>
                                         <form>
                                             <FormGroup>
                                                 <InputGroup>
