@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Col, Row } from 'react-bootstrap';
 import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
+import GroupService from '../GroupService';
 import PostList from './PostList';
 import NewPost from './NewPost';
 import TopicCard from '../CreateTopic/TopicCard';
@@ -22,7 +23,9 @@ class GroupView extends Component {
         }
         console.log(this.state.grupo);
         this.postService = new PostService();
+        this.groupService = new GroupService();
         this.listar();
+        this.listarGrupo();
 
     }
 
@@ -53,6 +56,25 @@ class GroupView extends Component {
         }
         );
 
+    } 
+    
+    setarGrupo(resultado) {
+        this.setState({
+            grupo: resultado
+        });
+    }
+    
+    listarGrupo() {
+        this.groupService.listarGrupoEspecifico(this.state.grupo.id,
+                (resultado) => {
+            console.log(resultado);
+            this.setarGrupo(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
     }   
 
     render() {
@@ -61,7 +83,9 @@ class GroupView extends Component {
             //<PostList posts={this.state.pagina}/>
         return (
             <div className="content">
-
+    
+                <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - Tópico Geral</h1>
+                
                 <Grid fluid>
                     <Row>
                 
