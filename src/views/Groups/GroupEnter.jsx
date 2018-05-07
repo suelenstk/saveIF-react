@@ -127,6 +127,10 @@ class GroupEnter extends Component {
                                             <h5>Categorias</h5>
                                             <p>{this.state.grupo.categoria.nome}</p>
                                             <br/>
+                                            
+                                            <h5>Tipo de privacidade</h5>
+                                            <p>{this.state.grupo.tipoPrivacidade}</p>
+                                            <br/>
 
                                             <h5>Participantes</h5>
                                             <ListParticipants pagina={this.state.pagina}/>
