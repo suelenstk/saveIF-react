@@ -11,30 +11,39 @@ class GroupEnter extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            grupo: this.props.grupo,
+            grupo: {nome:"teste"},
+            id:this.props.id,
             solicitar: this.props.solicitar,
             idUsuario: this.props.user,
-            pagina: {}
-        }       
-        //console.log(this.props.user);
+            pagina: ""
+        }      
+
+        console.log(this.props.id);
         this.GroupService = new GroupService();
+        this.listarGrupo();
         this.listarParticipantes();
 
     }
 
     setarItem(paginaResultado) {
-        //console.log(paginaResultado);
         this.setState({
             pagina: paginaResultado
+        });
+    }
+
+    setarGrupo(resultado) {
+        this.setState({
+            grupo: resultado
         });
     }
 
 
     listarParticipantes() {
         this.paginaAtual=0;
-        console.log(this.state.grupo.id);
-        this.GroupService.listarParticipantes(this.state.grupo.id,0,
+        console.log(this.state.id);
+        this.GroupService.listarParticipantes(this.state.id,0,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -46,15 +55,28 @@ class GroupEnter extends Component {
         );
     }   
 
+    listarGrupo() {
+        this.GroupService.listarGrupoEspecifico(this.state.id,
+                (resultado) => {
+            console.log(resultado);
+            this.setarGrupo(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+    }   
+
     //simulação da solicitação
     confirmar() {
         //insere a id do usuário solicitante
-        this.state.grupo.solicitantesGrupo[0] = {id:this.state.idUsuario}
+        //this.state.grupo.solicitantesGrupo[0] = {id:this.state.idUsuario}
 
         //alert(this.state.grupo.solicitantesGrupo[0].id);
         //alert(this.state.solicitar);
         //manda para atualzar no banco de dados
-        this.state.solicitar(this.state.grupo.id, this.state.grupo);
+        this.state.solicitar(this.state.id, this.state.idUsuario);
 
     }
 
@@ -78,7 +100,7 @@ class GroupEnter extends Component {
             let botoes = [];
 
             let botao = <Link to={{
-                pathname: '/groups'}}>
+                pathname: '/home'}}>
                 <Button
                     bsStyle="danger"
                     pullRight
@@ -99,10 +121,7 @@ class GroupEnter extends Component {
 
     render() {
 
-        //console.log(this.props.user);
-        //console.log(this.props.solicitar);
-        //console.log(this.state.pagina);
-        if(typeof this.state.grupo.nome !== "undefined")
+        if(this.state.grupo.nome !== "teste")
         return (
             <div className="content">
                              
@@ -133,9 +152,9 @@ class GroupEnter extends Component {
                                             <br/>
 
                                             <h5>Participantes</h5>
+
                                             <ListParticipants pagina={this.state.pagina}/>
-                                                       
-                                            <p>{this.state.grupo.integrantesGrupo}</p>           
+                                                               
                                             {this.botaoSolicitar()}
                                                                                                    
                                             <br/><br/>
@@ -152,7 +171,7 @@ class GroupEnter extends Component {
             </div>
         );
         else
-            return <div></div>
+            return <div>Não foi selecionado nenhum grupo.</div>
     }
 }
 

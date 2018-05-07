@@ -19,7 +19,8 @@ class RotaSolicitacao extends Component {
  render() {
   return <GroupEnter solicitar={this.props.solicitar}
                      user={this.props.user}
-                     grupo={(this.props.location.query)?this.props.location.query.grupo:""}/>;
+                     id={this.props.match.params.id}/>;
+
  }
 }
 

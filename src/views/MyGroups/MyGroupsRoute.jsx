@@ -19,7 +19,7 @@ class RotaLista extends Component {
 class RotaVisualizacao extends Component {
  render() {
     return <GroupEnter user={this.props.user}
-                     grupo={(this.props.location.query)?this.props.location.query.grupo:""}/>;
+                       id={this.props.match.params.id}/>;
  }
 }
 

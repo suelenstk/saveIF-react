@@ -30,7 +30,7 @@ class ListParticipants extends Component {
             </div>
 
         }else{
-            return <div></div>
+            return <div>Este grupo não possui integrantes!</div>
         }
     }
     

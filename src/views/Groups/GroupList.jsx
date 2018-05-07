@@ -10,14 +10,14 @@ export default class GroupList extends Component {
    botaoVerMais(grupo){
 
        let botoes = [];
-       let verificar = this.verificarIntegrante(this.props.user,grupo.solicitantesGrupo);
+       let verificar = this.verificarIntegrante(this.props.user,grupo.integrantesGrupo);
        //let botao = <Link to={`/GroupEnter`}>
        //Verificar rota certa
        let rota = (this.props.rota === "MyGroups" || verificar)? 
            `MyGroups/${grupo.id}/geral`:`groups/${grupo.id}/view`;
 
        let botao = 
-       <Link to={{ pathname: `/${rota}`, query: { grupo: grupo } }}>      
+       <Link to={{ pathname: `/${rota}`}}>      
                
                <Button
                        bsStyle="danger"
@@ -25,7 +25,7 @@ export default class GroupList extends Component {
                        fill
                        type="submit"                                          
                    >   
-                           {(this.props.rota === "MyGroups" || verificar)? "Ver postagens":"Ver mais"}
+               {(this.props.rota === "MyGroups" || verificar)? "Ver postagens":"Ver mais"}
                            
                            
                </Button></Link>
@@ -76,6 +76,9 @@ export default class GroupList extends Component {
                                <p>{grupo.descricao}</p>
                                
                                <p>Tipo de privacidade: {grupo.tipoPrivacidade}</p>
+
+                               <p>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo))? 
+                                        "Você é integrante desse grupo":""}</p>
                                            
                                {this.botaoVerMais(grupo)}
 
