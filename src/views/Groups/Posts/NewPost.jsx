@@ -53,6 +53,7 @@ export default class NewPost extends React.Component {
         this.setState(
                 (anterior) => {
             anterior.arquivo = valor;
+            alert("valor");
             return valor;
         }
 
@@ -112,9 +113,7 @@ export default class NewPost extends React.Component {
                     </Row>
 
                     <FormInputs
-                      onChange={(e) => {
-                            e.preventDefault()
-                            this.setArquivo(e.target)}}
+                      onChange={(e) => this.setArquivo(e.target.value)}
                       ncols={["col-md-6"]}
                       proprieties={[
                         {

@@ -15,8 +15,6 @@ import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
 import {UserCard} from '../../../components/UserCard/UserCard.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import InputGroup from "react-bootstrap/es/InputGroup";
-import categoryService from '../../../services/CategoryService';
-
 import cancelar from "../../../assets/img/ic_highlight_off_black_48px.svg";
 import avatar from "../../../assets/img/faces/face-3.jpg";
 
@@ -28,23 +26,9 @@ export default class CreateGroupElement extends React.Component {
     this.state={
                 group:this.props.group,
                 page2: false,             
-                listarCategorias:""
+                //categoy:this.props.lista,
+                categoria: null
             };
-            
-            this.setState({
-            listarCategorias: (
-                categoryService.listarNaoPaginado(
-                    (sucesso) => {
-                        this.setState({listarCategorias: sucesso});
-                        console.log("Sucesso");
-                        console.log(this.state.listarCategorias);
-                    },
-                    (erro) => {
-                        console.log(erro);
-                    }
-                )
-            )
-        });
     }
         
         componentWillReceiveProps(proximoEstado){
@@ -73,7 +57,7 @@ export default class CreateGroupElement extends React.Component {
                     );
             
         }
-        
+        /*
         setCategoria(valor){
             this.setState(
                     (anterior)=>
@@ -84,6 +68,14 @@ export default class CreateGroupElement extends React.Component {
                     );
             
         }
+        */
+        setCategory(valor) {
+        
+        this.setState({
+           categoria: valor
+        });  
+        
+       }
         
         setPrivacidade(valor){
             this.setState(
@@ -108,7 +100,7 @@ export default class CreateGroupElement extends React.Component {
                 this.props.confirmar();
             } else {
                 this.setState({page2: true});
-                this.props.inserir(this.state.group);              
+                this.props.inserir(this.state.group, this.state.categoria);              
             }
         } else {
             alert("Preencha todos os campos!");
@@ -157,15 +149,30 @@ export default class CreateGroupElement extends React.Component {
                                                         componentClass="select"
                                                         placeholder="categoria"
                                                         disabled={this.props.disabled}
+                                                        value={this.state.categoria}
+                                                        onChange={(e) => this.setCategory(e.target.value)}
                                                         >
+                                                        
                                                         <option value="">-- Selecione --</option>
-                                                        <option value="1">Informática</option>
-                                                        <option value="2">Lazer</option>
-                                                        <option value="3">Eletrônica</option>
-                                                        <option value="4">Linguagens</option>
-                                                        <option value="5">Desenvolvimento de sistemas</option>
-                                                        <option value="6">Gestão de pessoas</option>
-                                                        <option value="7">Empreendendorismo</option>
+                                                        <option value="1">Outros</option>
+                                                        <option value="2">Informática</option>
+                                                        <option value="3">Lazer</option>
+                                                        <option value="4">Eletrônica</option>
+                                                        <option value="5">Linguagens</option>
+                                                        <option value="6">Desenvolvimento de sistemas</option>
+                                                        <option value="7">Gestão de pessoas</option>
+                                                        <option value="8">Empreendendorismo</option>
+
+                                                        {/*
+                                                        <option value="">-- Selecione --</option>
+                                                        {this.state.category.map((categoria) => {
+                                                            return <option
+                                                                value={categoria.id}
+                                                                key={categoria.id}
+                                                            >{categoria.nome}</option>
+                                                            })}
+                                                            
+                                                        */}
                                                     </FormControl>
                                                 </FormGroup>
                                             </Row>                                   

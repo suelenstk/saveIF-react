@@ -20,7 +20,7 @@ class GroupView extends Component {
             grupo:{id:this.props.id}
             
         }
-
+        console.log(this.state.grupo);
         this.postService = new PostService();
         this.listar();
 
@@ -95,16 +95,18 @@ class GroupView extends Component {
                     />
                     </Col>
                     
-                    <TopicCard/>
+                    <TopicCard
+                    idGrupo={this.state.grupo.id}
+                    />
                     
             </Row>
                     <NewPost 
                     voltar={()=>{this.setState({show:false});}}
                     show={this.state.show}
                     inserir ={(post)=>{ 
-                                    this.postService.inserir(post, 
+                                    this.postService.inserirEmTopico(post,this.state.grupo.id, 
                                     (post)=>{
-                                        alert("Post criado com sucesso!"+post.id);
+                                        alert("Post criado com sucesso!");
                                         this.setState({show: false});                            
                                 },
                                 (erro)=>{

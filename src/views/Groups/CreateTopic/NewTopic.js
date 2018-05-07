@@ -8,6 +8,7 @@ import React, {Component} from 'react';
         import {UserCard} from '../../../components/UserCard/UserCard.jsx';
         import Button from '../../../elements/CustomButton/CustomButton.jsx';
         import done from "../../../assets/img/done.png";
+        import HelpBlock from "react-bootstrap/es/HelpBlock";
         
         
         export default class NewTopic extends React.Component {
@@ -18,7 +19,9 @@ import React, {Component} from 'react';
                 topic: this.props.topic,
                 campoNomeTopico:"none",
                 adicionarTopico: "Novo Tópico",
-                campoTopico: false,            
+                campoTopico: false,   
+                error: "",
+                msgErro:""
                 };
         }
 
@@ -53,22 +56,53 @@ import React, {Component} from 'react';
                 adicionarTopico: "Novo Tópico"
             }); 
         }
+        this.setNome("");
+        this.setError ("");
+        
         }
         
-  
+        setError (estilo, msg){
+            this.setState({
+                error: estilo,
+                msgErro: msg
+            });
+        }
+        
+        verificaSeErroMudou () {
+        var nome = this.state.topic.nome;
+        var convertido = nome.toLowerCase();
+        
+        if(convertido=="geral"){
+            this.setError("error", "Tópico "+nome+" não pode ser utilizado!");
+            return true;
+        }else {
+            this.setError ("", "");
+            return false;
+        }     
+        }
 
         confirmar() {
-
-        if (this.state.topic.nome) {
+            
+      
+        if (this.verificaSeErroMudou()){
+            
+        }else if (this.state.topic.nome) {
                 this.props.inserir(this.state.topic);
                 this.setConfigNovoTopico();
-                this.setNome("");
         } else {
-                alert ("Preencha o nome do tópico");
+                this.setError("error", "Campo nome não pode ser vazio!");
         }
         }
 
         render() {
+        let erroTopico=null;
+        if (this.state.error=="error"){
+            
+            erroTopico=<HelpBlock>{this.state.msgErro}</HelpBlock>
+            
+        }else erroTopico="";
+        
+        
         return (
                 <Col md={4}>
                         <Card
@@ -84,7 +118,7 @@ import React, {Component} from 'react';
                                         
                                         <tr>
                                         <td style={{display: this.state.campoNomeTopico}}>
-                                        <FormGroup controlId="formControlsText">
+                                        <FormGroup controlId="formControlsText" validationState={this.state.error}>
                                             <ControlLabel>Nome</ControlLabel>
                                 
                                         <FormControl
@@ -92,8 +126,11 @@ import React, {Component} from 'react';
                                             placeholder="Nome do Tópico"
                                             value={this.state.topic.nome}
                                             onChange={(e) => this.setNome(e.target.value)}                     
-                                            />
+                                            />  
+                                        <FormControl.Feedback />
+                                        
                                         </FormGroup>
+                                        {erroTopico}
                                         </td>
                                         <td><Button style={{borderStyle: "none", display: this.state.campoNomeTopico}} onClick={(e) => {this.confirmar();}}><img src={done} width="25px" height="20px"/></Button></td>
                                         </tr>                                 

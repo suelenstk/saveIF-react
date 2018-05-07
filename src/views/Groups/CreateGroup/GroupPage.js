@@ -12,6 +12,9 @@ import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import CreateGroupElement from './CreateGroupElement';
 import RightCard from './RightCard';
 import GroupService from '../GroupService.jsx';
+import {Redirect} from "react-router-dom";
+import CategoryService from "../../../services/CategoryService";
+import servicoLogin from '../../../login/ServicoLogin'
 
 class GroupPage extends React.Component {
 
@@ -29,10 +32,80 @@ constructor (props){
         page2: "",
         page3: "",
         group:{},
-    
+        category: {}
     }
+    
     this.groupService = new GroupService();
+    this.categoryService = new CategoryService();
+    
+    //this.listaCategorias();
 }
+
+setLista(categorias) {
+        
+        this.setState({
+           category: categorias
+        });    
+       
+}
+
+listaCategorias (){
+        this.categoryService.listarNaoPaginado(
+               (resultado) => {
+           console.log(resultado);
+           this.setLista(resultado);
+       },
+               (erro) => {
+           console.log("Erro:");
+           console.log(erro);
+       }
+       );
+}
+
+
+inserirComCategorias(item, idCategoria, sucesso, erro) {
+        console.log(item);
+        console.log ("Aqui");
+        fetch(`api/grupos/${idCategoria}`, {
+            method: "POST",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(item)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
+    
+    editarComCategorias(id, item, idCategoria, sucesso, erro) {
+        console.log(item);
+        fetch(`api/grupos/${id}/${idCategoria}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(item)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
+
 
 render() {
 
@@ -46,16 +119,19 @@ render() {
                                privacy={this.state.privacy}
                                disabled={this.state.disabled}
                                invite={this.state.invite}
+                               
+                               lista={this.state.category}
 
                                voltar={()=>{this.setState({privacy:"", disabled:false, information: "", search: "none", invite: "none", page1: "red", page2: "", page3: "", photo: "none"});}}
                                
                                confirmar={()=>{this.setState({privacy:"none", disabled:true, information: "none", search: "none", invite: "none", page1: "", page2: "", page3: "red", photo: ""});}}
                               
-                               inserir ={(group)=>{ 
-                                    this.groupService.inserir(group, 
+                               inserir ={(group, idCategoria)=>{ 
+                                    this.inserirComCategorias(group, idCategoria,
                                     (grupo)=>{
                                         alert("Grupo criado com sucesso!");
-                                        this.setState({privacy:"none", disabled:true, information: "none", search: "", group: grupo, invite: "", page1: "", page2: "red", page3: "", photo: "none"});                            
+                                        this.setState({privacy:"none", disabled:true, information: "none", search: "", group: grupo, invite: "", page1: "", page2: "red", page3: "", photo: "none"});            
+                                        
                                 },
                                 (erro)=>{
                                 console.log("Erro!");
@@ -64,8 +140,8 @@ render() {
                         );
                 }}
                 
-                editar = {(id, group)=>{ 
-                    this.groupService.editar(id, group, 
+                editar = {(id, group, idCategoria)=>{ 
+                    this.groupService.editar(id, group, idCategoria, 
                             (grupo)=>{
                                 alert("Grupo alterado com sucesso!");
                                 this.setState({privacy:"none", disabled:true, information: "none", search: "", group: grupo, invite: "", page1: "", page2: "red", page3: "", photo: "none"});   
@@ -108,7 +184,7 @@ render() {
                                     }
                                     ]}
                                     />
-                                        <a href="" style={{float: 'right', color: 'red'}}> Ir para o grupo</a>
+                                        <button style={{borderStyle: 'none', float: 'right', color: 'red'}} > Ir para o grupo</button>
                                      
                                         <div className="clearfix"></div>
                                         </div>

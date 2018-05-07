@@ -15,9 +15,10 @@ export default class TopicCard extends Component {
 
         this.state = {           
             topic:{},
-            lista: {}
+            lista: {},
+            idGrupoAtual: this.props.idGrupo
         }
-
+        
         this.topicService = new TopicService();
     }
     
@@ -27,7 +28,7 @@ export default class TopicCard extends Component {
 
                     <NewTopic 
                         inserir ={(topic)=>{ 
-                                    this.topicService.inserir(topic, 
+                                    this.topicService.inserirEmGrupo(topic,this.state.idGrupoAtual, 
                                     (topico)=>{
                                         alert("Topico criado com sucesso!");                         
                                 },

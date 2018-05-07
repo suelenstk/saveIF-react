@@ -1,8 +1,12 @@
+import servicoLogin from "../login/ServicoLogin";
+import ServicoRest from "../ServicoRest";
 
-class CategoryService {
+export default class CategoryService extends ServicoRest{
+    
     constructor() {
+            super("api/grupos");
     }
-
+    
     listarNaoPaginado(sucesso, erro) {
 
         let trataFetch = (resultado) => {
@@ -17,14 +21,10 @@ class CategoryService {
 
         fetch("/api/categorias", {
             headers: new Headers({
-                // 'Authorization': servicoLogin.getAuthorization(),
+               'Authorization': servicoLogin.getAuthorization(),
             }),
             method: "GET"
         }).then(trataFetch);
     }
 
 }
-
-let categoryService = new CategoryService();
-
-export default categoryService;
