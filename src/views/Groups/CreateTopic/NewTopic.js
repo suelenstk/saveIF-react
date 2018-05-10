@@ -9,21 +9,50 @@ import React, {Component} from 'react';
         import Button from '../../../elements/CustomButton/CustomButton.jsx';
         import done from "../../../assets/img/done.png";
         import HelpBlock from "react-bootstrap/es/HelpBlock";
+        import TopicService from './TopicService';
         
         
         export default class NewTopic extends React.Component {
 
         constructor(props) {
+            
+        
                 super(props);
                 this.state = {
                 topic: this.props.topic,
                 campoNomeTopico:"none",
                 adicionarTopico: "Novo Tópico",
+                topico:{titulo:"teste"},
                 campoTopico: false,   
                 error: "",
                 msgErro:""
                 };
+                
+                this.topicService = new TopicService();
+                
+                this.listarTopicos();
+                
         }
+        
+    listarTopicos() {
+        this.topicService.listarTopicosGrupo(this.props.idGrupo,
+                (resultado) => {
+            console.log(resultado);
+            this.setarTopico(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+    }   
+
+    
+    setarTopico(resultado) {
+        this.setState({
+            topico: resultado
+        });
+    }
 
         componentWillReceiveProps(proximoEstado) {
         this.setState({topic: proximoEstado.topic});
@@ -96,13 +125,14 @@ import React, {Component} from 'react';
 
         render() {
         let erroTopico=null;
-        if (this.state.error=="error"){
+        console.log(this.state.topico);
+        if (this.state.error==="error"){
             
             erroTopico=<HelpBlock>{this.state.msgErro}</HelpBlock>
             
         }else erroTopico="";
         
-        
+        if(this.state.topico.titulo !== "teste")
         return (
                 <Col md={4}>
                         <Card
@@ -111,11 +141,9 @@ import React, {Component} from 'react';
                             content={
                             <form>
                                 <Table responsive>  
-                                
-                                        <tr>Topico 1</tr>
-                                        <tr>Topico 2</tr>
-                                        <tr>Topico 3</tr>
-                                        
+                                    {this.state.topico.map((topico) => {
+                                       return <tr>{topico.nome}</tr>
+                                    })}
                                         <tr>
                                         <td style={{display: this.state.campoNomeTopico}}>
                                         <FormGroup controlId="formControlsText" validationState={this.state.error}>
@@ -157,5 +185,7 @@ import React, {Component} from 'react';
     
 
     );
+    else
+        return <div></div>
     }
     }

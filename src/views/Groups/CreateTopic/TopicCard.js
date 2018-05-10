@@ -16,17 +16,19 @@ export default class TopicCard extends Component {
         this.state = {           
             topic:{},
             lista: {},
-            idGrupoAtual: this.props.idGrupo
+            idGrupoAtual: this.props.idGrupo,
         }
         
         this.topicService = new TopicService();
+        
     }
     
     render() {
-
+        //console.log(this.state.topico);
         return (
 
-                    <NewTopic 
+                    <NewTopic
+                        idGrupo = {this.state.idGrupoAtual}
                         inserir ={(topic)=>{ 
                                     this.topicService.inserirEmGrupo(topic,this.state.idGrupoAtual, 
                                     (topico)=>{
@@ -37,6 +39,7 @@ export default class TopicCard extends Component {
                                 console.log(erro);
                             }
                         );
+                        
                 }}
                 topic={this.state.topic} 
                     />

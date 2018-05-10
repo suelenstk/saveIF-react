@@ -21,7 +21,9 @@ class GroupView extends Component {
             grupo:{id:this.props.id}
             
         }
+        
         console.log(this.state.grupo);
+        
         this.postService = new PostService();
         this.groupService = new GroupService();
         this.listar();
@@ -64,6 +66,8 @@ class GroupView extends Component {
         });
     }
     
+
+    
     listarGrupo() {
         this.groupService.listarGrupoEspecifico(this.state.grupo.id,
                 (resultado) => {
@@ -76,10 +80,10 @@ class GroupView extends Component {
         }
         );
     }   
-
+    
     render() {
         
-        
+        console.log(this.state.topico);
             //<PostList posts={this.state.pagina}/>
         return (
             <div className="content">
@@ -91,8 +95,7 @@ class GroupView extends Component {
                 
                         <Col md={8}>
                             <Card 
-                                title="Postagens"
-                                
+                                title="Postagens"                                                            
                                 content={
                                 
                                 <from>

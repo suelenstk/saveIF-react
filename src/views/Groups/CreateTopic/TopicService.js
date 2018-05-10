@@ -3,7 +3,7 @@ import servicoLogin from "../../../login/ServicoLogin";
 
 export default class TopicService {
         
-       inserirEmGrupo(item, idGrupo, sucesso, erro) {
+    inserirEmGrupo(item, idGrupo, sucesso, erro) {
         console.log(item);
        
         fetch(`api/topicos/${idGrupo}`, {
@@ -22,7 +22,33 @@ export default class TopicService {
                 )
             }
 
-        });
+        });            
+        
     }
+    
+    listarTopicosGrupo(id, sucesso, erro) {
+
+
+        let trataFetch = (resultado) => {
+
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`api/grupos/${id}/topicos`, {
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+
+            }),
+            method: "GET"
+        }).then(trataFetch);
+    }
+    
+    
 
 }
