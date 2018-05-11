@@ -26,6 +26,29 @@ export default class PostService {
         }).then(trataFetch);
     }
     
+    listarPostEspecifico(id,idt, sucesso, erro) {
+
+
+        let trataFetch = (resultado) => {
+
+            if (resultado.ok) {
+                resultado.json().then(sucesso);
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`api/grupos/${id}/posts/${idt}`, {
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+
+            }),
+            method: "GET"
+        }).then(trataFetch);
+    }
+    
     inserirEmTopico(item, idGrupo, sucesso, erro) {
         console.log(item);
        

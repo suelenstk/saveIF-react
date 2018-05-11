@@ -43,8 +43,9 @@ export default class PostList extends React.Component{
                                        {/*<p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>*/}
                                    </div>
 
-                                   <h5>Por {post.autorPost.nome}, {this.data(post.dataPostagem)}.</h5>
-                                   <p>{post.texto}</p> 
+                                   <p className="h5">{post.texto}</p> 
+
+                                   <small>Por {post.autorPost.nome}, {this.data(post.dataPostagem)}.</small>                                   
 
 
                                </Col>

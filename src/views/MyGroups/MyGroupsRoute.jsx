@@ -32,6 +32,16 @@ class RotaPosts extends Component {
 
 }
 
+class RotaPostEspecifico extends Component {
+
+ render() {
+    console.log(this.props.match.params.idt);
+    return <GroupView id={this.props.match.params.id}
+                       idt={this.props.match.params.idt}/>;
+ }
+
+}
+
 
 export default class MyGroupsRoute extends Component {
 
@@ -46,6 +56,8 @@ export default class MyGroupsRoute extends Component {
                                                 pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>
     
     <Route path="/MyGroups/:id/geral" component={RotaPosts} />
+    
+    <Route path="/MyGroups/:id/posts/:idt" component={RotaPostEspecifico} />
     
     <Route path="/MyGroups/:id/View" render = {(props) => <RotaVisualizacao  {...props} 
                  user={this.props.user}/>}

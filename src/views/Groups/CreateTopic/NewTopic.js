@@ -10,6 +10,7 @@ import React, {Component} from 'react';
         import done from "../../../assets/img/done.png";
         import HelpBlock from "react-bootstrap/es/HelpBlock";
         import TopicService from './TopicService';
+        import {Link} from 'react-router-dom';
         
         
         export default class NewTopic extends React.Component {
@@ -122,9 +123,19 @@ import React, {Component} from 'react';
                 this.setError("error", "Campo nome não pode ser vazio!");
         }
         }
+        
+        verTopico(id,topico){  
+            
+            return (topico.nome === 'Geral')? `MyGroups/${id}/geral`:`MyGroups/${id}/posts/${topico.id}`;               
+        }
 
         render() {
+        
         let erroTopico=null;
+        
+        
+        
+        
         console.log(this.state.topico);
         if (this.state.error==="error"){
             
@@ -142,7 +153,7 @@ import React, {Component} from 'react';
                             <form>
                                 <Table responsive>  
                                     {this.state.topico.map((topico) => {
-                                       return <tr>{topico.nome}</tr>
+                                       return <Link to={{ pathname: `/${this.verTopico(this.props.idGrupo,topico)}`}}>{topico.nome}<br/></Link>
                                     })}
                                         <tr>
                                         <td style={{display: this.state.campoNomeTopico}}>

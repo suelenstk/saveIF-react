@@ -18,15 +18,16 @@ class GroupView extends Component {
             show: false,
             pagina:"",
             post:{titulo:"teste"},
-            grupo:{id:this.props.id}
-            
+            grupo:{id:this.props.id},
+            topico:{id:this.props.idt}          
         }
         
-        console.log(this.state.grupo);
+        //alert(this.state.topico.id);
+        //alert(this.state.grupo.id);
         
         this.postService = new PostService();
         this.groupService = new GroupService();
-        this.listar();
+        (this.state.topico.id)? this.listarPostEspecifico():this.listar();
         this.listarGrupo();
 
     }
@@ -48,6 +49,21 @@ class GroupView extends Component {
         this.paginaAtual=0;
         console.log(this.state.grupo.id);
         this.postService.listarPostGeral(this.state.grupo.id,
+                (resultado) => {
+            console.log(resultado);
+            this.setarItem(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+
+    } 
+    
+    listarPostEspecifico() {
+        this.paginaAtual=0;
+        this.postService.listarPostEspecifico(this.state.grupo.id,this.state.topico.id,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -85,10 +101,11 @@ class GroupView extends Component {
         
         console.log(this.state.topico);
             //<PostList posts={this.state.pagina}/>
+        
         return (
             <div className="content">
     
-                <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - Tópico Geral</h1>
+                <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - Geral</h1>
                 
                 <Grid fluid>
                     <Row>
