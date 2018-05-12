@@ -17,7 +17,7 @@ import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import InputGroup from "react-bootstrap/es/InputGroup";
 import cancelar from "../../../assets/img/ic_highlight_off_black_48px.svg";
 import avatar from "../../../assets/img/faces/face-3.jpg";
-
+import CategoryService from '../../../services/CategoryService';
 export default class CreateGroupElement extends React.Component {
 
     constructor(props) {
@@ -27,8 +27,25 @@ export default class CreateGroupElement extends React.Component {
                 group:this.props.group,
                 page2: false,             
                 //categoy:this.props.lista,
-                categoria: null
+                categoria: null,
+                listarCategorias: ""
             };
+            this.categoryService = new CategoryService();
+
+            this.setState({
+                listarCategorias: (
+                    this.categoryService.listarNaoPaginado(
+                        (sucesso) => {
+                            this.setState({listarCategorias: sucesso});
+                            console.log("Sucesso");
+                            console.log(this.state.listarCategorias);
+                        },
+                        (erro) => {
+                            console.log(erro);
+                        }
+                    )
+                )
+            });
     }
         
         componentWillReceiveProps(proximoEstado){
@@ -109,7 +126,32 @@ export default class CreateGroupElement extends React.Component {
     }
             
     render () {
-        
+        let campoCategoria = null;
+
+        if (this.state.listarCategorias) {
+            campoCategoria =
+                <Row>
+                    <FormGroup controlId="formControlsText" className="col-md-12">
+                        <ControlLabel>Categoria</ControlLabel>
+                        <FormControl
+                            componentClass="select"
+                            placeholder="categoria"
+                            value={this.state.group.categoria}
+                            onChange={(e) => this.setCategory(e.target.value)}
+                            required
+                        >
+                            <option value="">-- Selecione --</option>
+                            {this.state.listarCategorias.map((categoria) => {
+                                return <option
+                                    value={categoria.id}
+                                    key={categoria.id}
+                                >{categoria.nome}</option>
+                            })}
+                        </FormControl>
+                    </FormGroup>
+                </Row>
+
+        }
             return (
                         <Card
                                 title="Criar Grupo"                   
@@ -142,40 +184,10 @@ export default class CreateGroupElement extends React.Component {
                                             </Col>
                                         </Row>
                                         
-                                            <Row>
-                                                <FormGroup controlId="formControlSelectVinculo" className="col-md-12">
-                                                    <ControlLabel>Categoria</ControlLabel>
-                                                    <FormControl
-                                                        componentClass="select"
-                                                        placeholder="categoria"
-                                                        disabled={this.props.disabled}
-                                                        value={this.state.categoria}
-                                                        onChange={(e) => this.setCategory(e.target.value)}
-                                                        >
-                                                        
-                                                        <option value="">-- Selecione --</option>
-                                                        <option value="1">Outros</option>
-                                                        <option value="2">Informática</option>
-                                                        <option value="3">Lazer</option>
-                                                        <option value="4">Eletrônica</option>
-                                                        <option value="5">Linguagens</option>
-                                                        <option value="6">Desenvolvimento de sistemas</option>
-                                                        <option value="7">Gestão de pessoas</option>
-                                                        <option value="8">Empreendendorismo</option>
-
-                                                        {/*
-                                                        <option value="">-- Selecione --</option>
-                                                        {this.state.category.map((categoria) => {
-                                                            return <option
-                                                                value={categoria.id}
-                                                                key={categoria.id}
-                                                            >{categoria.nome}</option>
-                                                            })}
-                                                            
-                                                        */}
-                                                    </FormControl>
-                                                </FormGroup>
-                                            </Row>                                   
+                                        <div>
+                                               {campoCategoria}
+                                                                              
+                                        </div>                              
                                             
                                     
                                     <FormGroup style={{display: this.props.privacy}} disabled={this.props.disabled}>
