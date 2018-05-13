@@ -57,7 +57,6 @@ class App extends Component {
             </div>
 )
         } else {
-            console.log(servicoLogin.getUsuario());
             return (
                 <div className="wrapper">
                     <Sidebar {...this.props} />

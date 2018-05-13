@@ -677,37 +677,40 @@ a, p {
 
 .chip {
     display: inline-block;
-    padding: 0 25px;
-    height: 50px;
+    padding: 0 12px 0 25px;
+    height: 35px;
     width: 100%;
-    font-size: 14px;
-    line-height: 50px;
+    font-size: 13px;
+    line-height: 35px;
     border-radius: 25px;
     background-color: #f1f1f1;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .chip img {
     float: left;
-    margin: 0 10px 0 -25px;
-    height: 50px;
-    width: 50px;
+    margin: 0 7px 0 -25px;
+    height: 35px;
+    width: 35px;
     border-radius: 50%;
 }
 
+.pager {
+    margin: 0 0 6px;
+}
+
+.card .footer {
+    line-height: 20px;
+}
+
 .addUserbtn {
-    padding: 10px 0;
+    padding: 5px 0;
     height: 100%;
     color: #000000;
     font-weight: bold;
     float: right;
     font-size: 25px;
     cursor: pointer;
-    /*background-color: #a1e82c;*/
-}
-
-.pe-7s-add-user {
-    /*background-color: #ED3846;*/
 }
 
 .addUserbtn:hover {

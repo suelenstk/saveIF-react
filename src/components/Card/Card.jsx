@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 
 export class Card extends Component{
@@ -22,7 +22,7 @@ export class Card extends Component{
                         {this.props.legend}
                         {this.props.stats != null ? <hr />:""}
                         <div className="stats">
-                            <i className={this.props.statsIcon}></i> {this.props.stats}
+                            <i className={this.props.statsIcon}/> {this.props.stats}
                         </div>
                     </div>
                 </div>

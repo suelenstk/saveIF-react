@@ -38,7 +38,6 @@ class UserRegistration extends React.Component {
                 courseService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listaCurso: sucesso});
-                        console.log("Sucesso");
                         console.log(this.state.listaCurso);
                     },
                     (erro) => {
@@ -217,7 +216,7 @@ class UserRegistration extends React.Component {
                                                         value={this.state.confirmaSenha}
                                                         placeholder="Confirmação de senha"
                                                         onChange={(e) => this.setState({confirmaSenha: e.target.value})}
-
+                                                        required
                                                     />
                                                 </FormGroup>
                                             </Row>

@@ -1,45 +1,47 @@
 import React from 'react';
 
-import {Col, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
+import {FormControl, FormGroup} from 'react-bootstrap';
 import InputGroup from "react-bootstrap/es/InputGroup";
 import {Card} from '../../components/Card/Card.jsx';
-import UserService from '../../services/UserService';
-import listUserService from "../../services/ListUserService";
 import {UserChip} from '../../elements/UserChip/UserChip';
 
 import avatar from "../../assets/img/default-avatar.png";
 import Button from "react-bootstrap/es/Button";
-
+import listUserService from "../../services/ListUserService"
+import Pager from "react-bootstrap/es/Pager";
 
 class UserSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             listaUsuario: "",
-
+            nome: "",
+            pagina: 0
         };
 
-        this.UserService = new UserService();
-
         this.setState({
-            listaUsuario: (
-                listUserService.listarNaoPaginado(
-                    (sucesso) => {
-                        this.setState({listaUsuario: sucesso});
-                        console.log("Sucesso");
-                        console.log(this.state.listaUsuario);
-                    },
-                    (erro) => {
-                        console.log(erro);
-                    }
-                )
-            )
+            listaUsuario: this.pesquisar(0)
         });
+    }
+
+    pesquisar(pagina) {
+        listUserService.pesquisarPaginado(
+            this.state.nome, pagina,
+            (sucesso) => {
+                this.setState({listaUsuario: sucesso});
+                console.log("Sucesso");
+                console.log(this.state.listaUsuario);
+            },
+            (erro) => {
+                console.log(erro);
+            }
+        );
+        this.setValor("pagina", pagina);
     }
 
     setValor(atributo, valor) {
         this.setState(
-            (estado) => estado.usuario[atributo] = valor
+            (estado) => estado[atributo] = valor
         );
     }
 
@@ -47,10 +49,21 @@ class UserSearch extends React.Component {
     render() {
         let campoUsuario = null;
 
+        let statusPrev = true;
+        let statusNext = true;
+
+        if (this.state.pagina > 0) {
+            statusPrev = false;
+        }
+
+        if (this.state.pagina < this.state.listaUsuario.totalPages - 1) {
+            statusNext = false;
+        }
+
         if (this.state.listaUsuario) {
             campoUsuario =
                 <div>
-                    {this.state.listaUsuario.map((usuario) => {
+                    {this.state.listaUsuario.content.map((usuario) => {
                         return <UserChip
                             value={usuario.id}
                             key={usuario.id}
@@ -59,44 +72,66 @@ class UserSearch extends React.Component {
                             alt={usuario.nome}
                             nomeBtn="addUserbtn"
                             icone="pe-7s-add-user"
-                            largura="100%"
-                        ></UserChip>
+                        />
                     })}
-
                 </div>
         }
 
-
         return (
-            
-                            <Card
-                                title="Pesquisar usuários"
-                                content={
-                                    <div style={{overflow: "auto", height: "500px"}}>
-                                        <form>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroup.Button>
-                                                        <Button className="btnSearch">
-                                                            <i className="fa fa-search"/>
-                                                        </Button>
-                                                    </InputGroup.Button>
-                                                    <FormControl
-                                                        type="text"
-                                                        placeholder="Pesquisar"
-                                                    />
-                                                </InputGroup>
-                                            </FormGroup>
-                                        </form>
-                                        <FormGroup>
-                                            <FormControl.Static>
-                                                {campoUsuario}
-                                            </FormControl.Static>
-                                        </FormGroup>
-                                    </div>
-                                }
-                            />
-                       
+            <Card
+                title="Pesquisar usuários"
+                content={
+                    <div style={{overflow: "auto", height: "415px"}}>
+                        <form onSubmit={(event) => {
+                            event.preventDefault();
+                            this.pesquisar(0)
+                        }}>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroup.Button>
+                                        <Button className="btnSearch" type="submit">
+                                            <i className="fa fa-search"/>
+                                        </Button>
+                                    </InputGroup.Button>
+                                    <FormControl
+                                        type="text"
+                                        placeholder="Pesquisar"
+                                        onChange={(e) => this.setValor("nome", e.target.value)}
+                                    />
+                                </InputGroup>
+                            </FormGroup>
+                        </form>
+                        <FormGroup>
+                            <FormControl.Static>
+                                {campoUsuario}
+                            </FormControl.Static>
+                        </FormGroup>
+                    </div>
+                }
+
+                legend={
+                    <Pager>
+                        <Pager.Item
+                            previous
+                            disabled={statusPrev}
+                            onClick={(e) => {
+                                this.pesquisar(this.state.pagina - 1);
+                            }}
+                        >
+                            &lt; Anterior
+                        </Pager.Item>
+                        <Pager.Item
+                            next
+                            disabled={statusNext}
+                            onClick={(e) => {
+                                this.pesquisar(this.state.pagina + 1);
+                            }}
+                        >
+                            Próxima &gt;
+                        </Pager.Item>
+                    </Pager>
+                }
+            />
         );
     }
 }

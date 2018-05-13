@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 export class UserChip extends Component {
     render() {
         return (
-            <div className="chip" style={{width: this.props.largura}}
+            <div className="chip"
                 // chip={this.state.chip}
                 // docked={false}
                 // onRequestChange={(chip) => this.setState({chip})}
