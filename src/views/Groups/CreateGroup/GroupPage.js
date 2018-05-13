@@ -15,6 +15,7 @@ import GroupService from '../GroupService.jsx';
 import {Redirect} from "react-router-dom";
 import CategoryService from "../../../services/CategoryService";
 import servicoLogin from '../../../login/ServicoLogin'
+import  GroupImage from '../../../components/GroupImage/GroupImage';
 
 class GroupPage extends React.Component {
 
@@ -173,23 +174,17 @@ render() {
                                 
                                 <div>
                           
-                                <FormInputs
-                                    ncols={["col-md-6"]}
-                                    proprieties={[
-                                {
-                                    label: "Adicione uma foto ao grupo: ",
-                                    type: "file",
-                                    bsClass: "form-control",
-                                    placeholder: "File",
-                                    }
-                                    ]}
-                                    />
-                                        <button style={{borderStyle: 'none', float: 'right', color: 'red'}} > Ir para o grupo</button>
-                                     
-                                        <div className="clearfix"></div>
-                                        </div>
+                                    <GroupImage
+                                        id= {this.state.group.id}
+                                    />         
+                
+                                    <button style={{borderStyle: 'none', float: 'right', color: 'red'}} > Ir para o grupo</button>
+                                    
+                                    <div className="clearfix"></div>
+
+                                </div>
                                 }
-                            />                     
+                            />    
                         </Col>
                     </Row>
 
