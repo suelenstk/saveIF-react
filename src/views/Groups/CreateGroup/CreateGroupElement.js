@@ -16,110 +16,108 @@ export default class CreateGroupElement extends React.Component {
 
     constructor(props) {
 
-    super(props);
-    this.state={
-                group:this.props.group,
-                page2: false,             
-                //categoy:this.props.lista,
-                categoria: null,
-                listarCategorias: ""
-            };
-            this.categoryService = new CategoryService();
+        super(props);
+        this.state = {
+            group: this.props.group,
+            page2: false,
+            //categoy:this.props.lista,
+            categoria: null,
+            listarCategorias: ""
+        };
+        this.categoryService = new CategoryService();
 
-            this.setState({
-                listarCategorias: (
-                    this.categoryService.listarNaoPaginado(
-                        (sucesso) => {
-                            this.setState({listarCategorias: sucesso});
-                            console.log("Sucesso");
-                            console.log(this.state.listarCategorias);
-                        },
-                        (erro) => {
-                            console.log(erro);
-                        }
-                    )
-                )
-            });
-    }
-        
-        componentWillReceiveProps(proximoEstado){
-            this.setState({group:proximoEstado.group});
-            
-        }
-        
-        setNome(valor){
-            this.setState(
-                    (anterior)=>
-                            {
-                            anterior.group.nome=valor;
-                            return anterior;
-                            }
-                    );
-            
-        }
-        
-        setDescricao(valor){
-            this.setState(
-                    (anterior)=>
-                            {
-                            anterior.group.descricao=valor;
-                            return anterior;
-                            }
-                    );
-            
-        }
-        /*
-        setCategoria(valor){
-            this.setState(
-                    (anterior)=>
-                            {
-                            anterior.group.categoria=valor;
-                            return anterior;
-                            }
-                    );
-            
-        }
-        */
-        setCategory(valor) {
-        
         this.setState({
-           categoria: valor
-        });  
-        
-       }
-        
-        setPrivacidade(valor){
-            this.setState(
-                    (anterior)=>
-                            {
-                            anterior.group.tipoPrivacidade=valor;
-                            return anterior;
-                            }
-                    );
-            
-        }
-   
-        createGroup(){
-          
-            if (this.state.group.nome &&
-                this.state.group.descricao) {
-            if (this.state.group.id&&this.state.page2!=true) {  
+            listarCategorias: (
+                this.categoryService.listarNaoPaginado(
+                    (sucesso) => {
+                        this.setState({listarCategorias: sucesso});
+                        console.log("Sucesso");
+                        console.log(this.state.listarCategorias);
+                    },
+                    (erro) => {
+                        console.log(erro);
+                    }
+                )
+            )
+        });
+    }
+
+    componentWillReceiveProps(proximoEstado) {
+        this.setState({group: proximoEstado.group});
+
+    }
+
+    setNome(valor) {
+        this.setState(
+            (anterior) => {
+                anterior.group.nome = valor;
+                return anterior;
+            }
+        );
+
+    }
+
+    setDescricao(valor) {
+        this.setState(
+            (anterior) => {
+                anterior.group.descricao = valor;
+                return anterior;
+            }
+        );
+
+    }
+
+    /*
+    setCategoria(valor){
+        this.setState(
+                (anterior)=>
+                        {
+                        anterior.group.categoria=valor;
+                        return anterior;
+                        }
+                );
+
+    }
+    */
+    setCategory(valor) {
+
+        this.setState({
+            categoria: valor
+        });
+
+    }
+
+    setPrivacidade(valor) {
+        this.setState(
+            (anterior) => {
+                anterior.group.tipoPrivacidade = valor;
+                return anterior;
+            }
+        );
+
+    }
+
+    createGroup() {
+
+        if (this.state.group.nome &&
+            this.state.group.descricao) {
+            if (this.state.group.id && this.state.page2 != true) {
                 this.setState({page2: true});
-                this.props.editar();   
-            } else if (this.state.group.id&&this.state.page2==true){
+                this.props.editar();
+            } else if (this.state.group.id && this.state.page2 == true) {
                 this.setState({page2: false});
                 this.props.confirmar();
             } else {
                 this.setState({page2: true});
-                this.props.inserir(this.state.group, this.state.categoria);              
+                this.props.inserir(this.state.group, this.state.categoria);
             }
         } else {
             alert("Preencha todos os campos!");
         }
-        
+
     }
-            
-    render () {
+
+    render() {
         let campoCategoria = null;
 
         if (this.state.listarCategorias) {
@@ -130,9 +128,10 @@ export default class CreateGroupElement extends React.Component {
                         <FormControl
                             componentClass="select"
                             placeholder="categoria"
-                            value={this.state.group.categoria}
+                            value={this.state.categoria}
                             onChange={(e) => this.setCategory(e.target.value)}
                             required
+                            disabled={this.props.disabled}
                         >
                             <option value="">-- Selecione --</option>
                             {this.state.listarCategorias.map((categoria) => {
@@ -146,125 +145,126 @@ export default class CreateGroupElement extends React.Component {
                 </Row>
 
         }
-            return (
-                        <Card
-                                title="Criar Grupo"                   
-                                content={ 
-                                <form>
-                                    
-                                <FormGroup controlId="formControlsText">
-                                            <ControlLabel>Nome</ControlLabel>
-                                            <FormControl
-                                                type="text"                                               
-                                                placeholder="Nome do Grupo"     
-                                                value={this.state.group.nome}
-                                                onChange={(e) => this.setNome(e.target.value)}
-                                                disabled={this.props.disabled}
-                                                
-                                            />
-                                        </FormGroup>
-                                        
-                                        <Row>
-                                            <Col md={12}>
-                                                <FormGroup controlId="formControlsTextarea">
-                                                
-                                                    <ControlLabel>Descrição</ControlLabel>
-                                                    <FormControl rows="5" componentClass="textarea" bsClass="form-control" placeholder="Descreva seu grupo"
-                                                    value={this.state.group.descricao}
-                                                    onChange={(e) => this.setDescricao(e.target.value)}
-                                                    disabled={this.props.disabled}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        
-                                        <div>
-                                               {campoCategoria}
-                                                                              
-                                        </div>                              
-                                            
-                                    
-                                    <FormGroup style={{display: this.props.privacy}} disabled={this.props.disabled}>
-                                    <ControlLabel>Privacidade</ControlLabel><br/>
-                                    
-                                    <FormControl componentClass="radio"
-                                        value={this.state.group.tipoPrivacidade}
-                                        onChange={(e) => this.setPrivacidade(e.target.value)}
-                                        
-                                            >
-                                        <Radio name="radioGroup" inline value="aberto">
-                                            Aberto
-                                        </Radio>
-                                        <Radio name="radioGroup" inline value="publico">
-                                            Público
-                                        </Radio>
-                                        <Radio name="radioGroup" inline value="privado">
-                                            Privado
-                                        </Radio>
-                                    </FormControl>
-                                    </FormGroup>
-                                    
-                                    <FormGroup controlId="formControlsConvidados" className="col-md-12" style={{display: this.props.invite}}>
-                                        <ControlLabel>Convidados</ControlLabel><br/>
-                                        
-                                        <div className="chip" style={{width: '200px'}}
-                                        chip={this.state.chip}
-                                        docked={false}
-                                        onRequestChange={(chip) => this.setState({chip})}
-                                        >
-                                        <img src={avatar} alt="Person" width="96" height="96"/>
-                                            
-                                            John Doe
-             
-                                        <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
-                                        </div>
-                                        
-                                        <div className="chip" style={{width: '200px'}}
-                                        chip={this.state.chip}
-                                        docked={false}
-                                        onRequestChange={(chip) => this.setState({chip})}
-                                        >
-                                        <img src={avatar} alt="Person" width="96" height="96"/>
-                                            
-                                            John Doe
-             
-                                        <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
-                                        </div>
-                                        </FormGroup> 
-                                    
-                                    <Button
-                                        bsStyle="danger"
-                                        pullRight
-                                        fill
-                                        style={{marginLeft: '5px'}}
-                                        onClick={(e) => {
-                                                this.createGroup()
-                                            }}
-                                        >   
-                                            Criar grupo
-                                        </Button>
-                                        
-                                        <Button
-                                            bsStyle="danger"
-                                            pullRight
+        return (
+            <Card
+                title="Criar Grupo"
+                content={
+                    <form>
 
-                                            onClick={(e) => {
-                                                
-                                                this.setState({page2: false})
-                                                this.props.voltar();
-                                            }}
-                                        >
-                                            Voltar
-                                        </Button>
-                                        
-                                        <div className="clearfix"></div>
-                                </form>
-                                }
-                                        
-                            />       
-                            
-                            
-                            
+                        <FormGroup controlId="formControlsText">
+                            <ControlLabel>Nome</ControlLabel>
+                            <FormControl
+                                type="text"
+                                placeholder="Nome do Grupo"
+                                value={this.state.group.nome}
+                                onChange={(e) => this.setNome(e.target.value)}
+                                disabled={this.props.disabled}
+
+                            />
+                        </FormGroup>
+
+                        <Row>
+                            <Col md={12}>
+                                <FormGroup controlId="formControlsTextarea">
+
+                                    <ControlLabel>Descrição</ControlLabel>
+                                    <FormControl rows="5" componentClass="textarea" bsClass="form-control"
+                                                 placeholder="Descreva seu grupo"
+                                                 value={this.state.group.descricao}
+                                                 onChange={(e) => this.setDescricao(e.target.value)}
+                                                 disabled={this.props.disabled}
+                                    />
+                                </FormGroup>
+                            </Col>
+                        </Row>
+
+                        <div>
+                            {campoCategoria}
+
+                        </div>
+
+
+                        <FormGroup style={{display: this.props.privacy}} disabled={this.props.disabled}>
+                            <ControlLabel>Privacidade</ControlLabel><br/>
+
+                            <FormControl componentClass="radio"
+                                         value={this.state.group.tipoPrivacidade}
+                                         onChange={(e) => this.setPrivacidade(e.target.value)}
+
+                            >
+                                <Radio name="radioGroup" inline value="aberto">
+                                    Aberto
+                                </Radio>
+                                <Radio name="radioGroup" inline value="publico">
+                                    Público
+                                </Radio>
+                                <Radio name="radioGroup" inline value="privado">
+                                    Privado
+                                </Radio>
+                            </FormControl>
+                        </FormGroup>
+
+                        <FormGroup controlId="formControlsConvidados" className="col-md-12"
+                                   style={{display: this.props.invite}}>
+                            <ControlLabel>Convidados</ControlLabel><br/>
+
+                            <div className="chip" style={{width: '200px'}}
+                                 chip={this.state.chip}
+                                 docked={false}
+                                 onRequestChange={(chip) => this.setState({chip})}
+                            >
+                                <img src={avatar} alt="Person" width="96" height="96"/>
+
+                                John Doe
+
+                                <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
+                            </div>
+
+                            <div className="chip" style={{width: '200px'}}
+                                 chip={this.state.chip}
+                                 docked={false}
+                                 onRequestChange={(chip) => this.setState({chip})}
+                            >
+                                <img src={avatar} alt="Person" width="96" height="96"/>
+
+                                John Doe
+
+                                <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
+                            </div>
+                        </FormGroup>
+
+                        <Button
+                            bsStyle="danger"
+                            pullRight
+                            fill
+                            style={{marginLeft: '5px'}}
+                            onClick={(e) => {
+                                this.createGroup()
+                            }}
+                        >
+                            Criar grupo
+                        </Button>
+
+                        <Button
+                            bsStyle="danger"
+                            pullRight
+
+                            onClick={(e) => {
+
+                                this.setState({page2: false})
+                                this.props.voltar();
+                            }}
+                        >
+                            Voltar
+                        </Button>
+
+                        <div className="clearfix"></div>
+                    </form>
+                }
+
+            />
+
+
         );
     }
 }

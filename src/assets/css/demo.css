@@ -736,3 +736,9 @@ a, p {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
 }
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}

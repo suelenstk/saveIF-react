@@ -6,6 +6,7 @@ import {FormInputs} from '../FormInputs/FormInputs.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import GroupService from '../../views/Groups/GroupService';
 import servicoLogin from '../../login/ServicoLogin';
+import Alert from "react-bootstrap/es/Alert";
 
 class GroupImage extends React.Component {
 
@@ -15,7 +16,8 @@ class GroupImage extends React.Component {
         this.state = {
             file: "",//para imagem
             imagePreviewUrl: "",//para imagemo
-            loading: false
+            loading: false,
+            success: false
         };
 
         this.groupService = new GroupService();
@@ -25,6 +27,7 @@ class GroupImage extends React.Component {
     }
 
     _handleSubmit(form) {
+        this.setState({loading: true});
         let formData = new FormData(form);
         fetch("/api/grupos/" + this.props.id + "/imagem", {
             method: "POST",
@@ -35,38 +38,43 @@ class GroupImage extends React.Component {
             }),
             body: formData
         }).then((resultado) => {
-            if (resultado.ok) {
-                this.setState(
-                    (anterior) => {
-                        alert("Imagem inserida com sucesso!");
-                        console.log("Mudou!");
-                        return anterior;
-                    }
-                );
+            this.setState({loading: true});
+
+            // simulacao de atraso no upload - pode ser removido ao entrar em producao
+
+            this.sleep(3000).then(() => {
+                if (resultado.ok) {
+                    this.setState(
+                        (anterior) => {
+                            alert("Imagem inserida com sucesso!");
+                            console.log("Mudou!");
+                            return anterior;
+                        }
+                    );
 
 
-            } else {
-                resultado.json().then(
-                    (resultadoErro) => console.log(resultadoErro)
-                )
-            }
+                } else {
+                    resultado.json().then(
+                        (resultadoErro) => console.log(resultadoErro)
+                    )
+                }
+                this.setState({loading: false});
+                this.setState({success: true});
+            });
 
         });
     }
 
-    sleep() {
-        return new Promise((e) => setTimeout(e, 3000));
+    sleep(tempo) {
+        return new Promise((e) => setTimeout(e, tempo));
     }
 
     _handleImageChange(e) {
         e.preventDefault();
-        this.setState({imagePreviewUrl: ""});
-        this.setState({loading: true});
 
         let reader = new FileReader();
         let file = e.target.files[0];
-        // simulacao de demora
-        // this.sleep().then(() => {
+
         reader.onloadend = () => {
             this.setState({
                 file: file,
@@ -75,7 +83,6 @@ class GroupImage extends React.Component {
         };
 
         reader.readAsDataURL(file)
-        // });
 
     }
 
@@ -83,25 +90,31 @@ class GroupImage extends React.Component {
     render() {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
-        if (this.state.loading) {
-            $imagePreview = (<ReactLoading type="spinningBubbles" className="loading" color="#ED3846"/>);
-        }
+
         if (imagePreviewUrl) {
             $imagePreview = (<img src={imagePreviewUrl} responsive width="100%"/>);
         }
+
+        if (this.state.loading) {
+            $imagePreview = (<ReactLoading type="spinningBubbles" className="loading" color="#ED3846"/>);
+        }
+
+        if (this.state.success) {
+            $imagePreview = (
+                <Alert bsStyle="success">
+                    Imagem enviada com sucesso!
+                </Alert>
+            );
+        }
+
         return (
-
-
             <div>
                 {$imagePreview}
-
                 <form method="post" encType="multipart/form-data"
                       onSubmit={(event) => {
                           event.preventDefault();
                           this._handleSubmit(event.target);
                       }}>
-
-
                     <FormInputs
                         ncols={["col-md-6"]}
                         proprieties={[
@@ -115,7 +128,6 @@ class GroupImage extends React.Component {
                             }
                         ]}
                     />
-
                     <Button
                         style={{width: "100%"}}
                         className="btnSaveif"
@@ -125,12 +137,8 @@ class GroupImage extends React.Component {
                     >
                         Enviar
                     </Button>
-
                 </form>
-
             </div>
-
-
         );
     }
 }
