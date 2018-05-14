@@ -8,6 +8,7 @@ import PostList from './PostList';
 import NewPost from './NewPost';
 import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
+import Pager from "react-bootstrap/es/Pager";
 
 class GroupView extends Component {
 
@@ -20,7 +21,8 @@ class GroupView extends Component {
             pagina: {},
             post:{titulo:"teste"},
             grupo:{id:this.props.id},
-            topico:{id:this.props.idt}          
+            topico:{id:this.props.idt},
+            paginaAtual:0
         }
         
         //alert(this.state.topico.id);
@@ -30,7 +32,7 @@ class GroupView extends Component {
         this.groupService = new GroupService();
         this.topicService = new TopicService();
 
-        (this.state.topico.id)? this.listarPostEspecifico():this.listar();
+        (this.state.topico.id)? this.listarPostEspecifico(0):this.listar(0);
         this.listarGrupo();
 
     }
@@ -55,10 +57,10 @@ class GroupView extends Component {
         });
     }
 
-    listar() {
-        let paginaAtual=0;
+    listar(pagina) {
+        
         console.log(this.state.grupo.id);
-        this.postService.listarPostGeral(this.state.grupo.id,paginaAtual,
+        this.postService.listarPostGeral(this.state.grupo.id,pagina,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -71,11 +73,9 @@ class GroupView extends Component {
 
     } 
     
-    listarPostEspecifico() {
+    listarPostEspecifico(pagina) {  
 
-        let paginaAtual=0;      
-
-        this.postService.listarPostEspecifico(this.state.grupo.id,this.state.topico.id,paginaAtual,
+        this.postService.listarPostEspecifico(this.state.grupo.id,this.state.topico.id,pagina,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -140,6 +140,18 @@ class GroupView extends Component {
         //console.log(this.state.topico.criadorTopico);
         //<PostList posts={this.state.pagina}/>   
         
+        let statusNext = true;
+        let statusPrev = true;
+        //alert(this.state.pagina.totalPages);
+        
+        if (this.state.paginaAtual > 0) {
+            statusPrev = false;
+        }
+
+        if (this.state.paginaAtual < this.state.pagina.totalPages - 1) {
+            statusNext = false;
+        }
+        
         return (
             <div className="content">
     
@@ -168,6 +180,7 @@ class GroupView extends Component {
                                     
                                     <PostList posts={this.state.pagina}/>
                                     
+                                    
                         
                                         <Button
                                             bsStyle="danger"
@@ -185,6 +198,33 @@ class GroupView extends Component {
                                 </from>
 
                          }
+                         
+                         legend={
+                    <Pager>
+                        
+                    <Pager.Item
+                            previous
+                            disabled={statusPrev}
+                            onClick={(e) => {
+                                this.listar(this.state.paginaAtual - 1);
+                                this.state.paginaAtual--;
+                            }}
+                        >
+                            &lt; Anterior
+                        </Pager.Item>
+                        <Pager.Item
+                            next
+                            disabled={statusNext}
+                            onClick={(e) => {
+                                this.listar(this.state.paginaAtual + 1);
+                                this.state.paginaAtual++;
+                            }}
+                        >
+                            Próxima &gt;
+                        </Pager.Item>
+                        
+                    </Pager>
+                }
                     />
                     </Col>
                     
