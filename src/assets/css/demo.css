@@ -562,8 +562,7 @@ a, p {
     font-size: 14px;
 }
 
-.wrapper {
-    height: auto;
+.wrapper, html {
     background-color: #E0E0E0;
 }
 
@@ -697,6 +696,11 @@ a, p {
 
 .pager {
     margin: 0 0 6px;
+}
+
+.loading {
+    color: #ED3846;
+    margin: 20px 45% 30px 45%;
 }
 
 .card .footer {
