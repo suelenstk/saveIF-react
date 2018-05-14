@@ -13,7 +13,7 @@ class GroupEnter extends Component {
         super(props);
 
         this.state = {
-            grupo: {nome:"teste"},
+            grupo: {nome:""},
             id:this.props.id,
             solicitar: this.props.solicitar,
             idUsuario: this.props.user,
@@ -121,7 +121,7 @@ class GroupEnter extends Component {
 
     render() {
 
-        if(this.state.grupo.nome !== "teste")
+        if(this.state.grupo.nome !== "")
         return (
             <div className="content">
                              
