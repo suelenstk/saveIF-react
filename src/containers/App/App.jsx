@@ -78,7 +78,8 @@ class App extends Component {
                                             />
                                         );
                                     //passar id do usuário
-                                    if (prop.name === "Grupos" || prop.name === "MyGroups")
+                                    if (prop.name === "Grupos" || prop.name === "Meus grupos")
+                                        
                                         return (
                                             <Route
                                                 path={prop.path}

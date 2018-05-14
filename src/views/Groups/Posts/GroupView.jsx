@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Col, Row } from 'react-bootstrap';
 import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
+import TopicService from '../CreateTopic/TopicService';
 import GroupService from '../GroupService';
 import PostList from './PostList';
 import NewPost from './NewPost';
@@ -16,7 +17,7 @@ class GroupView extends Component {
 
         this.state = {
             show: false,
-            pagina:"",
+            pagina: {},
             post:{titulo:"teste"},
             grupo:{id:this.props.id},
             topico:{id:this.props.idt}          
@@ -27,15 +28,24 @@ class GroupView extends Component {
         
         this.postService = new PostService();
         this.groupService = new GroupService();
+        this.topicService = new TopicService();
+
         (this.state.topico.id)? this.listarPostEspecifico():this.listar();
         this.listarGrupo();
 
     }
 
     setarItem(paginaResultado) {
-        //console.log(paginaResultado);
+        console.log(paginaResultado);
         this.setState({
             pagina: paginaResultado
+        });
+    }
+
+    setarTopico(topico) {
+        //console.log(paginaResultado);
+        this.setState({
+            topico: topico
         });
     }
     
@@ -46,9 +56,9 @@ class GroupView extends Component {
     }
 
     listar() {
-        this.paginaAtual=0;
+        let paginaAtual=0;
         console.log(this.state.grupo.id);
-        this.postService.listarPostGeral(this.state.grupo.id,
+        this.postService.listarPostGeral(this.state.grupo.id,paginaAtual,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -62,8 +72,10 @@ class GroupView extends Component {
     } 
     
     listarPostEspecifico() {
-        this.paginaAtual=0;
-        this.postService.listarPostEspecifico(this.state.grupo.id,this.state.topico.id,
+
+        let paginaAtual=0;      
+
+        this.postService.listarPostEspecifico(this.state.grupo.id,this.state.topico.id,paginaAtual,
                 (resultado) => {
             console.log(resultado);
             this.setarItem(resultado);
@@ -74,7 +86,24 @@ class GroupView extends Component {
         }
         );
 
+        this.listarTopicoEspecifico();
+
     } 
+
+    listarTopicoEspecifico(){
+
+        this.topicService.listarTopicosEspecifico(this.state.topico.id,
+                (resultado) => {
+            console.log(resultado);
+            this.setarTopico(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+
+    }
     
     setarGrupo(resultado) {
         this.setState({
@@ -95,17 +124,37 @@ class GroupView extends Component {
             console.log(erro);
         }
         );
-    }   
+    }
+    
+    data(date){
+        console.log(date);
+
+        let dateString = date;
+        let dateParts = dateString.split("-");
+
+        return dateParts[2] +"/"+ dateParts[1] +"/"+ dateParts[0];
+    }
     
     render() {
         
-        console.log(this.state.topico);
-            //<PostList posts={this.state.pagina}/>
+        //console.log(this.state.topico.criadorTopico);
+        //<PostList posts={this.state.pagina}/>   
         
         return (
             <div className="content">
     
-                <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - Geral</h1>
+                <div style={{padding:15}}>
+                
+                    <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - {(this.state.topico.id)? 
+                    this.state.topico.nome:"Geral"}</h1>
+
+                    <span className="h5">{(this.state.topico.id && this.state.topico.criadorTopico)? 
+                    "Criador do Tópico: " + this.state.topico.criadorTopico.nome +", Data: " 
+                                          + this.data(this.state.topico.dataCriacao):"Tópico gerado automaticamente."}</span> 
+
+                    
+                </div>
+                
                 
                 <Grid fluid>
                     <Row>

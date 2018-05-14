@@ -3,7 +3,7 @@ import servicoLogin from "../../../login/ServicoLogin";
 
 export default class PostService {
 
-    listarPostGeral(id, sucesso, erro) {
+    listarPostGeral(id,pagina, sucesso, erro) {
 
 
         let trataFetch = (resultado) => {
@@ -17,7 +17,7 @@ export default class PostService {
             }
         };
 
-        fetch(`api/grupos/${id}/geral`, {
+        fetch(`api/grupos/${id}/geral?pagina=` + pagina, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
 
@@ -25,9 +25,9 @@ export default class PostService {
             method: "GET"
         }).then(trataFetch);
     }
-    
-    listarPostEspecifico(id,idt, sucesso, erro) {
 
+    
+    listarPostEspecifico(id,idt,pagina,sucesso, erro) {
 
         let trataFetch = (resultado) => {
 
@@ -40,7 +40,7 @@ export default class PostService {
             }
         };
 
-        fetch(`api/grupos/${id}/posts/${idt}`, {
+        fetch(`api/grupos/${id}/posts/${idt}?pagina=` + pagina, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
 

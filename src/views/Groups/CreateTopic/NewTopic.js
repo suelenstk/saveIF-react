@@ -36,7 +36,8 @@ import React, {Component} from 'react';
         }
         
     listarTopicos() {
-        this.topicService.listarTopicosGrupo(this.props.idGrupo,
+        let paginaAtual = 0;
+        this.topicService.listarTopicosGrupo(this.props.idGrupo,paginaAtual,
                 (resultado) => {
             console.log(resultado);
             this.setarTopico(resultado);
@@ -152,8 +153,8 @@ import React, {Component} from 'react';
                             content={
                             <form>
                                 <Table responsive>  
-                                    {this.state.topico.map((topico) => {
-                                       return <Link to={{ pathname: `/${this.verTopico(this.props.idGrupo,topico)}`}}>{topico.nome}<br/></Link>
+                                    {this.state.topico.content.map((topico) => {
+                                       return <Link to={{ pathname: `/${this.verTopico(this.props.idGrupo,topico)}`}} style={{color:"#000000"}}>{topico.nome}<br/></Link>
                                     })}
                                         <tr>
                                         <td style={{display: this.state.campoNomeTopico}}>

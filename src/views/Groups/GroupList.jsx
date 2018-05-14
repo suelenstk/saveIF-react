@@ -6,15 +6,26 @@ import {Link} from 'react-router-dom';
 import grupoImage from '../../img/grupo.png';
 
 export default class GroupList extends Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.state = {   
+          flagGrupo:false
+        };
+    }
    
    botaoVerMais(grupo){
 
        let botoes = [];
+       this.state.flagGrupo = true;
+
        let verificar = this.verificarIntegrante(this.props.user,grupo.integrantesGrupo);
        //let botao = <Link to={`/GroupEnter`}>
        //Verificar rota certa
        let rota = (this.props.rota === "MyGroups" || verificar)? 
            `MyGroups/${grupo.id}/geral`:`groups/${grupo.id}/view`;
+
 
        let botao = 
        <Link to={{ pathname: `/${rota}`}}>      
@@ -64,7 +75,8 @@ export default class GroupList extends Component {
               return <Card                                
                    ctAllGroups
                
-                   content={
+                   content={                      
+                    
                        <Row>
                                                                       
                            <Image src={grupoImage} responsive width="1024" />
@@ -88,9 +100,10 @@ export default class GroupList extends Component {
                                   
                            
                            </Row>
-                        }
+                  }
                    />
            })}
+           {(!this.state.flagGrupo)?"Você não esta inscrito em nenhum grupo":""}
            </Col>
 
        </Row>

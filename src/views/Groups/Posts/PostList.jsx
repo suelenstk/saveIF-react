@@ -23,12 +23,12 @@ export default class PostList extends React.Component{
 
    render() {
     console.log(this.props.posts);
-       if (this.props.posts) {
+       if (this.props.posts.content !== undefined) {
      
            return <Row>
                      
                <Col md={12}>
-               {this.props.posts.map((post) => {
+               {this.props.posts.content.map((post) => {
 
                    return <Card
                        title={post.titulo}
@@ -39,7 +39,7 @@ export default class PostList extends React.Component{
                                <Col lg={12} md={12} sm={12} xs={12}>
 
                                    <div style={imgStyle}>
-                                       <Image src={anexoTeste} responsive/>
+                                       {(post.anexoPost)?<Image src={anexoTeste} responsive width={30} />:""}
                                        {/*<p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>*/}
                                    </div>
 

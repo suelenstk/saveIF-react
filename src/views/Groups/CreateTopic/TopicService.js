@@ -26,7 +26,7 @@ export default class TopicService {
         
     }
     
-    listarTopicosGrupo(id, sucesso, erro) {
+    listarTopicosGrupo(id,pagina,sucesso, erro) {
 
 
         let trataFetch = (resultado) => {
@@ -40,7 +40,30 @@ export default class TopicService {
             }
         };
 
-        fetch(`api/grupos/${id}/topicos`, {
+        fetch(`api/grupos/${id}/topicos?pagina=` + pagina, {
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+
+            }),
+            method: "GET"
+        }).then(trataFetch);
+    }
+
+    listarTopicosEspecifico(id, sucesso, erro) {
+
+
+        let trataFetch = (resultado) => {
+
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`api/topicos/${id}`, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
 
