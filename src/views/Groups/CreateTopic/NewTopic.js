@@ -10,8 +10,10 @@ import React, {Component} from 'react';
         import done from "../../../assets/img/done.png";
         import HelpBlock from "react-bootstrap/es/HelpBlock";
         import TopicService from './TopicService';
+        import avatar from "../../../assets/img/default-avatar.png";
         import {Link} from 'react-router-dom';
         import Pager from "react-bootstrap/es/Pager";
+        import UserChip from "../../../elements/UserChip/UserChip";
         
         
         export default class NewTopic extends React.Component {
@@ -164,7 +166,7 @@ import React, {Component} from 'react';
                             
                              legend={
                     <Pager>
-                        
+                     {(!statusPrev)?   
                     <Pager.Item
                             previous
                             disabled={statusPrev}
@@ -174,7 +176,8 @@ import React, {Component} from 'react';
                             }}
                         >
                             &lt; Anterior
-                        </Pager.Item>
+                        </Pager.Item>:""}
+                     {(!statusNext)?     
                         <Pager.Item
                             next
                             disabled={statusNext}
@@ -184,7 +187,7 @@ import React, {Component} from 'react';
                             }}
                         >
                             Próxima &gt;
-                        </Pager.Item>
+                        </Pager.Item>:""}
                         
                     </Pager>
                 }
@@ -193,7 +196,18 @@ import React, {Component} from 'react';
                             <form>
                                 <Table responsive>  
                                     {this.state.topico.content.map((topico) => {
-                                       return <Link to={{ pathname: `/${this.verTopico(this.props.idGrupo,topico)}`}} style={{color:"#000000"}}>{topico.nome}<br/></Link>
+                                       return <Link to={{ pathname: `/${this.verTopico(this.props.idGrupo,topico)}`}} >
+                                        <UserChip                                          
+                                            value={this.props.idGrupo}                                          
+                                            key={this.props.idGrupo}
+                                            nome={topico.nome}                                  
+                                            alt={topico.nome}
+                                            icone="pe-7s-folder"
+                                            largura="30%"
+                                        ></UserChip>   
+                                            
+                                        
+                                    </Link>
                                     })}
                                         <tr>
                                         <td style={{display: this.state.campoNomeTopico}}>

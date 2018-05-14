@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Grid} from 'react-bootstrap';
 import GroupService from './GroupService';
 import GroupRoute from './GroupRoute';
+import Pager from "react-bootstrap/es/Pager";
 
 
 class Groups extends Component {
@@ -12,6 +13,7 @@ class Groups extends Component {
        //console.log(this.props.user);
        this.state = {
            pagina: {},
+           paginaAtual:0,
            grupo:{nome:"teste"}
        }
        this.groupService = new GroupService();
@@ -45,11 +47,48 @@ class Groups extends Component {
 
        //console.log(this.state.pagina.content);
        //console.log(this.state.grupo);
+        let statusNext = true;
+        let statusPrev = true;
+        //alert(this.state.pagina.totalPages);
+        
+        if (this.state.paginaAtual > 0) {
+            statusPrev = false;
+        }
+
+        if (this.state.paginaAtual < this.state.pagina.totalPages - 1) {
+            statusNext = false;
+        }
 
        return (            
            <div className="content">    
       
-               <Grid fluid> 
+               <Grid fluid legend={
+                    <Pager>
+                     {(!statusPrev)?   
+                    <Pager.Item
+                            previous
+                            disabled={statusPrev}
+                            onClick={(e) => {
+                                this.listarTopicos(this.state.pagina - 1);
+                                this.state.pagina--;
+                            }}
+                        >
+                            &lt; Anterior
+                        </Pager.Item>:""}
+                     {(!statusNext)?     
+                        <Pager.Item
+                            next
+                            disabled={statusNext}
+                            onClick={(e) => {
+                                this. listarTopicos(this.state.pagina + 1);
+                                this.state.pagina++;
+                            }}
+                        >
+                            Próxima &gt;
+                        </Pager.Item>:""}
+                        
+                    </Pager>
+                }> 
 
                    <GroupRoute pagina={this.state.pagina}
                                solicitar = {(id, idUsuario)=>{ 
@@ -65,6 +104,7 @@ class Groups extends Component {
                                }}
                                user={this.props.user}
                                rota="groups" />
+                                                             
 
                </Grid>
            </div>

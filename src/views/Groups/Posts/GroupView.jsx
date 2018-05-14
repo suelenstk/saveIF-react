@@ -200,18 +200,21 @@ class GroupView extends Component {
                          }
                          
                          legend={
-                    <Pager>
+                    <Pager style={{marginTop:25}}>
                         
-                    <Pager.Item
+                    {(!statusPrev)? <Pager.Item                           
                             previous
                             disabled={statusPrev}
+                            
                             onClick={(e) => {
                                 this.listar(this.state.paginaAtual - 1);
                                 this.state.paginaAtual--;
                             }}
                         >
                             &lt; Anterior
-                        </Pager.Item>
+                            
+                        </Pager.Item>:""}
+                    {(!statusNext)?    
                         <Pager.Item
                             next
                             disabled={statusNext}
@@ -222,7 +225,7 @@ class GroupView extends Component {
                         >
                             Próxima &gt;
                         </Pager.Item>
-                        
+                        :""}
                     </Pager>
                 }
                     />
