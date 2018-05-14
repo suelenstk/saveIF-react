@@ -6,6 +6,7 @@ import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
 import grupoImage from '../../img/grupo.png';
 import GroupService from './GroupService';
+import ServicoLogin from '../../login/ServicoLogin';
 
 class GroupEnter extends Component {
 
@@ -134,8 +135,8 @@ class GroupEnter extends Component {
                             
                                 content={
                                     <Row>
-                                        <Image src={"/api/grupos/" + grupo.id +"/imagem?" +
-                                        servicoLogin.getAuthorizationGet()} responsive width="1024" />
+                                        <Image src={"/api/grupos/" + this.props.id +"/imagem?" +
+                                        ServicoLogin.getAuthorizationGet()} responsive width="450" />
                                         <Col lg={12} md={12} sm={12} xs={12} >
                                                                                                                                    
                                             <h2>{this.state.grupo.nome}</h2>

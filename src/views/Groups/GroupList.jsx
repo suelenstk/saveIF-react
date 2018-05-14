@@ -4,6 +4,7 @@ import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
 import grupoImage from '../../img/grupo.png';
+import ServicoLogin from '../../login/ServicoLogin';
 
 export default class GroupList extends Component {
 
@@ -79,7 +80,8 @@ export default class GroupList extends Component {
                     
                        <Row>
                                                                       
-                           <Image src={grupoImage} responsive width="1024" />
+                           <Image src={"/api/grupos/" + grupo.id +"/imagem?" +
+                                        ServicoLogin.getAuthorizationGet()} responsive width="450" />
                            
                            <Col lg={12} md={12} sm={12} xs={12}>
                                                                                                
