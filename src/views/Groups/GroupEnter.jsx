@@ -142,7 +142,7 @@ class GroupEnter extends Component {
                                             <h2>{this.state.grupo.nome}</h2>
                                             <br/>
                                                                                        
-                                            <h5>Descricao</h5>
+                                            <h5>Descrição</h5>
 
                                             <p style={{marginLeft:20}}>{this.state.grupo.descricao}</p>
                                             <br/>
