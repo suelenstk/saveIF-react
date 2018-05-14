@@ -134,7 +134,8 @@ class GroupEnter extends Component {
                             
                                 content={
                                     <Row>
-                                        <Image src={grupoImage} responsive width="1024" />
+                                        <Image src={"/api/grupos/" + grupo.id +"/imagem?" +
+                                        servicoLogin.getAuthorizationGet()} responsive width="1024" />
                                         <Col lg={12} md={12} sm={12} xs={12} >
                                                                                                                                    
                                             <h2>{this.state.grupo.nome}</h2>
