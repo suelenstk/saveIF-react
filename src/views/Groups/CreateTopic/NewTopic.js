@@ -11,6 +11,7 @@ import React, {Component} from 'react';
         import HelpBlock from "react-bootstrap/es/HelpBlock";
         import TopicService from './TopicService';
         import {Link} from 'react-router-dom';
+        import Pager from "react-bootstrap/es/Pager";
         
         
         export default class NewTopic extends React.Component {
@@ -24,6 +25,7 @@ import React, {Component} from 'react';
                 campoNomeTopico:"none",
                 adicionarTopico: "Novo Tópico",
                 topico:{titulo:"teste"},
+                pagina:0,
                 campoTopico: false,   
                 error: "",
                 msgErro:""
@@ -31,13 +33,12 @@ import React, {Component} from 'react';
                 
                 this.topicService = new TopicService();
                 
-                this.listarTopicos();
+                this.listarTopicos(0);
                 
         }
         
-    listarTopicos() {
-        let paginaAtual = 0;
-        this.topicService.listarTopicosGrupo(this.props.idGrupo,paginaAtual,
+    listarTopicos(pagina) {
+        this.topicService.listarTopicosGrupo(this.props.idGrupo,pagina,
                 (resultado) => {
             console.log(resultado);
             this.setarTopico(resultado);
@@ -51,6 +52,7 @@ import React, {Component} from 'react';
 
     
     setarTopico(resultado) {
+        
         this.setState({
             topico: resultado
         });
@@ -134,7 +136,17 @@ import React, {Component} from 'react';
         
         let erroTopico=null;
         
+        let statusNext = true;
+        let statusPrev = true;
+        //alert(this.state.pagina.totalPages);
         
+        if (this.state.pagina > 0) {
+            statusPrev = false;
+        }
+
+        if (this.state.pagina < this.state.topico.totalPages - 1) {
+            statusNext = false;
+        }
         
         
         console.log(this.state.topico);
@@ -149,6 +161,33 @@ import React, {Component} from 'react';
                 <Col md={4}>
                         <Card
                             title="Tópicos"
+                            
+                             legend={
+                    <Pager>
+                        
+                    <Pager.Item
+                            previous
+                            disabled={statusPrev}
+                            onClick={(e) => {
+                                this.listarTopicos(this.state.pagina - 1);
+                                this.state.pagina--;
+                            }}
+                        >
+                            &lt; Anterior
+                        </Pager.Item>
+                        <Pager.Item
+                            next
+                            disabled={statusNext}
+                            onClick={(e) => {
+                                this. listarTopicos(this.state.pagina + 1);
+                                this.state.pagina++;
+                            }}
+                        >
+                            Próxima &gt;
+                        </Pager.Item>
+                        
+                    </Pager>
+                }
                             
                             content={
                             <form>

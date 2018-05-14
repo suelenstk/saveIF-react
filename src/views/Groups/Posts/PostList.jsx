@@ -53,6 +53,8 @@ export default class PostList extends React.Component{
                            </Row>
 
                        }
+                       
+                       
                    />
                })}
                </Col>
