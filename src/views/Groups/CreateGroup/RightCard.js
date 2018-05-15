@@ -23,7 +23,7 @@ class RightCard extends React.Component {
         console.log(this.state.chip);
     }
     
-    fechaChip = () => this.setState({chip: false});
+    //fechaChip = () => this.setState({chip: false});
 
     render() {
         return (
