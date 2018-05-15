@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Col, Row } from 'react-bootstrap';
+import Alert from "react-bootstrap/es/Alert";
 import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
 import TopicService from '../CreateTopic/TopicService';
@@ -9,6 +10,7 @@ import NewPost from './NewPost';
 import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Pager from "react-bootstrap/es/Pager";
+import servicoLogin from "../../../login/ServicoLogin";
 
 class GroupView extends Component {
 
@@ -19,10 +21,13 @@ class GroupView extends Component {
         this.state = {
             show: false,
             pagina: {},
-            post:{titulo:"teste"},
+            post:{},
+            loading: "none",
             grupo:{id:this.props.id},
             topico:{id:this.props.idt},
-            paginaAtual:0
+            paginaAtual:0,
+            tipoAlert: "",
+            msgAlert: ""
         }
         
         //alert(this.state.topico.id);
@@ -54,6 +59,12 @@ class GroupView extends Component {
     abrirNovoPost() { 
         this.setState({
             show: true
+        });
+    }
+    
+    loading(value) { 
+        this.setState({
+            loading: value
         });
     }
 
@@ -126,6 +137,47 @@ class GroupView extends Component {
         );
     }
     
+    setAlert(msg, tipo){
+        this.setState({
+            msgAlert: msg,
+            tipoAlert: tipo
+        }); 
+        }
+    
+    upload(form, idPost) {
+         
+        let formData = new FormData(form);
+        fetch("/api/posts/"+idPost+"/anexo", {
+            method: "POST",
+
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization()
+
+            }),
+            body: formData
+        }).then((resultado) => {
+            
+            if (resultado.ok) {
+                this.setState(
+                (anterior) =>
+        {
+            anterior.update = anterior.update+1; 
+            console.log("Mudou");
+            
+            
+    
+            return anterior;
+        }
+        );            
+            } else {
+                resultado.json().then(
+                        (resultadoErro) => console.log(resultadoErro)
+                )
+            }
+        });
+        
+    }
+    
     data(date){
         console.log(date);
 
@@ -152,6 +204,18 @@ class GroupView extends Component {
             statusNext = false;
         }
         
+        let aviso=null;
+    
+    if (this.state.msgAlert!==""){
+        
+        let status;
+        if(this.state.tipoAlert==="success"){
+            status="Concluído!";
+        }else status="Erro!";
+        aviso=<Alert bsStyle={this.state.tipoAlert}>
+        <strong>{status}</strong> {this.state.msgAlert}
+        </Alert>
+    }
         return (
             <div className="content">
     
@@ -169,6 +233,7 @@ class GroupView extends Component {
                 
                 
                 <Grid fluid>
+                {aviso}
                     <Row>
                 
                         <Col md={8}>
@@ -233,23 +298,42 @@ class GroupView extends Component {
                     
                     <TopicCard
                     idGrupo={this.state.grupo.id}
+                    
+                    mostraErro={(erro, tipo)=>{this.setAlert(erro, tipo);}}
                     />
                     
             </Row>
                     <NewPost 
                     voltar={()=>{this.setState({show:false});}}
                     show={this.state.show}
-                    inserir ={(post)=>{ 
-                                    this.postService.inserirEmTopico(post,this.state.grupo.id, 
+                    loading={this.state.loading}
+                    
+                    upload={(anexo)=>{this.upload(anexo);}}
+                    inserir ={(post, anexo, estadoArquivo)=>{
+                                    this.loading("");
+                                    let topicoId;
+                                    if(this.state.topico.id){
+                                    topicoId=this.state.topico.id;
+                                    }else topicoId=0;
+                                    
+                                    this.postService.inserirEmTopico(post, this.state.grupo.id, topicoId,
                                     (post)=>{
-                                        alert("Post criado com sucesso!");
+                                    
+                                    if(estadoArquivo){                                        
+                                        this.upload(anexo, post.id);
+                                        }
+                                        this.loading("none");
+                                        this.setAlert ("Post realizado com sucesso!", "success");
                                         this.setState({show: false});                            
                                 },
                                 (erro)=>{
                                 console.log("Erro!");
                                 console.log(erro);
+                                
+                                this.setAlert (erro+"!", "danger");
                             }
                         );
+                        
                 }}
                 post={this.state.post} 
                     />

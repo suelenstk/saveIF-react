@@ -3,6 +3,8 @@ import React, {Component} from 'react';
         Grid, Row, Col,
                 FormGroup, ControlLabel, FormControl, Table
         } from 'react-bootstrap';
+        
+        import Alert from "react-bootstrap/es/Alert";
         import {Card} from '../../../components/Card/Card.jsx';
         import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
         import {UserCard} from '../../../components/UserCard/UserCard.jsx';
@@ -30,7 +32,8 @@ import React, {Component} from 'react';
                 pagina:0,
                 campoTopico: false,   
                 error: "",
-                msgErro:""
+                msgErro:"",
+                erroTopico: this.props.erroTopico
                 };
                 
                 this.topicService = new TopicService();
@@ -53,8 +56,7 @@ import React, {Component} from 'react';
     }   
 
     
-    setarTopico(resultado) {
-        
+    setarTopico(resultado) {       
         this.setState({
             topico: resultado
         });
@@ -123,7 +125,9 @@ import React, {Component} from 'react';
             
         }else if (this.state.topic.nome) {
                 this.props.inserir(this.state.topic);
+                
                 this.setConfigNovoTopico();
+            
         } else {
                 this.setError("error", "Campo nome não pode ser vazio!");
         }
@@ -150,8 +154,6 @@ import React, {Component} from 'react';
             statusNext = false;
         }
         
-        
-        console.log(this.state.topico);
         if (this.state.error==="error"){
             
             erroTopico=<HelpBlock>{this.state.msgErro}</HelpBlock>

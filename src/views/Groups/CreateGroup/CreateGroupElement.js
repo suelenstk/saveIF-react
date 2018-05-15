@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {Col, ControlLabel, FormControl, FormGroup, Radio, Row} from 'react-bootstrap';
+import {Col, ControlLabel, FormControl, FormGroup, Radio, Row, HelpBlock} from 'react-bootstrap';
 
 import {Card} from '../../../components/Card/Card.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
@@ -22,7 +22,11 @@ export default class CreateGroupElement extends React.Component {
             page2: false,
             //categoy:this.props.lista,
             categoria: null,
-            listarCategorias: ""
+            errorGrupo: "",
+            msgErroGrupo:"",
+            listarCategorias: "",
+            nomeBotao: "Próximo",
+            botao:""
         };
         this.categoryService = new CategoryService();
 
@@ -96,28 +100,81 @@ export default class CreateGroupElement extends React.Component {
         );
 
     }
-
-    createGroup() {
-
-        if (this.state.group.nome &&
-            this.state.group.descricao) {
-            if (this.state.group.id && this.state.page2 != true) {
-                this.setState({page2: true});
-                this.props.editar();
-            } else if (this.state.group.id && this.state.page2 == true) {
-                this.setState({page2: false});
-                this.props.confirmar();
-            } else {
-                this.setState({page2: true});
-                this.props.inserir(this.state.group, this.state.categoria);
-            }
-        } else {
-            alert("Preencha todos os campos!");
+    
+    setBotao(valor) {
+        
+        this.setState(
+                    (anterior)=>
+                            {
+                            anterior.botao=valor;
+                            return anterior;
+                            }
+                    ); 
+        
+       }
+        
+    setPrivacidade(valor){
+            this.setState(
+                    (anterior)=>
+                            {
+                            anterior.group.tipoPrivacidade=valor;
+                            return anterior;
+                            }
+                    );
+        }           
+        
+    setErrorGrupo (estilo, msg){
+            this.setState({
+                errorGrupo: estilo,
+                msgErroGrupo: msg
+            });
+        }
+        
+    setNomeBotao (nome){
+            this.setState({
+                nomeBotao: nome
+            });
         }
 
+    createGroup(){
+            let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
+            
+            if (this.state.group.nome &&
+                this.state.group.descricao&&this.state.group.tipoPrivacidade&&this.state.categoria) {
+            
+            this.setErrorGrupo("", "");
+            if (this.state.group.id&&this.state.page2!=true) {  
+                this.setState({page2: true});
+                //this.props.editar();   
+            } else if (this.state.group.id&&this.state.page2==true){
+                this.setState({page2: false});
+                    this.props.alert();
+                    this.setBotao("none");
+                    this.props.confirmar(); 
+            } else {
+                this.setState({page2: true});
+                if(regexNome.test(this.state.group.nome)){
+                this.props.inserir(this.state.group, this.state.categoria);
+                this.setNomeBotao("Criar grupo");
+                this.setErrorGrupo("", "");
+                }else this.setErrorGrupo("error", "Não é permitido caracteres especiais!");
+            }
+        } else {
+            this.setErrorGrupo("error", "Preencha todos os campos obrigatórios!");
+        }
+        
     }
 
     render() {
+        
+        let erroGrupo=null;
+
+        if (this.state.errorGrupo==="error"){
+            
+            erroGrupo=<HelpBlock>{this.state.msgErroGrupo}</HelpBlock>
+            
+        }else erroGrupo="";
+        
         let campoCategoria = null;
 
         if (this.state.listarCategorias) {
@@ -203,7 +260,8 @@ export default class CreateGroupElement extends React.Component {
                                 </Radio>
                             </FormControl>
                         </FormGroup>
-
+                        {erroGrupo}
+                        
                         <FormGroup controlId="formControlsConvidados" className="col-md-12"
                                    style={{display: this.props.invite}}>
                             <ControlLabel>Convidados</ControlLabel><br/>
@@ -234,29 +292,31 @@ export default class CreateGroupElement extends React.Component {
                         </FormGroup>
 
                         <Button
-                            bsStyle="danger"
-                            pullRight
-                            fill
-                            style={{marginLeft: '5px'}}
-                            onClick={(e) => {
-                                this.createGroup()
-                            }}
-                        >
-                            Criar grupo
-                        </Button>
-
-                        <Button
-                            bsStyle="danger"
-                            pullRight
-
-                            onClick={(e) => {
-
-                                this.setState({page2: false})
-                                this.props.voltar();
-                            }}
-                        >
-                            Voltar
-                        </Button>
+                                            bsStyle="danger"
+                                            pullRight
+                                            fill
+                                            
+                                            onClick={(e) => {
+                                                this.createGroup()
+                                            }}
+                                            style={{display: this.state.botao}}
+                                        >   
+                                            {this.state.nomeBotao}
+                                        </Button>
+                                        {/*
+                                        <Button
+                                            bsStyle="danger"
+                                            pullRight
+                                       
+                                            onClick={(e) => {
+                                                
+                                                this.setState({page2: false})
+                                                this.props.voltar();
+                                            }}
+                                        >
+                                            Voltar
+                                        </Button>
+                                        */}
 
                         <div className="clearfix"></div>
                     </form>

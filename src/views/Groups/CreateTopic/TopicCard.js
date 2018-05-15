@@ -23,20 +23,26 @@ export default class TopicCard extends Component {
         
     }
     
+    propsErro (msg, tipo) {
+        this.props.mostraErro(msg, tipo);
+    }
+    
     render() {
         //console.log(this.state.topico);
         return (
 
                     <NewTopic
                         idGrupo = {this.state.idGrupoAtual}
+                        erroTopico={this.state.erro}
                         inserir ={(topic)=>{ 
                                     this.topicService.inserirEmGrupo(topic,this.state.idGrupoAtual, 
                                     (topico)=>{
-                                        alert("Topico criado com sucesso!");                         
+                                        this.propsErro("Tópico criado com sucesso.", "success");                         
                                 },
                                 (erro)=>{
                                 console.log("Erro!");
                                 console.log(erro);
+                                this.propsErro(erro.message, "danger");
                             }
                         );
                         

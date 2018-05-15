@@ -49,10 +49,10 @@ export default class PostService {
         }).then(trataFetch);
     }
     
-    inserirEmTopico(item, idGrupo, sucesso, erro) {
+    inserirEmTopico(item, idGrupo, idTopico, sucesso, erro) {
         console.log(item);
        
-        fetch(`api/posts/${idGrupo}`, {
+        fetch(`api/grupos/${idGrupo}/topicos/${idTopico}/posts`, {
             method: "POST",
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),

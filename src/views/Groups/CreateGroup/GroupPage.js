@@ -3,6 +3,7 @@ import {
 Grid, Row, Col,
 FormGroup, ControlLabel, FormControl, Radio, Checkbox
 } from 'react-bootstrap';
+import Alert from "react-bootstrap/es/Alert";
 import {Link} from 'react-router-dom'
 
 import {Card} from '../../../components/Card/Card.jsx';
@@ -15,7 +16,7 @@ import GroupService from '../GroupService.jsx';
 import {Redirect} from "react-router-dom";
 import CategoryService from "../../../services/CategoryService";
 import servicoLogin from '../../../login/ServicoLogin'
-import  GroupImage from '../../../components/GroupImage/GroupImage';
+import GroupImage from '../../../components/GroupImage/GroupImage';
 
 class GroupPage extends React.Component {
 
@@ -33,7 +34,8 @@ constructor (props){
         page2: "",
         page3: "",
         group:{},
-        category: {}
+        category: {},
+        alert: false
     }
     
     this.groupService = new GroupService();
@@ -49,6 +51,12 @@ setLista(categorias) {
         });    
        
 }
+
+setAlert(valor){
+        this.setState({
+            alert: valor
+        }); 
+        }
 
 listaCategorias (){
         this.categoryService.listarNaoPaginado(
@@ -109,10 +117,18 @@ inserirComCategorias(item, idCategoria, sucesso, erro) {
 
 
 render() {
-
+let aviso=null;
+    
+    if (this.state.alert){
+        aviso=<Alert bsStyle="success">
+        <strong>Concluído!</strong> Grupo criado com sucesso.
+        </Alert>
+    }
     return (
         <div className="content">
+        
             <Grid fluid>
+            {aviso}
                 <Row>
                     <Col md={8}>
 
@@ -127,10 +143,12 @@ render() {
                                
                                confirmar={()=>{this.setState({privacy:"none", disabled:true, information: "none", search: "none", invite: "none", page1: "", page2: "", page3: "red", photo: ""});}}
                               
+                               alert={()=>{this.setState({alert:true});}}
+                                       
                                inserir ={(group, idCategoria)=>{ 
                                     this.inserirComCategorias(group, idCategoria,
                                     (grupo)=>{
-                                        alert("Grupo criado com sucesso!");
+                                        
                                         this.setState({privacy:"none", disabled:true, information: "none", search: "", group: grupo, invite: "", page1: "", page2: "red", page3: "", photo: "none"});            
                                         
                                 },
