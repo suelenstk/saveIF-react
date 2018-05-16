@@ -249,13 +249,13 @@ export default class CreateGroupElement extends React.Component {
                                          onChange={(e) => this.setPrivacidade(e.target.value)}
 
                             >
-                                <Radio name="radioGroup" inline value="aberto">
+                                <Radio name="radioGroup" inline value="Aberto">
                                     Aberto
                                 </Radio>
-                                <Radio name="radioGroup" inline value="publico">
+                                <Radio name="radioGroup" inline value="Público">
                                     Público
                                 </Radio>
-                                <Radio name="radioGroup" inline value="privado">
+                                <Radio name="radioGroup" inline value="Privado">
                                     Privado
                                 </Radio>
                             </FormControl>

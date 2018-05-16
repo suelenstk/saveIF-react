@@ -61,6 +61,42 @@ export default class GroupList extends Component {
 
    }
    
+   testarIcone(privacidade){
+       if(privacidade === "Aberto"){
+           return "pe-7s-unlock";
+           
+       }else if(privacidade === "Público"){
+           return "fa fa-globe";
+           
+       }else{
+           return "pe-7s-lock";
+       }
+   }
+   
+   
+   mudarCor(privacidade){
+       if(privacidade === "Aberto"){
+           return "green";
+           
+       }else if(privacidade === "Público"){
+           return "lightBlue";
+           
+       }else{          
+           return "red";
+       }
+   }
+   
+   descricao(privacidade){
+       if(privacidade === "Aberto"){
+           return "Grupo onde todos podem participar sem a necessidade de convite ou solicitação.";
+       
+       }else if(privacidade === "Público"){
+           return "Grupo onde todos podem solicitar a participação e ingressar mediante a aprovação do administrador.";
+       }else{
+           return "Grupo onde todos podem participar mediante ao convite do administrador.";
+       }
+   }
+   
    
    render() {
        //alert(this.props.pagina);
@@ -89,7 +125,9 @@ export default class GroupList extends Component {
 
                                <p>{grupo.descricao}</p>
                                
-                               <p>Tipo de privacidade: {grupo.tipoPrivacidade}</p>
+                               <p>Grupo {grupo.tipoPrivacidade}<i className={this.testarIcone (grupo.tipoPrivacidade)} title={this.descricao(grupo.tipoPrivacidade)}
+                                   style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade)}}/> 
+                                   </p>
 
                                <p>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo))? 
                                         "Você é integrante desse grupo":""}</p>
