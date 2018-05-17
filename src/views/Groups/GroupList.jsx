@@ -69,7 +69,7 @@ export default class GroupList extends Component {
            return "fa fa-globe";
            
        }else{
-           return "pe-7s-lock";
+           return "pe-7s-lock";           
        }
    }
    
