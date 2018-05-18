@@ -92,7 +92,7 @@ class GroupImage extends React.Component {
         let $imagePreview = null;
 
         if (imagePreviewUrl) {
-            $imagePreview = (<img src={imagePreviewUrl} responsive width="100%"/>);
+            $imagePreview = (<a href={imagePreviewUrl} download> download </a>);
         }
 
         if (this.state.loading) {

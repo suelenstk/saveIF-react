@@ -122,6 +122,7 @@ class UserSearch extends React.Component {
                         </Pager.Item>
                         <Pager.Item
                             next
+                            title="teste 123"
                             disabled={statusNext}
                             onClick={(e) => {
                                 this.pesquisar(this.state.pagina + 1);

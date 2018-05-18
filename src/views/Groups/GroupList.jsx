@@ -79,7 +79,7 @@ export default class GroupList extends Component {
            return "green";
            
        }else if(privacidade === "Público"){
-           return "lightBlue";
+           return "#2E64FE";
            
        }else{          
            return "red";
@@ -126,7 +126,7 @@ export default class GroupList extends Component {
                                <p>{grupo.descricao}</p>
                                
                                <p>Grupo {grupo.tipoPrivacidade}<i className={this.testarIcone (grupo.tipoPrivacidade)} title={this.descricao(grupo.tipoPrivacidade)}
-                                   style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade)}}/> 
+                                   style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade),marginLeft:"10"}}/> 
                                    </p>
 
                                <p>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo))? 
@@ -135,7 +135,7 @@ export default class GroupList extends Component {
                                {this.botaoVerMais(grupo)}
 
                                <br/><br/>
-                               <hr/>
+
                            </Col>
                                   
                            
