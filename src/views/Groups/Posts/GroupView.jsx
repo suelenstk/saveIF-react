@@ -181,10 +181,14 @@ class GroupView extends Component {
     data(date){
         console.log(date);
 
+        if(date !== undefined){
         let dateString = date;
         let dateParts = dateString.split("-");
 
         return dateParts[2] +"/"+ dateParts[1] +"/"+ dateParts[0];
+        }else{
+            return "";
+        }
     }
     
     render() {
@@ -216,7 +220,12 @@ class GroupView extends Component {
         <strong>{status}</strong> {this.state.msgAlert}
         </Alert>
     }
+
+
         return (
+
+            
+
             <div className="content">
     
                 <div style={{padding:15}}>
@@ -224,12 +233,15 @@ class GroupView extends Component {
                     <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - {(this.state.topico.id)? 
                     this.state.topico.nome:"Geral"}</h1>
 
-                    <span className="h5">{(this.state.topico.id && this.state.topico.criadorTopico)? 
+                    <small>{(this.state.topico.id && this.state.topico.criadorTopico)? 
                     "Criador do Tópico: " + this.state.topico.criadorTopico.nome +", Data: " 
-                                          + this.data(this.state.topico.dataCriacao):"Tópico gerado automaticamente."}</span> 
+                                          + this.data(this.state.topico.dataCriacao):
+                                          +(this.state.grupo.donoGrupo !== undefined)? "Data: " + this.data(this.state.grupo.dataCriacao) 
+                                          + " - Dono do Grupo: " + this.state.grupo.donoGrupo.nome:""}</small> 
 
                     
                 </div>
+                
                 
                 
                 <Grid fluid>
