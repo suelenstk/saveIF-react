@@ -115,23 +115,36 @@ export default class GroupList extends Component {
                    content={                      
                     
                        <Row>
-                                                                      
-                           <Image src={"/api/grupos/" + grupo.id +"/imagem?" +
-                                        ServicoLogin.getAuthorizationGet()} responsive width="450" />
+                           <Col lg={4} md={4} xs={4}>
                            
-                           <Col lg={12} md={12} sm={12} xs={12}>
+                           <Image src={"/api/grupos/" + grupo.id +"/imagem?" +
+                                        ServicoLogin.getAuthorizationGet()} responsive width="350" />
+                           </Col>
+                           <Col lg={8} md={6} sm={6} xs={6}>
                                                                                                
                                <h2>{grupo.nome}</h2>
-
-                               <p>{grupo.descricao}</p>
                                
-                               <p>Grupo {grupo.tipoPrivacidade}<i className={this.testarIcone (grupo.tipoPrivacidade)} title={this.descricao(grupo.tipoPrivacidade)}
-                                   style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade),marginLeft:"10"}}/> 
-                                   </p>
+                               <div style={{textIndent:"15"}}>        
+                                   
+                                <p><strong>Categoria:</strong> {grupo.categoria.nome}</p>
 
-                               <p>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo))? 
+                                <p><strong>Descrição do Grupo:</strong> {grupo.descricao}</p>
+                                </div> 
+                              
+                              </Col>
+                                
+                                <Col lg={12} xs={12} className="text-center">
+                                
+                                <p style={{fontWeight:"bold"}}>
+                                Grupo {grupo.tipoPrivacidade}<i className={this.testarIcone(grupo.tipoPrivacidade)} 
+                                title={this.descricao(grupo.tipopPrivacidade)}
+                                style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade), marginLeft:"5"}}/>
+                                </p>                                                           
+                               
+                                <p style={{fontWeight:"bold"}}>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo))? 
                                         "Você é integrante desse grupo":""}</p>
-                                           
+                                
+                                
                                {this.botaoVerMais(grupo)}
 
                                <br/><br/>
