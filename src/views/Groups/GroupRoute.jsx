@@ -10,7 +10,7 @@ Switch
 
 class RotaLista extends Component {
  render() {
-   //console.log(this.props.pagina);
+   console.log(this.props.pagina);
   return <GroupList pagina={this.props.pagina} user={this.props.user}/>;
  }
 }
