@@ -16,7 +16,8 @@ class GroupImage extends React.Component {
             file: "",//para imagem
             imagePreviewUrl: "",//para imagemo
             loading: false,
-            success: false
+            success: false,
+            error: ""
         };
 
         this._handleImageChange = this._handleImageChange.bind(this);
@@ -47,8 +48,6 @@ class GroupImage extends React.Component {
                             return anterior;
                         }
                     );
-
-
                 } else {
                     resultado.json().then(
                         (resultadoErro) => console.log(resultadoErro)
@@ -65,21 +64,41 @@ class GroupImage extends React.Component {
         return new Promise((e) => setTimeout(e, tempo));
     }
 
+    validateImage(file) {
+        if (file) {
+            let num = file.name.split(".").length;
+            let name = file.name.split(".")[num - 1].toLowerCase();
+            if (name === "png" || name === "tiff" || name === "jpg" || name === "jpeg" || name === "bmp") {
+                this.setState({error: ""});
+                return true;
+            } else {
+                this.setState({error: "Formato inválido! São aceitos apenas arquivos no formato de imagem."});
+                return false;
+            }
+        } else {
+            this.setState({error: ""});
+            return false;
+        }
+    }
+
     _handleImageChange(e) {
         e.preventDefault();
+
+        this.setState({imagePreviewUrl: ""});
+        this.setState({success: false});
 
         let reader = new FileReader();
         let file = e.target.files[0];
 
-        reader.onloadend = () => {
-            this.setState({
-                file: file,
-                imagePreviewUrl: reader.result
-            });
-        };
-
-        reader.readAsDataURL(file)
-
+        if (this.validateImage(file)) {
+            reader.onloadend = () => {
+                this.setState({
+                    file: file,
+                    imagePreviewUrl: reader.result
+                });
+            };
+            reader.readAsDataURL(file)
+        }
     }
 
 
@@ -87,8 +106,16 @@ class GroupImage extends React.Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
 
+        if (this.state.error !== "") {
+            $imagePreview = (
+                <Alert bsStyle="error">
+                    {this.state.error} <i className="pe-7s-close-circle ld ldt-jump-in"/>
+                </Alert>
+            );
+        }
+
         if (imagePreviewUrl) {
-            $imagePreview = (<img src={imagePreviewUrl} responsive width="100%"/>);
+            $imagePreview = <img src={imagePreviewUrl} width="100%"/>;
         }
 
         if (this.state.loading) {
