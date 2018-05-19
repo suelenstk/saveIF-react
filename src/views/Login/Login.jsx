@@ -63,78 +63,78 @@ class Login extends Component {
             <div>
                 <Navbar className="navbarLogin">
                 </Navbar>
-                        <Grid fluid>
-                            <Row>
-                                <Col md={6} className="logoLogin">
+                <Grid fluid>
+                    <Row>
+                        <Col md={6} className="logoLogin">
+                            <div>
+                                <a className="navbar-brand" href="">
+                                    <img src={logo} className="img-responsive" alt="logo_image"/>
+                                </a>
+                            </div>
+                        </Col>
+                        <Col md={6} className="formLogin">
+                            <div>
+                                <h4>Login do usuário</h4>
+                                <form onSubmit={(event) => {
+                                    event.preventDefault();
+                                    this.login()
+                                }}>
+                                    {erroLogin}
+                                    <FormGroup controlId="formHorizontalEmail" className="">
+                                        <ControlLabel>E-mail</ControlLabel>
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.login.usuario}
+                                            placeholder="Ex: pmachado@restinga.ifrs.edu.br"
+                                            onChange={(e) => this.setValor("usuario", e.target.value)}
+                                            required
+                                        />
+                                    </FormGroup>
+                                    <FormGroup controlId="formHorizontalPassword">
+                                        <ControlLabel>Senha</ControlLabel>
+                                        <FormControl
+                                            type="password"
+                                            value={this.state.login.senha}
+                                            placeholder="Senha"
+                                            onChange={(e) => this.setValor("senha", e.target.value)}
+                                            required
+                                        />
+                                    </FormGroup>
                                     <div>
-                                        <a className="navbar-brand" href="">
-                                            <img src={logo} className="img-responsive" alt="logo_image"/>
+                                        <a href="">
+                                            Esqueceu sua senha?
                                         </a>
+                                        <br/><br/>
                                     </div>
-                                </Col>
-                                <Col md={6} className="formLogin">
+                                    <Button
+                                        style={{width: "100%"}}
+                                        className="btnSaveif"
+                                        block
+                                        fill
+                                        type="submit"
+                                    >
+                                        Entrar
+                                    </Button>
+                                    <br/>
+                                    <Button
+                                        className="btnLoginGoogle"
+                                        block
+                                    >
+                                        <img src={google} alt="Logo google" className="google"/>Login com Google
+                                    </Button>
                                     <div>
-                                        <h4>Login do usuário</h4>
-                                        <form onSubmit={(event) => {
-                                            event.preventDefault();
-                                            this.login()
-                                        }}>
-                                            {erroLogin}
-                                            <FormGroup controlId="formHorizontalEmail" className="">
-                                                <ControlLabel>E-mail</ControlLabel>
-                                                <FormControl
-                                                    type="text"
-                                                    value={this.state.login.usuario}
-                                                    placeholder="Ex: pmachado@restinga.ifrs.edu.br"
-                                                    onChange={(e) => this.setValor("usuario", e.target.value)}
-                                                    required
-                                                />
-                                            </FormGroup>
-                                            <FormGroup controlId="formHorizontalPassword">
-                                                <ControlLabel>Senha</ControlLabel>
-                                                <FormControl
-                                                    type="password"
-                                                    value={this.state.login.senha}
-                                                    placeholder="Senha"
-                                                    onChange={(e) => this.setValor("senha", e.target.value)}
-                                                    required
-                                                />
-                                            </FormGroup>
-                                            <div>
-                                                <a href="">
-                                                    Esqueceu sua senha?
-                                                </a>
-                                                <br/><br/>
-                                            </div>
-                                            <Button
-                                                style={{width: "100%"}}
-                                                className="btnSaveif"
-                                                block
-                                                fill
-                                                type="submit"
-                                            >
-                                                Entrar
-                                            </Button>
-                                            <br/>
-                                            <Button
-                                                className="btnLoginGoogle"
-                                                block
-                                            >
-                                                <img src={google} alt="Logo google" className="google"/>Login com Google
-                                            </Button>
-                                            <div>
-                                                <br/>
-                                                <p>
-                                                    Não tem conta? <Link to="/cadastro">Cadastre-se.</Link>
-                                                </p>
-                                                <br/><br/>
-                                            </div>
-                                        </form>
+                                        <br/>
+                                        <p>
+                                            Não tem conta? <Link to="/cadastro">Cadastre-se.</Link>
+                                        </p>
+                                        <br/><br/>
                                     </div>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </div>
+                                </form>
+                            </div>
+                        </Col>
+                    </Row>
+                </Grid>
+            </div>
         );
     }
 }

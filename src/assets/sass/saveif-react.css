@@ -1533,7 +1533,6 @@ body > .navbar-collapse[data-color="purple"]:after {
   .navbar-transparent .navbar-form .form-control,
   [class*="navbar-ct"] .navbar-form .form-control {
     color: #FFFFFF;
-    border: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
 
 .navbar-ct-blue {
@@ -1771,7 +1770,7 @@ body > .navbar-collapse[data-color="purple"]:after {
     font-size: 14px;
     font-weight: 400;
     color: #9A9A9A;
-    margin-bottom: 0px; }
+    margin-bottom: 0; }
     .card .category i,
     .card label i {
       font-size: 16px; }

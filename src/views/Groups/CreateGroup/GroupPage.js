@@ -1,80 +1,71 @@
-import React, { Component } from 'react';
-import {
-Grid, Row, Col,
-FormGroup, ControlLabel, FormControl, Radio, Checkbox
-} from 'react-bootstrap';
+import React from 'react';
+import {Col, Grid, Row} from 'react-bootstrap';
 import Alert from "react-bootstrap/es/Alert";
-import {Link} from 'react-router-dom'
 
 import {Card} from '../../../components/Card/Card.jsx';
-import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx'
-import {UserCard} from '../../../components/UserCard/UserCard.jsx';
-import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import CreateGroupElement from './CreateGroupElement';
 import RightCard from './RightCard';
 import GroupService from '../GroupService.jsx';
-import {Redirect} from "react-router-dom";
 import CategoryService from "../../../services/CategoryService";
 import servicoLogin from '../../../login/ServicoLogin'
 import GroupImage from '../../../components/GroupImage/GroupImage';
 
 class GroupPage extends React.Component {
 
-constructor (props){
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-        disabled: false,  
-        privacy: "",
-        information: "",
-        search: "none",
-        invite: "none",
-        photo: "none",
-        page1: "red",
-        page2: "",
-        page3: "",
-        group:{},
-        category: {},
-        alert: false
+        this.state = {
+            disabled: false,
+            privacy: "",
+            information: "",
+            search: "none",
+            invite: "none",
+            photo: "none",
+            page1: "red",
+            page2: "",
+            page3: "",
+            group: {},
+            category: {},
+            alert: false
+        };
+
+        this.groupService = new GroupService();
+        this.categoryService = new CategoryService();
+
+        //this.listaCategorias();
     }
-    
-    this.groupService = new GroupService();
-    this.categoryService = new CategoryService();
-    
-    //this.listaCategorias();
-}
 
-setLista(categorias) {
-        
+    setLista(categorias) {
+
         this.setState({
-           category: categorias
-        });    
-       
-}
+            category: categorias
+        });
 
-setAlert(valor){
+    }
+
+    setAlert(valor) {
         this.setState({
             alert: valor
-        }); 
-        }
+        });
+    }
 
-listaCategorias (){
+    listaCategorias() {
         this.categoryService.listarNaoPaginado(
-               (resultado) => {
-           console.log(resultado);
-           this.setLista(resultado);
-       },
-               (erro) => {
-           console.log("Erro:");
-           console.log(erro);
-       }
-       );
-}
+            (resultado) => {
+                console.log(resultado);
+                this.setLista(resultado);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
+    }
 
 
-inserirComCategorias(item, idCategoria, sucesso, erro) {
+    inserirComCategorias(item, idCategoria, sucesso, erro) {
         console.log(item);
-        console.log ("Aqui");
         fetch(`api/grupos/${idCategoria}`, {
             method: "POST",
             headers: new Headers({
@@ -93,7 +84,7 @@ inserirComCategorias(item, idCategoria, sucesso, erro) {
 
         });
     }
-    
+
     editarComCategorias(id, item, idCategoria, sucesso, erro) {
         console.log(item);
         fetch(`api/grupos/${id}/${idCategoria}`, {
@@ -116,117 +107,167 @@ inserirComCategorias(item, idCategoria, sucesso, erro) {
     }
 
 
-render() {
-let aviso=null;
-    
-    if (this.state.alert){
-        aviso=<Alert bsStyle="success">
-        <strong>Concluído!</strong> Grupo criado com sucesso.
-        </Alert>
-    }
-    return (
-        <div className="content">
-        
-            <Grid fluid>
-            {aviso}
-                <Row>
-                    <Col md={8}>
+    render() {
+        let aviso = null;
 
-                               <CreateGroupElement
-                               privacy={this.state.privacy}
-                               disabled={this.state.disabled}
-                               invite={this.state.invite}
-                               
-                               lista={this.state.category}
+        if (this.state.alert) {
+            aviso = <Alert bsStyle="success">
+                <strong>Concluído!</strong> Grupo criado com sucesso. <i className="pe-7s-check ld ldt-jump-in"/>
+            </Alert>
+        }
+        return (
+            <div className="content">
 
-                               voltar={()=>{this.setState({privacy:"", disabled:false, information: "", search: "none", invite: "none", page1: "red", page2: "", page3: "", photo: "none"});}}
-                               
-                               confirmar={()=>{this.setState({privacy:"none", disabled:true, information: "none", search: "none", invite: "none", page1: "", page2: "", page3: "red", photo: ""});}}
-                              
-                               alert={()=>{this.setState({alert:true});}}
-                                       
-                               inserir ={(group, idCategoria)=>{ 
+                <Grid fluid>
+                    {aviso}
+                    <Row>
+                        <Col md={8}>
+
+                            <CreateGroupElement
+                                privacy={this.state.privacy}
+                                disabled={this.state.disabled}
+                                invite={this.state.invite}
+
+                                lista={this.state.category}
+
+                                voltar={() => {
+                                    this.setState({
+                                        privacy: "",
+                                        disabled: false,
+                                        information: "",
+                                        search: "none",
+                                        invite: "none",
+                                        page1: "red",
+                                        page2: "",
+                                        page3: "",
+                                        photo: "none"
+                                    });
+                                }}
+
+                                confirmar={() => {
+                                    this.setState({
+                                        privacy: "none",
+                                        disabled: true,
+                                        information: "none",
+                                        search: "none",
+                                        invite: "none",
+                                        page1: "",
+                                        page2: "",
+                                        page3: "red",
+                                        photo: ""
+                                    });
+                                }}
+
+                                alert={() => {
+                                    this.setState({alert: true});
+                                }}
+
+                                inserir={(group, idCategoria) => {
                                     this.inserirComCategorias(group, idCategoria,
-                                    (grupo)=>{
-                                        
-                                        this.setState({privacy:"none", disabled:true, information: "none", search: "", group: grupo, invite: "", page1: "", page2: "red", page3: "", photo: "none"});            
-                                        
-                                },
-                                (erro)=>{
-                                console.log("Erro!");
-                                console.log(erro);
-                            }
-                        );
-                }}
-                
-                editar = {(id, group, idCategoria)=>{ 
-                    this.groupService.editar(id, group, idCategoria, 
-                            (grupo)=>{
-                                alert("Grupo alterado com sucesso!");
-                                this.setState({privacy:"none", disabled:true, information: "none", search: "", group: grupo, invite: "", page1: "", page2: "red", page3: "", photo: "none"});   
-                            },
-                            (erro)=>{
-                                console.log("Erro!");
-                                console.log(erro);
-                                }
-                            );
-                    }}
-                      
+                                        (grupo) => {
 
-            group={this.state.group} 
-            /> 
-                    </Col>
-                    
+                                            this.setState({
+                                                privacy: "none",
+                                                disabled: true,
+                                                information: "none",
+                                                search: "",
+                                                group: grupo,
+                                                invite: "",
+                                                page1: "",
+                                                page2: "red",
+                                                page3: "",
+                                                photo: "none"
+                                            });
+
+                                        },
+                                        (erro) => {
+                                            console.log("Erro!");
+                                            console.log(erro);
+                                        }
+                                    );
+                                }}
+
+                                editar={(id, group, idCategoria) => {
+                                    this.groupService.editar(id, group, idCategoria,
+                                        (grupo) => {
+                                            alert("Grupo alterado com sucesso!");
+                                            this.setState({
+                                                privacy: "none",
+                                                disabled: true,
+                                                information: "none",
+                                                search: "",
+                                                group: grupo,
+                                                invite: "",
+                                                page1: "",
+                                                page2: "red",
+                                                page3: "",
+                                                photo: "none"
+                                            });
+                                        },
+                                        (erro) => {
+                                            console.log("Erro!");
+                                            console.log(erro);
+                                        }
+                                    );
+                                }}
+
+
+                                group={this.state.group}
+                            />
+                        </Col>
+
                         <RightCard
-                        information={this.state.information}
-                        search={this.state.search}
+                            information={this.state.information}
+                            search={this.state.search}
                         />
-  
-                </Row>
-                
-                <Row style={{display: this.state.photo}}>
+
+                    </Row>
+
+                    <Row style={{display: this.state.photo}}>
                         <Col md={8}>
                             <Card
-                                title=""                   
-                                content={ 
-                                
-                                <div>
-                          
-                                    <GroupImage
-                                        id= {this.state.group.id}
-                                    />         
-                
-                                    <button style={{borderStyle: 'none', float: 'right', color: 'red'}} > Ir para o grupo</button>
-                                    
-                                    <div className="clearfix"></div>
+                                title=""
+                                content={
 
-                                </div>
+                                    <div>
+
+                                        <GroupImage
+                                            id={this.state.group.id}
+                                        />
+
+                                        <button style={{borderStyle: 'none', float: 'right', color: 'red'}}> Ir para o
+                                            grupo
+                                        </button>
+
+                                        <div className="clearfix"/>
+
+                                    </div>
                                 }
-                            />    
+                            />
                         </Col>
                     </Row>
 
-                    
-                <div style={{display: 'table'}}>
+
+                    <div style={{display: 'table'}}>
                         <div style={{display: 'table', float: 'left'}}>
-                        <div className="circle" style={{backgroundColor: this.state.page1, color: 'white'}}>1</div>
-                        <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Crie o Grupo</h4>
+                            <div className="circle" style={{backgroundColor: this.state.page1, color: 'white'}}>1</div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Crie o Grupo</h4>
                         </div>
 
                         <div style={{display: 'table', float: 'left'}}>
-                        <div className="circle" style={{backgroundColor: this.state.page2, color: 'white'}}>2</div>
-                        <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Convide Participantes</h4>
+                            <div className="circle" style={{backgroundColor: this.state.page2, color: 'white'}}>2</div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Convide Participantes</h4>
                         </div>
 
                         <div style={{display: 'table', float: 'left'}}>
-                        <div className="circle" style={{backgroundColor: this.state.page3, color: 'white'}}>3</div>
-                        <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Pronto</h4>
+                            <div className="circle" style={{backgroundColor: this.state.page3, color: 'white'}}>3</div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Pronto</h4>
                         </div>
-                        </div>
-            </Grid>
-        </div>
-    );
-}
+                    </div>
+                </Grid>
+            </div>
+        );
+    }
 }
 
 export default GroupPage;

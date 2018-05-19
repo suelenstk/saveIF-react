@@ -10,6 +10,7 @@ import './assets/css/animate.min.css';
 import './assets/sass/saveif-react.css';
 import './assets/css/demo.css';
 import './assets/css/pe-icon-7-stroke.css';
+import './assets/css/animations.css';
 
 
 ReactDOM.render((

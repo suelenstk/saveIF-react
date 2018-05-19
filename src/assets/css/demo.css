@@ -15,7 +15,7 @@
 
 .all-icons .font-icon-detail {
     text-align: center;
-    padding: 45px 0px 30px;
+    padding: 45px 0 30px;
     border: 1px solid #e5e5e5;
     border-radius: 6px;
     margin: 15px 0;
@@ -130,37 +130,8 @@
     width: 23px;
 }
 
-.fixed-plugin .badge.active,
-.fixed-plugin .badge:hover {
-    border-color: #00bbff;
-}
-
 .fixed-plugin .badge-white {
     background-color: #FFFFFF;
-}
-
-.fixed-plugin .badge-black {
-    background-color: #1DC7EA;
-}
-
-.fixed-plugin .badge-azure {
-    background-color: #1DC7EA;
-}
-
-.fixed-plugin .badge-green {
-    background-color: #87CB16;
-}
-
-.fixed-plugin .badge-orange {
-    background-color: #FFA534;
-}
-
-.fixed-plugin .badge-purple {
-    background-color: #9368E9;
-}
-
-.fixed-plugin .badge-red {
-    background-color: #FB404B;
 }
 
 .fixed-plugin h5 {
@@ -226,8 +197,6 @@
     border-radius: 10px;
     background-color: #FFF;
     border: 3px solid #FFF;
-    padding-left: 0;
-    padding-right: 0;
     opacity: 1;
     cursor: pointer;
     max-height: 86px;
@@ -256,7 +225,6 @@
 }
 
 .fixed-plugin .btn-social {
-    width: 50%;
     display: block;
     width: 48%;
     float: left;
@@ -336,7 +304,7 @@
     .typo-line .category {
         transform: translateY(-50%);
         top: 50%;
-        left: 0px;
+        left: 0;
         position: absolute;
     }
 
@@ -366,7 +334,7 @@
 
     .fixed-plugin .adjustments-line .switch {
         float: right;
-        margin: 0 0px;
+        margin: 0 0;
     }
 
     .fixed-plugin li.header-title {
@@ -493,7 +461,7 @@
     .typo-line .category {
         transform: translateY(-50%);
         top: 50%;
-        left: 0px;
+        left: 0;
         position: absolute;
     }
 }
@@ -508,7 +476,7 @@
 
 .all-icons .font-icon-detail {
     text-align: center;
-    padding: 45px 0px 30px;
+    padding: 45px 0 30px;
     border: 1px solid #e5e5e5;
     border-radius: 6px;
     margin: 15px 0;
@@ -554,7 +522,7 @@ a {
     color: #ED3846;
 }
 
-a:hover {
+a:hover, a:focus {
     color: #C0313C;
 }
 
@@ -709,7 +677,6 @@ a, p {
 
 .addUserbtn {
     padding: 5px 0;
-    height: 100%;
     color: #000000;
     font-weight: bold;
     float: right;
@@ -731,7 +698,6 @@ a, p {
     text-align: center;
     font-size: 30px;
     float: left;
-
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -740,5 +706,24 @@ a, p {
 .alert-success {
     color: #3c763d;
     background-color: #dff0d8;
-    border-color: #d6e9c6;
+    border: 1px solid #3c763d;
 }
+
+.alert-success i {
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+.disabled > a, .disabled > a:focus, .disabled > a:hover, .disabled > span {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff
+}
+
+.boia {
+    margin: 0 40% 10px 42%;
+    width: 90px;
+    height: 90px;
+}
+

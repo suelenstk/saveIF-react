@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactLoading from 'react-loading';
 
 
 import {FormInputs} from '../FormInputs/FormInputs.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
-import GroupService from '../../views/Groups/GroupService';
 import servicoLogin from '../../login/ServicoLogin';
 import Alert from "react-bootstrap/es/Alert";
+import boia from '../../assets/img/boia.png';
 
 class GroupImage extends React.Component {
 
@@ -20,7 +19,6 @@ class GroupImage extends React.Component {
             success: false
         };
 
-        this.groupService = new GroupService();
         this._handleImageChange = this._handleImageChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
         //this.listaCategorias();
@@ -46,8 +44,6 @@ class GroupImage extends React.Component {
                 if (resultado.ok) {
                     this.setState(
                         (anterior) => {
-                            alert("Imagem inserida com sucesso!");
-                            console.log("Mudou!");
                             return anterior;
                         }
                     );
@@ -92,17 +88,18 @@ class GroupImage extends React.Component {
         let $imagePreview = null;
 
         if (imagePreviewUrl) {
-            $imagePreview = (<a href={imagePreviewUrl} download> download </a>);
+            $imagePreview = (<img src={imagePreviewUrl} responsive width="100%"/>);
         }
 
         if (this.state.loading) {
-            $imagePreview = (<ReactLoading type="spinningBubbles" className="loading" color="#ED3846"/>);
+            $imagePreview = (<img src={boia} className="boia ld ld-cycle"/>);
+            // $imagePreview = (<ReactLoading type="spinningBubbles" className="loading" color="#ED3846"/>);
         }
 
         if (this.state.success) {
             $imagePreview = (
                 <Alert bsStyle="success">
-                    Imagem enviada com sucesso!
+                    Imagem enviada com sucesso! <i className="pe-7s-check ld ldt-jump-in"/>
                 </Alert>
             );
         }
@@ -121,6 +118,7 @@ class GroupImage extends React.Component {
                             {
                                 label: "Adicione uma foto ao grupo: ",
                                 type: "file",
+                                accept: "image/*",
                                 bsClass: "form-control",
                                 placeholder: "File",
                                 name: "arquivo",

@@ -243,8 +243,7 @@
     .navbar-transparent & .form-control, 
     [class*="navbar-ct"] & .form-control{
         color: $white-color;
-        border: $none;
-        border-bottom: 1px solid rgba($white-color,.6);
+        border-bottom: 1px solid rgba($white-color, .6);
     }
 
 }

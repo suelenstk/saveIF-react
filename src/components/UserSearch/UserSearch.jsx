@@ -29,7 +29,6 @@ class UserSearch extends React.Component {
             this.state.nome, pagina,
             (sucesso) => {
                 this.setState({listaUsuario: sucesso});
-                console.log("Sucesso");
                 console.log(this.state.listaUsuario);
             },
             (erro) => {
@@ -122,7 +121,6 @@ class UserSearch extends React.Component {
                         </Pager.Item>
                         <Pager.Item
                             next
-                            title="teste 123"
                             disabled={statusNext}
                             onClick={(e) => {
                                 this.pesquisar(this.state.pagina + 1);
