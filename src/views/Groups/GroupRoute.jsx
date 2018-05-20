@@ -43,8 +43,8 @@ export default class GroupRoute extends Component {
 
    <Switch>
 
-    <Route exact path="/groups" render = {(props) => <RotaLista  {...props} pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>}   
-          pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>
+    <Route exact path="/groups" render = {(props) => <RotaLista  {...props} rota={this.props.rota} user={this.props.user}/>}   
+          rota={this.props.rota} user={this.props.user}/>
     
     <Route path="/groups/:id/geral" component={RotaPosts} />
     

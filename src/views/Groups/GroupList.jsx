@@ -5,16 +5,46 @@ import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Link} from 'react-router-dom';
 import grupoImage from '../../img/grupo.png';
 import ServicoLogin from '../../login/ServicoLogin';
+import GroupService from './GroupService';
+import Pager from "react-bootstrap/es/Pager";
 
 export default class GroupList extends Component {
 
     constructor(props) {
+
         super(props);
-    
-        this.state = {   
-          flagGrupo:false
-        };
+
+        this.state = {
+            paginaAtual:0,
+            grupo:{},
+            flagGrupo:false
+        }
+
+        this.groupService = new GroupService();
+        this.listar(0);
     }
+
+    setarItem(paginaResultado) {
+        //console.log(paginaResultado);
+        this.setState({
+            grupo: paginaResultado
+        });
+    }
+ 
+ 
+    listar(pagina) {
+  
+        this.groupService.listarPaginado(pagina,
+                (resultado) => {
+            console.log(resultado);
+            this.setarItem(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+    }   
    
    botaoVerMais(grupo){
 
@@ -100,7 +130,21 @@ export default class GroupList extends Component {
    
    render() {
        //alert(this.props.pagina);
-       if (!this.props.pagina.content) {
+
+       let statusNext = true;
+       let statusPrev = true;
+       //alert(this.state.pagina.totalPages);
+       
+       if (this.state.paginaAtual > 0) {
+           statusPrev = false;
+       }
+
+       if (this.state.paginaAtual < this.state.grupo.totalPages - 1) {
+           statusNext = false;
+       }
+
+
+       if (!this.state.grupo.content) {
 
            return <div>Não há grupos cadastrados!</div>;
 
@@ -108,7 +152,7 @@ export default class GroupList extends Component {
            return  <Row>
            <h1 style={{fontSize: '30px'}}>{(this.props.rota === "MyGroups")? "Meus Grupos":"Outros Grupos"}</h1>
            <Col md={12}>
-           {this.props.pagina.content.map((grupo) => {             
+           {this.state.grupo.content.map((grupo) => {             
               return <Card                                
                    ctAllGroups
                
@@ -158,6 +202,33 @@ export default class GroupList extends Component {
            })}
            {(!this.state.flagGrupo)?"Você não esta inscrito em nenhum grupo":""}
            </Col>
+           
+           <Pager>
+                     {(!statusPrev)?   
+                    <Pager.Item
+                            previous
+                            disabled={statusPrev}
+                            onClick={(e) => {
+                                this.listar(this.state.paginaAtual - 1);
+                                this.state.paginaAtual--;
+                            }}
+                        >
+                            &lt; Anterior
+                        </Pager.Item>:""}
+                     {(!statusNext)?     
+                        <Pager.Item
+                            next
+                            disabled={statusNext}
+                            onClick={(e) => {
+                                this.listar(this.state.paginaAtual + 1);
+                                this.state.paginaAtual++;
+                            }}
+                        >
+                            Próxima &gt;
+                        </Pager.Item>:""}
+                        
+                </Pager>
+
 
        </Row>
 

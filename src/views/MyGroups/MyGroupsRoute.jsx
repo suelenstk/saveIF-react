@@ -52,8 +52,8 @@ export default class MyGroupsRoute extends Component {
   return <div>
    <Switch>
 
-    <Route exact path="/MyGroups" render = {(props) => <RotaLista  {...props} pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>}
-                                                pagina={this.props.pagina} rota={this.props.rota} user={this.props.user}/>
+    <Route exact path="/MyGroups" render = {(props) => <RotaLista  {...props} rota={this.props.rota} user={this.props.user}/>}
+                                                rota={this.props.rota} user={this.props.user}/>
     
     <Route path="/MyGroups/:id/geral" component={RotaPosts} />
     
