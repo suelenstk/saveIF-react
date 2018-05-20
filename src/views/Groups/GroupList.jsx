@@ -21,7 +21,9 @@ export default class GroupList extends Component {
         }
 
         this.groupService = new GroupService();
-        this.listar(0);
+        //alert(this.props.user);
+        (this.props.rota === "MyGroups")? 
+            this.listarGrupoParticipa(0,this.props.user):this.listar(0);
     }
 
     setarItem(paginaResultado) {
@@ -45,12 +47,26 @@ export default class GroupList extends Component {
         }
         );
     }   
+    
+    listarGrupoParticipa(pagina,id) {
+  
+        this.groupService.listarGrupoIntegrantes(id,pagina,
+                (resultado) => {
+            console.log(resultado);
+            this.setarItem(resultado);
+        },
+                (erro) => {
+            console.log("Erro:");
+            console.log(erro);
+        }
+        );
+    }   
    
    botaoVerMais(grupo){
 
        let botoes = [];
        this.state.flagGrupo = true;
-
+       
        let verificar = this.verificarIntegrante(this.props.user,grupo.integrantesGrupo);
        //let botao = <Link to={`/GroupEnter`}>
        //Verificar rota certa
@@ -130,7 +146,6 @@ export default class GroupList extends Component {
    
    render() {
        //alert(this.props.pagina);
-
        let statusNext = true;
        let statusPrev = true;
        //alert(this.state.pagina.totalPages);
@@ -185,7 +200,7 @@ export default class GroupList extends Component {
                                 style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade), marginLeft:"5"}}/>
                                 </p>                                                           
                                
-                                <p style={{fontWeight:"bold"}}>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo))? 
+                                <p style={{fontWeight:"bold"}}>{(this.verificarIntegrante(this.props.user,grupo.integrantesGrupo) && this.props.rota !== "MyGroups")? 
                                         "Você é integrante desse grupo":""}</p>
                                 
                                 

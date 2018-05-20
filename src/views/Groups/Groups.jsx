@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Grid} from 'react-bootstrap';
 import GroupRoute from './GroupRoute';
+import GroupService from './GroupService';
 
 
 class Groups extends Component {
@@ -9,6 +10,7 @@ class Groups extends Component {
 
        super(props);
        //console.log(this.props.user);
+       this.groupService = new GroupService();
 
    }
    

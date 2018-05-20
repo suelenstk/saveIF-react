@@ -12,7 +12,9 @@ class RotaLista extends Component {
  render() {
    //console.log(this.props.pagina);
     return <GroupList pagina={this.props.pagina}
-                    rota={this.props.rota}/>;
+                    rota={this.props.rota}
+                    user={this.props.user}
+                    />;
  }
 }
 
