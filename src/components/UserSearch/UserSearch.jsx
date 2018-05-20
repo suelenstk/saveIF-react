@@ -8,7 +8,7 @@ import {UserChip} from '../../elements/UserChip/UserChip';
 import avatar from "../../assets/img/default-avatar.png";
 import Button from "react-bootstrap/es/Button";
 import listUserService from "../../services/ListUserService"
-import Pager from "react-bootstrap/es/Pager";
+import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
 
 class UserSearch extends React.Component {
     constructor(props) {
@@ -35,31 +35,30 @@ class UserSearch extends React.Component {
                 console.log(erro);
             }
         );
-        this.setValor("pagina", pagina);
+        this.setState({pagina: pagina});
     }
 
-    setValor(atributo, valor) {
-        this.setState(
-            (estado) => estado[atributo] = valor
-        );
+    sleep(tempo) {
+        return new Promise((e) => setTimeout(e, tempo));
+    }
+
+    // Esse sleep faz a busca automatica, sem precisar dar enter,
+    // entretanto, isso obriga ele a fazer muitas requisicoes.
+    // Podemos remove-lo, caso o desempenho seja mais vantajoso.
+    setNome(nome) {
+        this.setState({nome: nome});
+        this.setState({pagina: 0});
+        this.sleep(200).then(() => {
+            this.pesquisar(this.state.pagina);
+        });
     }
 
 
     render() {
         let campoUsuario = null;
 
-        let statusPrev = true;
-        let statusNext = true;
-
-        if (this.state.pagina > 0) {
-            statusPrev = false;
-        }
-
-        if (this.state.pagina < this.state.listaUsuario.totalPages - 1) {
-            statusNext = false;
-        }
-
-        if (this.state.listaUsuario) {
+        if (this.state.listaUsuario.totalPages) {
+            console.log("entrou no if");
             campoUsuario =
                 <div>
                     {this.state.listaUsuario.content.map((usuario) => {
@@ -73,6 +72,12 @@ class UserSearch extends React.Component {
                             icone="pe-7s-add-user"
                         />
                     })}
+                </div>
+        } else {
+            console.log("entrou no else");
+            campoUsuario =
+                <div style={{margin: "20px"}}>
+                    <p>Nenhum usuário encontrado!</p>
                 </div>
         }
 
@@ -95,7 +100,7 @@ class UserSearch extends React.Component {
                                     <FormControl
                                         type="text"
                                         placeholder="Pesquisar"
-                                        onChange={(e) => this.setValor("nome", e.target.value)}
+                                        onChange={(e) => this.setNome(e.target.value)}
                                     />
                                 </InputGroup>
                             </FormGroup>
@@ -109,26 +114,13 @@ class UserSearch extends React.Component {
                 }
 
                 legend={
-                    <Pager>
-                        <Pager.Item
-                            previous
-                            disabled={statusPrev}
-                            onClick={(e) => {
-                                this.pesquisar(this.state.pagina - 1);
-                            }}
-                        >
-                            &lt; Anterior
-                        </Pager.Item>
-                        <Pager.Item
-                            next
-                            disabled={statusNext}
-                            onClick={(e) => {
-                                this.pesquisar(this.state.pagina + 1);
-                            }}
-                        >
-                            Próxima &gt;
-                        </Pager.Item>
-                    </Pager>
+                    <PaginationSaveIf
+                        lista={this.state.listaUsuario}
+                        pagina={this.state.pagina}
+                        setPagina={(e) => {
+                            this.pesquisar(e);
+                        }}
+                    />
                 }
             />
         );

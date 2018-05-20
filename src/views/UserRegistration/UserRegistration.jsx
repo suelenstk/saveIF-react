@@ -9,6 +9,7 @@ import logo from '../../assets/img/reactlogo.png';
 import HelpBlock from "react-bootstrap/es/HelpBlock";
 import courseService from "../../services/CourseService";
 import {Redirect} from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 
 
 class UserRegistration extends React.Component {
@@ -60,7 +61,7 @@ class UserRegistration extends React.Component {
                 existe = sucesso;
                 if (existe) {
                     this.setState({
-                        avisoUsuario: "E-mail já cadastrado no sistema. Por favor, tente novamente."
+                        avisoUsuario: "E-mail já cadastrado no sistema. Por favor, cadastre outro e-mail ou faça login."
                     });
                 }
             },
@@ -175,6 +176,7 @@ class UserRegistration extends React.Component {
                     <Grid fluid>
                         <Row>
                             <Col md={12}>
+
                                 <Card
                                     title="Cadastro de usuário"
                                     content={
@@ -280,6 +282,12 @@ class UserRegistration extends React.Component {
                                         </form>
                                     }
                                 />
+                                <div>
+                                    <p>
+                                        Já tem conta? <Link to="/login">Faça login.</Link>
+                                    </p>
+                                    <br/>
+                                </div>
                             </Col>
                         </Row>
                     </Grid>
