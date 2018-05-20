@@ -16,7 +16,7 @@ class UserRegistration extends React.Component {
         super(props);
         this.state = {
             avisoUsuario: "",
-            sucesso:"",
+            sucesso: "",
             confirmaSenha: "",
             listaCurso: "",
             cadastro: true,
@@ -31,7 +31,6 @@ class UserRegistration extends React.Component {
         };
 
         this.UserService = new UserService();
-
 
         this.setState({
             listaCurso: (
@@ -48,6 +47,32 @@ class UserRegistration extends React.Component {
         });
     }
 
+    consultarEmail() {
+        let existe = false;
+
+        this.setState({
+            avisoUsuario: ""
+        });
+
+        this.UserService.consultarExistencia(
+            this.state.usuario.email,
+            (sucesso) => {
+                existe = sucesso;
+                if (existe) {
+                    this.setState({
+                        avisoUsuario: "E-mail já cadastrado no sistema. Por favor, tente novamente."
+                    });
+                }
+            },
+            (erro) => {
+                console.log(erro);
+                this.setState({
+                    avisoUsuario: "Erro inesperado:\n" + erro.message + "\nInforme ao administrador do sistema."
+                });
+            }
+        );
+    }
+
     setValor(atributo, valor) {
         this.setState(
             (estado) => estado.usuario[atributo] = valor
@@ -58,10 +83,9 @@ class UserRegistration extends React.Component {
         let usuario = this.state.usuario;
         this.UserService.inserirSemAutorizacao(usuario,
             (sucesso) => {
-                this.setState({cadastro: false })
+                this.setState({cadastro: false});
                 alert("Usuário cadastrado com sucesso!");
-                this.setState({sucesso: <Redirect to="/" />})
-
+                this.setState({sucesso: <Redirect to="/"/>})
             },
             (erro) => {
                 console.log("Erro!");
@@ -74,18 +98,14 @@ class UserRegistration extends React.Component {
     }
 
     confirmar() {
-        let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
 
         if (this.state.usuario.email && this.state.usuario.nome && this.state.usuario.novaSenha && this.state.confirmaSenha && this.state.usuario.tipoVinculo) {
             if (this.state.usuario.tipoVinculo !== "aluno" || (this.state.usuario.tipoVinculo === "aluno" && this.state.usuario.curso !== "")) {
-                if (regexEmail.test(this.state.usuario.email+"@restinga.ifrs.edu.br")) {
+                if (regexEmail.test(this.state.usuario.email + "@restinga.ifrs.edu.br")) {
                     if (regexNome.test(this.state.usuario.nome)) {
                         if (this.state.usuario.novaSenha === this.state.confirmaSenha) {
-                            // TODO set null quando for != aluno
-                            // if (this.state.usuario.tipoVinculo !== "aluno" && this.state.usuario.curso !== "") {
-                            //     this.setState({curso: ""});
-                            // }
                             this.inserirUsuario();
                         } else {
                             alert("As senhas digitadas não coincidem!");
@@ -104,7 +124,6 @@ class UserRegistration extends React.Component {
             alert("Preencha todos os campos obrigatórios!");
         }
     }
-
 
     render() {
         let campoCurso = null;
@@ -145,12 +164,7 @@ class UserRegistration extends React.Component {
 
         if (this.state.sucesso)
             return this.state.sucesso;
-        else
-
-
-        return (
-
-            
+        else return (
             <div className="wrapper">
                 <Navbar className="navbarLogin">
                     <Navbar.Brand className="logoInicial">
@@ -170,13 +184,15 @@ class UserRegistration extends React.Component {
                                         }}>
                                             {erroCadastro}
                                             <Row>
-                                                <FormGroup controlId="formHorizontalPrefixoEmail" className="col-md-6">
+                                                <FormGroup controlId="formHorizontalPrefixoEmail"
+                                                           className="col-md-6">
                                                     <ControlLabel>Prefixo do e-mail</ControlLabel>
                                                     <FormControl
                                                         type="text"
                                                         value={this.state.usuario.email}
                                                         placeholder="Ex: pmachado"
                                                         onChange={(e) => this.setValor("email", e.target.value)}
+                                                        onBlur={(e) => this.consultarEmail(e.target.value)}
                                                         required
                                                     />
                                                 </FormGroup>
@@ -221,7 +237,8 @@ class UserRegistration extends React.Component {
                                                 </FormGroup>
                                             </Row>
                                             <Row>
-                                                <FormGroup controlId="formControlSelectVinculo" className="col-md-12">
+                                                <FormGroup controlId="formControlSelectVinculo"
+                                                           className="col-md-12">
                                                     <ControlLabel>Vínculo</ControlLabel>
                                                     <FormControl
                                                         componentClass="select"
@@ -252,6 +269,7 @@ class UserRegistration extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Button
+                                                disabled={this.state.avisoUsuario !== ""}
                                                 className="btnSaveif"
                                                 fill
                                                 type="submit"
