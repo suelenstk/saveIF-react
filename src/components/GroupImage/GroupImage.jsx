@@ -6,6 +6,7 @@ import Button from '../../elements/CustomButton/CustomButton.jsx';
 import servicoLogin from '../../login/ServicoLogin';
 import Alert from "react-bootstrap/es/Alert";
 import boia from '../../assets/img/boia.png';
+import Redirect from "react-router-dom/es/Redirect";
 
 class GroupImage extends React.Component {
 
@@ -17,7 +18,8 @@ class GroupImage extends React.Component {
             imagePreviewUrl: "",//para imagemo
             loading: false,
             success: false,
-            error: ""
+            error: "",
+            concluded: ""
         };
 
         this._handleImageChange = this._handleImageChange.bind(this);
@@ -43,6 +45,9 @@ class GroupImage extends React.Component {
 
             this.sleep(3000).then(() => {
                 if (resultado.ok) {
+                    this.sleep(2000).then(() => {
+                        this.setState({concluded: <Redirect to={"/MyGroups/" + this.props.id + "/geral"}/>});
+                    });
                     this.setState(
                         (anterior) => {
                             return anterior;
@@ -105,6 +110,38 @@ class GroupImage extends React.Component {
     render() {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
+        let seletorImagem = (
+            <form method="post" encType="multipart/form-data"
+                  onSubmit={(event) => {
+                      event.preventDefault();
+                      this._handleSubmit(event.target);
+                  }}>
+                <FormInputs
+                    ncols={["col-md-6"]}
+                    proprieties={[
+                        {
+                            label: "Adicione uma foto ao grupo: ",
+                            type: "file",
+                            accept: "image/*",
+                            bsClass: "form-control",
+                            placeholder: "File",
+                            name: "arquivo",
+                            onChange: this._handleImageChange
+                        }
+                    ]}
+                />
+                <Button
+                    disabled={this.state.imagePreviewUrl === ""}
+                    style={{width: "100%"}}
+                    className="btnSaveif"
+                    block
+                    fill
+                    type="submit"
+                >
+                    Enviar
+                </Button>
+            </form>
+        );
 
         if (this.state.error !== "") {
             $imagePreview = (
@@ -129,40 +166,15 @@ class GroupImage extends React.Component {
                     Imagem enviada com sucesso! <i className="pe-7s-check ld ldt-jump-in"/>
                 </Alert>
             );
+            seletorImagem = "";
         }
 
-        return (
+        if (this.state.concluded) {
+            return this.state.concluded;
+        } else return (
             <div>
                 {$imagePreview}
-                <form method="post" encType="multipart/form-data"
-                      onSubmit={(event) => {
-                          event.preventDefault();
-                          this._handleSubmit(event.target);
-                      }}>
-                    <FormInputs
-                        ncols={["col-md-6"]}
-                        proprieties={[
-                            {
-                                label: "Adicione uma foto ao grupo: ",
-                                type: "file",
-                                accept: "image/*",
-                                bsClass: "form-control",
-                                placeholder: "File",
-                                name: "arquivo",
-                                onChange: this._handleImageChange
-                            }
-                        ]}
-                    />
-                    <Button
-                        style={{width: "100%"}}
-                        className="btnSaveif"
-                        block
-                        fill
-                        type="submit"
-                    >
-                        Enviar
-                    </Button>
-                </form>
+                {seletorImagem}
             </div>
         );
     }

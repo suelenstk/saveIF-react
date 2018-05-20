@@ -9,6 +9,7 @@ import GroupService from '../GroupService.jsx';
 import CategoryService from "../../../services/CategoryService";
 import servicoLogin from '../../../login/ServicoLogin'
 import GroupImage from '../../../components/GroupImage/GroupImage';
+import Redirect from "react-router-dom/es/Redirect";
 
 class GroupPage extends React.Component {
 
@@ -17,6 +18,7 @@ class GroupPage extends React.Component {
 
         this.state = {
             disabled: false,
+            concluded: "",
             privacy: "",
             information: "",
             search: "none",
@@ -32,8 +34,6 @@ class GroupPage extends React.Component {
 
         this.groupService = new GroupService();
         this.categoryService = new CategoryService();
-
-        //this.listaCategorias();
     }
 
     setLista(categorias) {
@@ -106,6 +106,11 @@ class GroupPage extends React.Component {
         });
     }
 
+    btnIrParaGrupo() {
+        this.setState({
+            concluded: <Redirect to={"/MyGroups/" + this.state.group.id + "/geral"}/>
+        })
+    }
 
     render() {
         let aviso = null;
@@ -115,9 +120,11 @@ class GroupPage extends React.Component {
                 <strong>Concluído!</strong> Grupo criado com sucesso. <i className="pe-7s-check ld ldt-jump-in"/>
             </Alert>
         }
-        return (
-            <div className="content">
 
+        if (this.state.concluded) {
+            return this.state.concluded;
+        } else return (
+            <div className="content">
                 <Grid fluid>
                     {aviso}
                     <Row>
@@ -222,31 +229,29 @@ class GroupPage extends React.Component {
                         />
 
                     </Row>
-
                     <Row style={{display: this.state.photo}}>
                         <Col md={8}>
                             <Card
                                 title=""
                                 content={
-
                                     <div>
-
                                         <GroupImage
                                             id={this.state.group.id}
                                         />
-
-                                        <button style={{borderStyle: 'none', float: 'right', color: 'red'}}> Ir para o
-                                            grupo
+                                        <button
+                                            style={{borderStyle: 'none', float: 'right', color: 'red'}}
+                                            onClick={() => {
+                                                this.btnIrParaGrupo()
+                                            }}
+                                        >
+                                            Ir para o grupo
                                         </button>
-
                                         <div className="clearfix"/>
-
                                     </div>
                                 }
                             />
                         </Col>
                     </Row>
-
 
                     <div style={{display: 'table'}}>
                         <div style={{display: 'table', float: 'left'}}>
