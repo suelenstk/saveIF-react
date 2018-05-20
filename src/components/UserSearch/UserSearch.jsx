@@ -7,7 +7,8 @@ import {UserChip} from '../../elements/UserChip/UserChip';
 
 import avatar from "../../assets/img/default-avatar.png";
 import Button from "react-bootstrap/es/Button";
-import listUserService from "../../services/ListUserService"
+import listUserService from "../../services/ListUserService";
+import GroupService from "../../views/Groups/GroupService";
 import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
 
 class UserSearch extends React.Component {
@@ -22,6 +23,7 @@ class UserSearch extends React.Component {
         this.setState({
             listaUsuario: this.pesquisar(0)
         });
+        this.groupService = new GroupService();
     }
 
     pesquisar(pagina) {
@@ -53,23 +55,30 @@ class UserSearch extends React.Component {
         });
     }
 
+    // Esse metodo adiciona a acao ao botao do chip
+    // adicionarUsuario(usuario){
+    //     console.log("userId = "+usuario.id);
+    //     console.log("userName = "+usuario.nome);
+    // }
 
     render() {
         let campoUsuario = null;
 
         if (this.state.listaUsuario.totalPages) {
-            console.log("entrou no if");
             campoUsuario =
                 <div>
                     {this.state.listaUsuario.content.map((usuario) => {
                         return <UserChip
-                            value={usuario.id}
+                            usuario={usuario}
                             key={usuario.id}
                             nome={usuario.nome}
                             avatar={avatar}
                             alt={usuario.nome}
-                            nomeBtn="addUserbtn"
+                            class="addUserbtn"
                             icone="pe-7s-add-user"
+                            evento={(e) => {
+                                this.adicionarUsuario(e);
+                            }}
                         />
                     })}
                 </div>

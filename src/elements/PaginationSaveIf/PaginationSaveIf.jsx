@@ -16,26 +16,28 @@ export class PaginationSaveIf extends Component {
 
 
         if (this.props.pagina > 0) {
-            statusPrev = <Pager.Item
-                previous
-                onClick={(e) => {
-                    this.props.setPagina(this.props.pagina - 1);
-                }}
-            >
-                &lt; Anterior
-            </Pager.Item>
+            statusPrev =
+                <Pager.Item
+                    previous
+                    onClick={(e) => {
+                        this.props.setPagina(this.props.pagina - 1);
+                    }}
+                >
+                    &lt; Anterior
+                </Pager.Item>
 
         } else statusPrev = "";
 
         if (this.props.pagina < this.props.lista.totalPages - 1) {
-            statusNext = <Pager.Item
-                next
-                onClick={(e) => {
-                    this.props.setPagina(this.props.pagina + 1);
-                }}
-            >
-                Próxima &gt;
-            </Pager.Item>
+            statusNext =
+                <Pager.Item
+                    next
+                    onClick={(e) => {
+                        this.props.setPagina(this.props.pagina + 1);
+                    }}
+                >
+                    Próxima &gt;
+                </Pager.Item>
 
         } else statusNext = "";
 
