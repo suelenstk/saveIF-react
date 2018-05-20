@@ -196,7 +196,7 @@ export default class GroupList extends Component {
                                 
                                 <p style={{fontWeight:"bold"}}>
                                 Grupo {grupo.tipoPrivacidade}<i className={this.testarIcone(grupo.tipoPrivacidade)} 
-                                title={this.descricao(grupo.tipopPrivacidade)}
+                                title={this.descricao(grupo.tipoPrivacidade)}
                                 style={{fontWeight:"bold", color:this.mudarCor(grupo.tipoPrivacidade), marginLeft:"5"}}/>
                                 </p>                                                           
                                
