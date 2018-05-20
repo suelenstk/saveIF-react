@@ -6,6 +6,7 @@ import TopicService from './TopicService';
 
 import NewTopic from './NewTopic';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
+import TopicRoute from "./TopicRoute";
 
 export default class TopicCard extends Component {
 
@@ -31,7 +32,7 @@ export default class TopicCard extends Component {
         //console.log(this.state.topico);
         return (
 
-                    <NewTopic
+                    <TopicRoute
                         idGrupo = {this.state.idGrupoAtual}
                         erroTopico={this.state.erro}
                         inserir ={(topic)=>{ 

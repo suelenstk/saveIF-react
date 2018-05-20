@@ -15,8 +15,7 @@ import React, {Component} from 'react';
         import avatar from "../../../assets/img/default-avatar.png";
         import {Link} from 'react-router-dom';
         import Pager from "react-bootstrap/es/Pager";
-        import UserChip from "../../../elements/UserChip/UserChip";
-        
+        import UserChip from "../../../elements/UserChip/UserChip";       
         
         export default class NewTopic extends React.Component {
 
