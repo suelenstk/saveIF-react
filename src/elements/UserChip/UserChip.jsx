@@ -15,11 +15,13 @@ export class UserChip extends Component {
                     <i className={this.props.icone} style={{fontSize: 20, width: 25, fontWeight: "bold"}}/>
                 }
                 {this.props.nome}
-                {(!this.props.icone) ?
+                {(this.props.icone) ?
                     <span
                         className={this.props.class}
                         onClick={(e) => {
-                            this.props.evento(this.props.usuario);
+                            if (this.props.evento) {
+                                this.props.evento(this.props.usuario);
+                            }
                         }}
                     >
                         <i className={this.props.icone}/>
