@@ -136,17 +136,21 @@ export default class CreateGroupElement extends React.Component {
             if (this.state.group.id && this.state.page2 !== true) {
                 this.setState({page2: true});
                 //this.props.editar();   
+             
             } else if (this.state.group.id && this.state.page2 === true) {
                 this.setState({page2: false});
                 this.props.alert();
                 this.setBotao("none");
+               
                 this.props.confirmar();
             } else {
                 this.setState({page2: true});
+              
                 if (regexNome.test(this.state.group.nome)) {
                     this.props.inserir(this.state.group, this.state.categoria);
                     this.setNomeBotao("Criar grupo");
                     this.setErrorGrupo("", "");
+              
                 } else this.setErrorGrupo("error", "Não é permitido caracteres especiais!");
             }
         } else {

@@ -226,6 +226,19 @@ class GroupPage extends React.Component {
                         <RightCard
                             information={this.state.information}
                             search={this.state.search}
+                            confirmar={() => {
+                                    this.setState({
+                                        privacy: "none",
+                                        disabled: true,
+                                        information: "none",
+                                        search: "none",
+                                        invite: "none",
+                                        page1: "",
+                                        page2: "",
+                                        page3: "red",
+                                        photo: ""
+                                    });
+                                }}
                         />
 
                     </Row>

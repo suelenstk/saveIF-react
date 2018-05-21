@@ -51,7 +51,7 @@ class RightCard extends React.Component {
                             <div>
                             <UserSearch/>
                             </div>  
-                            <a href="" style={{color: 'red'}}> Pular esta etapa &gt;&gt;</a>
+                            <button onClick={this.props.confirmar} style={{color: 'red'}}> Pular esta etapa &gt;&gt;</button>
                                         
                     </Row>
                     
