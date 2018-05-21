@@ -33,6 +33,7 @@ export default class TopicService {
 
             if (resultado.ok) {
                 resultado.json().then(sucesso)
+             
             } else {
                 resultado.json().then(
                     (resultadoErro) => erro(resultadoErro)
@@ -56,6 +57,7 @@ export default class TopicService {
 
             if (resultado.ok) {
                 resultado.json().then(sucesso)
+              
             } else {
                 resultado.json().then(
                     (resultadoErro) => erro(resultadoErro)

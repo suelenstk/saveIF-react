@@ -25,7 +25,7 @@ export default class GroupList extends Component {
         (this.props.rota === "MyGroups")? 
             this.listarGrupoParticipa(0,this.props.user):this.listar(0);
     }
-
+    
     setarItem(paginaResultado) {
         //console.log(paginaResultado);
         this.setState({

@@ -126,6 +126,7 @@ import React, {Component} from 'react';
                 this.props.inserir(this.state.topic);
                 
                 this.setConfigNovoTopico();
+                this.listarTopicos(this.state.pagina);
             
         } else {
                 this.setError("error", "Campo nome não pode ser vazio!");
