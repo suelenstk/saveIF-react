@@ -342,7 +342,8 @@ class GroupView extends Component {
                                         }
                                         this.loading("none");
                                         this.setAlert ("Post realizado com sucesso!", "success");
-                                        this.setState({show: false});                            
+                                        this.setState({show: false});   
+                                        this.listarPostEspecifico(0);
                                 },
                                 (erro)=>{
                                 console.log("Erro!");
