@@ -171,10 +171,16 @@ class GroupView extends Component {
         );            
             } else {
                 resultado.json().then(
-                        (resultadoErro) => console.log(resultadoErro)
+                        (resultadoErro) => {
+                            this.setAlert (resultadoErro+"!", "danger"); 
+                        }
+                        
                 )
             }
         });
+        
+        this.loading("none");                         
+        this.setState({show: false});
         
     }
     
@@ -321,7 +327,7 @@ class GroupView extends Component {
                     loading={this.state.loading}
                     
                     upload={(anexo)=>{this.upload(anexo);}}
-                    inserir ={(post, anexo, estadoArquivo)=>{
+                    inserir ={(post, anexo)=>{
                                     this.loading("");
                                     let topicoId;
                                     if(this.state.topico.id){
@@ -331,7 +337,7 @@ class GroupView extends Component {
                                     this.postService.inserirEmTopico(post, this.state.grupo.id, topicoId,
                                     (post)=>{
                                     
-                                    if(estadoArquivo){                                        
+                                    if (anexo){
                                         this.upload(anexo, post.id);
                                         }
                                         this.loading("none");

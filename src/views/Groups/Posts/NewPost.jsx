@@ -9,7 +9,10 @@ import {FormInputs} from '../../../components/FormInputs/FormInputs.jsx';
 import {UserCard} from '../../../components/UserCard/UserCard.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Loading from 'react-loading';
-import avatar from "../../../assets/img/faces/face-3.jpg";
+import doc from "../../../assets/img/doc.png";
+import ppt from "../../../assets/img/ppt.png";
+import pdf from "../../../assets/img/pdf.png";
+import outro from "../../../assets/img/outro.png";
 
 export default class NewPost extends React.Component {
     
@@ -18,12 +21,15 @@ export default class NewPost extends React.Component {
 
     this.state = {   
       post:this.props.post,
-      estadoArquivo: null,
+      extensaoArquivo: null,
+      file: null,
       errorDescricao: "",
       errorTitulo: "",
       msgErroDescricao:"",
       msgErroTitulo:""
     };
+    
+    this.mostraArquivo = this.mostraArquivo.bind(this);
   }
   
     componentWillReceiveProps(proximoEstado) {
@@ -54,15 +60,11 @@ export default class NewPost extends React.Component {
         }    
         
     
-    setEstadoArquivo(valor){
-        
-        let valorTrocado = null;
-        if (!valor){
-           valorTrocado = !this.state.estadoArquivo; 
-        }
+    setExtensaoArquivo(extensao, arquivo){
         this.setState({
-            estadoArquivo: valorTrocado
-        }); 
+                extensaoArquivo: extensao,
+                file: arquivo
+            });
         }
         
     setErrorTitulo (estilo, msg){
@@ -81,12 +83,16 @@ export default class NewPost extends React.Component {
     
     confirmar(arquivo) {
         
+    if(!this.state.extensaoArquivo){
+        arquivo=null;
+    }    
+        
     if (this.state.post.titulo&&
                 this.state.post.texto) {          
                     this.setErrorDescricao("", "");
                     this.setErrorTitulo("", "");
-                    this.props.inserir(this.state.post, arquivo, this.state.estadoArquivo);
-                    this.setEstadoArquivo(true);          
+                    this.props.inserir(this.state.post, arquivo);
+                    this.setExtensaoArquivo(null, null);     
     }
     if (!this.state.post.titulo){
         this.setErrorTitulo("error", "Campo Titulo não pode ser vazio!");   
@@ -96,8 +102,48 @@ export default class NewPost extends React.Component {
     }else this.setErrorDescricao("", "");
     
     }
+    
+    mostraArquivo (e){
+        e.preventDefault();
+
+        let reader = new FileReader();
+
+        if (e.target.files.length!==0){
+            let posicao = e.target.files[0].name.split(".").length;
+            let extensao = e.target.files[0].name.split(".")[posicao-1];
+            
+                reader.onloadend = () => {
+                this.setExtensaoArquivo(extensao, reader.result)
+            };
+            
+            reader.readAsDataURL(e.target.files[0])
+
+        }else {
+            this.setExtensaoArquivo(null, null);
+        }
+    }
 
   render() {
+    
+    let iconeArquivo=null;
+    let btnCloseFile=null;
+    
+    let extensao = this.state.extensaoArquivo;
+ 
+    if (extensao){  
+          
+    if (extensao === "png" || extensao === "tiff" || extensao === "jpg" || extensao === "jpeg" || extensao === "bmp"){
+        iconeArquivo=<img src={this.state.file} width="100px" heigth="auto" download/>
+    }else if (this.state.extensaoArquivo==="doc"){
+        iconeArquivo=<img src={doc} width="100px" heigth="auto" download/>
+    }else if (this.state.extensaoArquivo==="ppt"){
+        iconeArquivo=<img src={ppt} width="100px" heigth="auto" download/>
+    }else if (this.state.extensaoArquivo==="pdf"){
+        iconeArquivo=<img src={pdf} width="100px" heigth="auto" download/>
+    }else iconeArquivo=<img src={outro} width="100px" heigth="auto"/>
+    
+    btnCloseFile=<button class="close" onClick={(event) => {this.setExtensaoArquivo(null, null);}} style={{float: "right", border: "none", backgroundColor: "white"}}>&#x2716;</button>
+    }
    
     let erroTitulo=null;
 
@@ -117,7 +163,7 @@ export default class NewPost extends React.Component {
     return (
       <Modal
           show={this.props.show}
-          onHide={this.props.voltar}
+          onHide={(event) => { this.props.voltar(); this.setExtensaoArquivo(null, null);}}
           container={this}
           aria-labelledby="contained-modal-title"
         >
@@ -157,12 +203,30 @@ export default class NewPost extends React.Component {
                             event.preventDefault();
                             this.confirmar(event.target);
 }}>    
-                <input name="arquivo" type="file" onClick={() => this.setEstadoArquivo(true)} onChange={() => this.setEstadoArquivo()} style={{float:"left"}}/> 
-                  
+                <FormInputs
+                    ncols={["col-md-6"]}
+                    proprieties={[
+                        {
+                            id: "arquivo",
+                            type: "file",
+                            bsClass: "form-control",
+                            placeholder: "File",
+                            name: "arquivo",
+                            onChange: this.mostraArquivo
+                        }
+                        
+                    ]}
+                />
+                <div style={{float: "left"}}>
+                    {btnCloseFile}
+                <a href={this.state.file} download>
+                    {iconeArquivo}  
+                </a>
+                </div>
                     <div style={{float:"right", display: this.props.loading}}><Loading type ='spinningBubbles' color='#FF4A55' height={30} width={30}/></div>
                     
                     <br/><br/><br/>
-        <Button onClick={this.props.voltar}>Voltar</Button>
+        <Button onClick={(event) => { this.props.voltar(); this.setExtensaoArquivo(null, null);}}>Voltar</Button>
             <Button                    
                       bsStyle="danger"
                       pullRight
