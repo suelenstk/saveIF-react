@@ -134,11 +134,11 @@ export default class NewPost extends React.Component {
           
     if (extensao === "png" || extensao === "tiff" || extensao === "jpg" || extensao === "jpeg" || extensao === "bmp"){
         iconeArquivo=<img src={this.state.file} width="100px" heigth="auto" download/>
-    }else if (this.state.extensaoArquivo==="doc"){
+    }else if (extensao==="doc"|| extensao === "docx"){
         iconeArquivo=<img src={doc} width="100px" heigth="auto" download/>
-    }else if (this.state.extensaoArquivo==="ppt"){
+    }else if (extensao==="ppt"|| extensao === "pptx"){
         iconeArquivo=<img src={ppt} width="100px" heigth="auto" download/>
-    }else if (this.state.extensaoArquivo==="pdf"){
+    }else if (extensao==="pdf"){
         iconeArquivo=<img src={pdf} width="100px" heigth="auto" download/>
     }else iconeArquivo=<img src={outro} width="100px" heigth="auto"/>
     
@@ -213,8 +213,7 @@ export default class NewPost extends React.Component {
                             placeholder: "File",
                             name: "arquivo",
                             onChange: this.mostraArquivo
-                        }
-                        
+                        }                    
                     ]}
                 />
                 <div style={{float: "left"}}>

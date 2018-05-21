@@ -316,8 +316,8 @@ class GroupView extends Component {
                     
                     <TopicCard
                     idGrupo={this.state.grupo.id}
-                    
                     mostraErro={(erro, tipo)=>{this.setAlert(erro, tipo);}}
+                    listar={this.listarTopicoEspecifico()}
                     />
                     
             </Row>
@@ -344,6 +344,7 @@ class GroupView extends Component {
                                         this.setAlert ("Post realizado com sucesso!", "success");
                                         this.setState({show: false});   
                                         this.listarPostEspecifico(0);
+                                        this.listar(0);
                                 },
                                 (erro)=>{
                                 console.log("Erro!");

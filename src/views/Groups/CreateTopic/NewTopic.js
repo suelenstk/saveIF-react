@@ -55,11 +55,11 @@ import React, {Component} from 'react';
     }   
 
     
-    setarTopico(resultado) {       
+        setarTopico(resultado) {       
         this.setState({
             topico: resultado
         });
-    }
+        }
 
         componentWillReceiveProps(proximoEstado) {
         this.setState({topic: proximoEstado.topic});
@@ -118,19 +118,19 @@ import React, {Component} from 'react';
         }
 
         confirmar() {
-            
-      
+
         if (this.verificaSeErroMudou()){
             
         }else if (this.state.topic.nome) {
-                this.props.inserir(this.state.topic);
+                this.props.inserir(this.state.topic);  
                 
                 this.setConfigNovoTopico();
-                this.listarTopicos(this.state.pagina);
+                
             
         } else {
                 this.setError("error", "Campo nome não pode ser vazio!");
         }
+        this.listarTopicos(this.state.pagina);
         }
         
         verTopico(id,topico){  
