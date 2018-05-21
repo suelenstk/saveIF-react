@@ -229,6 +229,7 @@ export default class GroupList extends Component {
                                         this.state.paginaAtual--;
                             }}
                         >
+                        
                             &lt; Anterior
                         </Pager.Item>:""}
                      {(!statusNext)?     
