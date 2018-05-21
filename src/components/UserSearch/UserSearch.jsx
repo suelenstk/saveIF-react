@@ -56,10 +56,10 @@ class UserSearch extends React.Component {
     }
 
     // Esse metodo adiciona a acao ao botao do chip
-    // adicionarUsuario(usuario){
-    //     console.log("userId = "+usuario.id);
-    //     console.log("userName = "+usuario.nome);
-    // }
+    adicionarUsuario(usuario) {
+        console.log("userId = " + usuario.id);
+        console.log("userName = " + usuario.nome);
+    }
 
     render() {
         let campoUsuario = null;
