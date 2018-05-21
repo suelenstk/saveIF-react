@@ -224,8 +224,9 @@ export default class GroupList extends Component {
                             previous
                             disabled={statusPrev}
                             onClick={(e) => {
-                                this.listar(this.state.paginaAtual - 1);
-                                this.state.paginaAtual--;
+                                (this.props.rota === "MyGroups")? 
+                                        this.listarGrupoParticipa(this.state.paginaAtual - 1,this.props.user):this.listar(this.state.paginaAtual - 1);
+                                        this.state.paginaAtual--;
                             }}
                         >
                             &lt; Anterior
@@ -235,8 +236,9 @@ export default class GroupList extends Component {
                             next
                             disabled={statusNext}
                             onClick={(e) => {
-                                this.listar(this.state.paginaAtual + 1);
-                                this.state.paginaAtual++;
+                                (this.props.rota === "MyGroups")? 
+                                        this.listarGrupoParticipa(this.state.paginaAtual + 1,this.props.user):this.listar(this.state.paginaAtual + 1);
+                                        this.state.paginaAtual++;
                             }}
                         >
                             Próxima &gt;
