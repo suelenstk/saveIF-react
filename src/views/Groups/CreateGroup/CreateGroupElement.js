@@ -154,7 +154,7 @@ export default class CreateGroupElement extends React.Component {
                 } else this.setErrorGrupo("error", "Não é permitido caracteres especiais!");
             }
         } else {
-            this.setErrorGrupo("error", "Preencha todos os campos obrigatórios!");
+            this.setErrorGrupo("error", "Todos os campos são obrigatórios!");
         }
 
     }
