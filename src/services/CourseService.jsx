@@ -19,6 +19,26 @@ class CourseService {
             method: "GET"
         }).then(trataFetch);
     }
+    
+    recuperar(id,sucesso, erro) {
+
+        let trataFetch = (resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`/api/cursos/${id}`, {
+            headers: new Headers({
+                // 'Authorization': servicoLogin.getAuthorization(),
+            }),
+            method: "GET"
+        }).then(trataFetch);
+    }
 
 }
 

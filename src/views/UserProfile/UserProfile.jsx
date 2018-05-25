@@ -21,6 +21,7 @@ class UserProfile extends Component {
             avisoUsuario: "",
             sucesso: "",
             listaCurso: "",
+            curso: "",
             cadastro: true,
             usuario: this.props.user,
             nome:this.props.user.nome,
@@ -42,6 +43,22 @@ class UserProfile extends Component {
                 )
             )
        });
+       
+        this.setState({
+            curso: (
+                courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
+                    (sucesso) => {
+                        this.setState({curso: sucesso});
+                        console.log(this.state.curso);
+                    },
+                    (erro) => {
+                        console.log(erro);
+                    }
+                )
+            )
+       });
+        
+             
 
    }
    
@@ -92,6 +109,7 @@ class UserProfile extends Component {
         
         let campoCurso = null;
         let erroCadastro = "";
+        
 
         if (this.state.usuario.tipoVinculo === "aluno" && this.state.listaCurso) {
             campoCurso =
@@ -209,7 +227,7 @@ class UserProfile extends Component {
                                 
                                 avatar={avatar}
                                 name={this.state.nome}
-                                curso="Superior de Tecnologia em Análise e Desenvolvimento de Sistemas"
+                                curso={(this.state.curso)?this.state.curso.nome:""}
                                 description={this.state.desc}
 
                             />
