@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 import HelpBlock from "react-bootstrap/es/HelpBlock";
+import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
 import {Card} from '../../components/Card/Card.jsx';
 import {UserCard} from '../../components/UserCard/UserCard.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
@@ -8,6 +9,10 @@ import UserService from '../../services/UserService';
 import courseService from "../../services/CourseService";
 import avatar from "../../assets/img/faces/face-3.jpg";
 import {Redirect} from "react-router-dom";
+import Alert from "react-bootstrap/es/Alert";
+import boia from '../../assets/img/boia.png';
+import ServicoLogin from '../../login/ServicoLogin';
+import ProfileImage from './ProfileImage';
 
 class UserProfile extends Component {
     
@@ -25,7 +30,10 @@ class UserProfile extends Component {
             cadastro: true,
             usuario: this.props.user,
             nome:this.props.user.nome,
-            desc:this.props.user.sobreUsuario
+            desc:this.props.user.sobreUsuario,
+            avatar:`/api/usuarios/` + this.props.user.id +`/imagem?`+
+                                        ServicoLogin.getAuthorizationGet(),
+            
        };
        
        this.UserService = new UserService();
@@ -57,8 +65,6 @@ class UserProfile extends Component {
                 )
             )
        });
-        
-             
 
    }
    
@@ -103,7 +109,6 @@ class UserProfile extends Component {
              alert("Preencha o campo 'CURSO'!");
          }
     }
-   
     
     render() {
         
@@ -207,13 +212,7 @@ class UserProfile extends Component {
                                                 </Col>
                                         </Row>
                                         
-                                        <Button
-                                                disabled={this.state.avisoUsuario !== ""}
-                                                className="btnSaveif"
-                                                fill
-                                                type="submit">
-                                                Editar Perfil
-                                        </Button>
+                                        <ProfileImage id={this.state.usuario.id}/>
                                         
                                         <div className="clearfix"/>
                                         
@@ -225,12 +224,13 @@ class UserProfile extends Component {
                         <Col md={4}>
                             <UserCard
                                 
-                                avatar={avatar}
+                                avatar={this.state.avatar}
                                 name={this.state.nome}
                                 curso={(this.state.curso)?this.state.curso.nome:""}
                                 description={this.state.desc}
 
                             />
+                                                                                        
                         </Col>
 
                     </Row>
