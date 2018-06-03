@@ -1,16 +1,11 @@
 import React, {Component} from 'react';
 import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 import HelpBlock from "react-bootstrap/es/HelpBlock";
-import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
 import {Card} from '../../components/Card/Card.jsx';
 import {UserCard} from '../../components/UserCard/UserCard.jsx';
-import Button from '../../elements/CustomButton/CustomButton.jsx';
 import UserService from '../../services/UserService';
 import courseService from "../../services/CourseService";
-import avatar from "../../assets/img/faces/face-3.jpg";
 import {Redirect} from "react-router-dom";
-import Alert from "react-bootstrap/es/Alert";
-import boia from '../../assets/img/boia.png';
 import ServicoLogin from '../../login/ServicoLogin';
 import ProfileImage from './ProfileImage';
 
@@ -51,20 +46,20 @@ class UserProfile extends Component {
                 )
             )
        });
-       
-        this.setState({
-            curso: (
-                courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
-                    (sucesso) => {
-                        this.setState({curso: sucesso});
-                        console.log(this.state.curso);
-                    },
-                    (erro) => {
-                        console.log(erro);
-                    }
-                )
-            )
-       });
+
+       //  this.setState({
+       //      curso: (
+       //          courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
+       //              (sucesso) => {
+       //                  this.setState({curso: sucesso});
+       //                  console.log(this.state.curso);
+       //              },
+       //              (erro) => {
+       //                  console.log(erro);
+       //              }
+       //          )
+       //      )
+       // });
 
    }
    

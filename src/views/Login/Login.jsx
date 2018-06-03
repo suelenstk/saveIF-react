@@ -104,7 +104,7 @@ class Login extends Component {
                                         <a href="">
                                             Esqueceu sua senha?
                                         </a>
-                                        <br/><br/>
+                                        <br/>
                                     </div>
                                     <Button
                                         style={{width: "100%"}}
@@ -115,7 +115,6 @@ class Login extends Component {
                                     >
                                         Entrar
                                     </Button>
-                                    <br/>
                                     <Button
                                         className="btnLoginGoogle"
                                         block
@@ -123,7 +122,6 @@ class Login extends Component {
                                         <img src={google} alt="Logo google" className="google"/>Login com Google
                                     </Button>
                                     <div>
-                                        <br/>
                                         <p>
                                             Não tem conta? <Link to="/cadastro">Cadastre-se.</Link>
                                         </p>
