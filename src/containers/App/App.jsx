@@ -90,8 +90,7 @@ class App extends Component {
                                             />
                                     );
                                     
-                                    if (prop.name === "Meu perfil")
-                                         
+                                    if (prop.name === "Meu perfil")                                         
                                           return (
                                             <Route
                                                 path={prop.path}
@@ -101,7 +100,20 @@ class App extends Component {
                                                 user={servicoLogin.logado()}
                                             />
                                     );
+
+                                    if (prop.name === "Notificações")                                         
+                                        return (
+                                        <Route
+                                            path={prop.path}
+                                            key={key}
+                                            render={(props) => <prop.component  {...props}
+                                                                                user={servicoLogin.logado()}/>}
+                                            user={servicoLogin.logado()}
+                                        />
+                                        );
+
                                     
+
                                     if (prop.redirect)
                                         return (
                                             <Redirect from={prop.path} to={prop.to} key={key}/>

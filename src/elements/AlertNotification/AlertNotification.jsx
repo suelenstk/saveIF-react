@@ -22,7 +22,12 @@ export class AlertNotification extends Component {
                 <span data-notify="icon" className="pe-7s-bell"/>
                 <span data-notify="message">
                     {this.props.message}
+                <a href={this.props.link}>
+                    {this.props.textoLink}
+                </a>    
                 </span>
+
+
                 {(this.props.btnFirstName) ?
                     <Button
                         className="btnFirstAction"
