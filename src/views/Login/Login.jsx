@@ -122,6 +122,7 @@ class Login extends Component {
                                         <img src={google} alt="Logo google" className="google"/>Login com Google
                                     </Button>
                                     <div>
+                                        <br/>
                                         <p>
                                             Não tem conta? <Link to="/cadastro">Cadastre-se.</Link>
                                         </p>

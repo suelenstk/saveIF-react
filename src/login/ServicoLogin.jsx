@@ -1,9 +1,6 @@
 import base64 from "base-64/base64.js";
 
 class ServicoLogin {
-    //constructor() {
-        //super("api/login");
-    //}
 
     login(usuario, senha, sucesso, erro) {
         this.usuario = usuario;
@@ -19,6 +16,7 @@ class ServicoLogin {
             if (resposta.ok) {
                 resposta.json().then((dados) => {
                     this.token = resposta.headers.get("token");
+                    sessionStorage.setItem("token", this.token);
                     this.dados = dados;
                     sucesso(dados);
                 })
@@ -28,6 +26,34 @@ class ServicoLogin {
             }
 
         }).catch(erro);
+    }
+
+    validarLogin() {
+
+        fetch(`api/usuarios/validarLogin`, {
+                headers: new Headers({
+                    'Authorization': "Bearer " + sessionStorage.getItem("token")
+                }),
+                method: "GET"
+            }
+        ).then((resposta) => {
+            if (resposta.ok) {
+                resposta.json().then((dados) => {
+                    this.dados = dados;
+                    this.token = sessionStorage.getItem("token");
+                    console.log("sucesso" + this.dados);
+                })
+
+            } else {
+                console.log("erro" + resposta.json().then());
+            }
+
+        }).catch();
+    }
+
+    revogaLogin() {
+        sessionStorage.removeItem("token");
+        console.log("removeu token");
     }
 
     getAuthorizationGet() {
@@ -42,7 +68,7 @@ class ServicoLogin {
     }
 
     logado() {
-        if (this.usuario && this.senha) {
+        if (this.dados) {
             return this.dados;
         } else {
             return false;
@@ -50,14 +76,11 @@ class ServicoLogin {
     }
 
     getUsuario() {
-        let id = this.dados.id;
-        return id;
+        return this.dados.id;
     }
 
 }
 
 let servicoLogin = new ServicoLogin();
-
-//servicoLogin.login("admin","1234");
 
 export default servicoLogin;

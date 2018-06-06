@@ -559,6 +559,23 @@ a, p, .alert-info a {
     padding: 9% 0 0 11%;
 }
 
+.logoRefresh {
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoRefresh img {
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin: 0 -50% 0 0;
+    transform: translate(-50%, -50%);
+}
+
 .formLogin {
     margin-top: 4%;
     padding: 0 10%;
