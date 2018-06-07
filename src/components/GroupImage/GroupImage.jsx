@@ -152,12 +152,11 @@ class GroupImage extends React.Component {
         }
 
         if (imagePreviewUrl) {
-            $imagePreview = <img src={imagePreviewUrl} width="100%"/>;
+            $imagePreview = <img src={imagePreviewUrl} alt="Pré-visualização de imagem" width="100%"/>;
         }
 
         if (this.state.loading) {
-            $imagePreview = (<img src={boia} className="boia ld ld-cycle"/>);
-            // $imagePreview = (<ReactLoading type="spinningBubbles" className="loading" color="#ED3846"/>);
+            $imagePreview = (<img src={boia} alt="Bóia loading" className="boia ld ld-cycle"/>);
         }
 
         if (this.state.success) {

@@ -26,7 +26,7 @@ export default class ServicoRest {
 
     inserir(item, sucesso, erro) {
         console.log(item);
-        console.log ("Aqui");
+        console.log("Aqui");
         fetch(this.url, {
             method: "POST",
             headers: new Headers({
@@ -45,6 +45,7 @@ export default class ServicoRest {
 
         });
     }
+
     inserirSemAutorizacao(item, sucesso, erro) {
         console.log(item);
         fetch(this.url, {
@@ -89,9 +90,7 @@ export default class ServicoRest {
 
     listarPaginado(pagina, sucesso, erro) {
 
-
         let trataFetch = (resultado) => {
-            this.url;
             if (resultado.ok) {
                 resultado.json().then(sucesso)
             } else {

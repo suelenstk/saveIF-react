@@ -1,62 +1,52 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import GroupEnter from './GroupEnter';
 import GroupList from './GroupList';
 import GroupView from './Posts/GroupView';
 
-import {
-Route,
-Switch
-} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 class RotaLista extends Component {
- render() {
-   console.log(this.props.pagina);
-  return <GroupList pagina={this.props.pagina} user={this.props.user}/>;
- }
+    render() {
+        return <GroupList pagina={this.props.pagina} user={this.props.user}/>;
+    }
 }
 
 class RotaSolicitacao extends Component {
- render() {
-  return <GroupEnter solicitar={this.props.solicitar}
-                     user={this.props.user}
-                     id={this.props.match.params.id}/>;
-
- }
+    render() {
+        return <GroupEnter solicitar={this.props.solicitar}
+                           user={this.props.user}
+                           id={this.props.match.params.id}/>;
+    }
 }
-
 
 class RotaPosts extends Component {
 
- render() {
-   return <GroupView/>;
+    render() {
+        return <GroupView/>;
+    }
 }
-}
-
 
 export default class GroupRoute extends Component {
 
- render() {
+    render() {
+        return <div>
+            <Switch>
+                <Route exact path="/groups"
+                       render={(props) => <RotaLista  {...props} rota={this.props.rota} user={this.props.user}/>}
+                       rota={this.props.rota} user={this.props.user}/>
 
-  console.log(this.props.pagina);
+                <Route path="/groups/:id/geral" component={RotaPosts}/>
 
-  return <div>
-
-   <Switch>
-
-    <Route exact path="/groups" render = {(props) => <RotaLista  {...props} rota={this.props.rota} user={this.props.user}/>}   
-          rota={this.props.rota} user={this.props.user}/>
-    
-    <Route path="/groups/:id/geral" component={RotaPosts} />
-    
-    <Route path="/groups/:id/view" render = {(props) => <RotaSolicitacao  {...props} 
-             solicitar={this.props.solicitar}  user={this.props.user}/>}
-             solicitar={this.props.solicitar}  user={this.props.user}/>/>
- 
-
-   </Switch>
-
-  </div>
+                <Route path="/groups/:id/view" render={(props) => <RotaSolicitacao  {...props}
+                                                                                    solicitar={this.props.solicitar}
+                                                                                    user={this.props.user}/>}
+                       solicitar={this.props.solicitar} user={this.props.user}/>/>
 
 
- }
+            </Switch>
+
+        </div>
+
+
+    }
 }

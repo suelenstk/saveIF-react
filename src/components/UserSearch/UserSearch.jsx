@@ -8,7 +8,6 @@ import {UserChip} from '../../elements/UserChip/UserChip';
 import avatar from "../../assets/img/default-avatar.png";
 import Button from "react-bootstrap/es/Button";
 import listUserService from "../../services/ListUserService";
-import GroupService from "../../views/Groups/GroupService";
 import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
 
 class UserSearch extends React.Component {
@@ -23,7 +22,6 @@ class UserSearch extends React.Component {
         this.setState({
             listaUsuario: this.pesquisar(0)
         });
-        this.groupService = new GroupService();
     }
 
     pesquisar(pagina) {
@@ -31,7 +29,7 @@ class UserSearch extends React.Component {
             this.state.nome, pagina,
             (sucesso) => {
                 this.setState({listaUsuario: sucesso});
-                console.log(this.state.listaUsuario);
+                // console.log(this.state.listaUsuario);
             },
             (erro) => {
                 console.log(erro);
@@ -83,7 +81,6 @@ class UserSearch extends React.Component {
                     })}
                 </div>
         } else {
-            console.log("entrou no else");
             campoUsuario =
                 <div style={{margin: "20px"}}>
                     <p>Nenhum usuário encontrado!</p>

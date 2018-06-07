@@ -41,7 +41,6 @@ class ServicoLogin {
                 resposta.json().then((dados) => {
                     this.dados = dados;
                     this.token = sessionStorage.getItem("token");
-                    console.log("sucesso" + this.dados);
                 })
 
             } else {
@@ -53,7 +52,6 @@ class ServicoLogin {
 
     revogaLogin() {
         sessionStorage.removeItem("token");
-        console.log("removeu token");
     }
 
     getAuthorizationGet() {

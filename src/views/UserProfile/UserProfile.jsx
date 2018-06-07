@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
-import HelpBlock from "react-bootstrap/es/HelpBlock";
+// import HelpBlock from "react-bootstrap/es/HelpBlock";
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Card} from '../../components/Card/Card.jsx';
 import {UserCard} from '../../components/UserCard/UserCard.jsx';
@@ -8,42 +8,42 @@ import UserService from '../../services/UserService';
 import courseService from "../../services/CourseService";
 import {Redirect} from "react-router-dom";
 import ServicoLogin from '../../login/ServicoLogin';
-import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
 import servicoLogin from '../../login/ServicoLogin';
+import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
 import Alert from "react-bootstrap/es/Alert";
 import boia from '../../assets/img/boia.png';
 
 class UserProfile extends Component {
-    
-    
-   constructor(props){
 
-       super(props);
-       console.log(this.props.user);
-       
-       this.state = {
+
+    constructor(props) {
+
+        super(props);
+        console.log(this.props.user);
+
+        this.state = {
             avisoUsuario: "",
             sucesso: "",
             listaCurso: "",
-            desable:true,
+            desable: true,
             curso: "",
             cadastro: true,
             usuario: this.props.user,
-            nome:this.props.user.nome,
+            nome: this.props.user.nome,
             imagePreviewUrl: "",//para imagemo
             loading: false,
             success: false,
             error: "",
             concluded: "",
-            desc:this.props.user.sobreUsuario,
-            avatar:`/api/usuarios/` + this.props.user.id +`/imagem?`+
-                                        ServicoLogin.getAuthorizationGet(),
-            
-       };
-       
-       this.UserService = new UserService();
+            desc: this.props.user.sobreUsuario,
+            avatar: `/api/usuarios/` + this.props.user.id + `/imagem?` +
+            ServicoLogin.getAuthorizationGet(),
 
-       this.setState({
+        };
+
+        this.UserService = new UserService();
+
+        this.setState({
             listaCurso: (
                 courseService.listarNaoPaginado(
                     (sucesso) => {
@@ -55,28 +55,28 @@ class UserProfile extends Component {
                     }
                 )
             )
-       });
+        });
 
-       //  this.setState({
-       //      curso: (
-       //          courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
-       //              (sucesso) => {
-       //                  this.setState({curso: sucesso});
-       //                  console.log(this.state.curso);
-       //              },
-       //              (erro) => {
-       //                  console.log(erro);
-       //              }
-       //          )
-       //      )
-       // });
-       
-       this._handleImageChange = this._handleImageChange.bind(this);
-       this._handleSubmit = this._handleSubmit.bind(this);
+        //  this.setState({
+        //      curso: (
+        //          courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
+        //              (sucesso) => {
+        //                  this.setState({curso: sucesso});
+        //                  console.log(this.state.curso);
+        //              },
+        //              (erro) => {
+        //                  console.log(erro);
+        //              }
+        //          )
+        //      )
+        // });
 
-   }
-   
-   _handleSubmit(form) {
+        this._handleImageChange = this._handleImageChange.bind(this);
+        this._handleSubmit = this._handleSubmit.bind(this);
+
+    }
+
+    _handleSubmit(form) {
         this.setState({loading: true});
         let formData = new FormData(form);
         fetch("/api/usuarios/" + this.state.usuario.id + "/imagem", {
@@ -113,8 +113,8 @@ class UserProfile extends Component {
 
         });
     }
-   
-   validateImage(file) {
+
+    validateImage(file) {
         if (file) {
             let num = file.name.split(".").length;
             let name = file.name.split(".")[num - 1].toLowerCase();
@@ -146,7 +146,7 @@ class UserProfile extends Component {
                 this.setState({
                     file: file,
                     imagePreviewUrl: reader.result,
-                    avatar:reader.result
+                    avatar: reader.result
                 });
             };
             reader.readAsDataURL(file)
@@ -156,21 +156,21 @@ class UserProfile extends Component {
     sleep(tempo) {
         return new Promise((e) => setTimeout(e, tempo));
     }
-   
+
     setValor(atributo, valor) {
-        
+
         this.setState(
-            (estado) => estado.usuario[atributo] = valor         
+            (estado) => estado.usuario[atributo] = valor
         );
-        
-        this.setState({desable:false});    
+
+        this.setState({desable: false});
 
     }
-    
+
     editarUsuario() {
         let usuario = this.state.usuario;
-        this.UserService.editar(this.state.usuario.id,usuario,
-            (sucesso) => {
+        this.UserService.editar(this.state.usuario.id, usuario,
+            () => {
                 this.setState({cadastro: false});
                 alert("Perfil alterado com sucesso!");
                 this.setState({sucesso: <Redirect to="/"/>})
@@ -184,30 +184,30 @@ class UserProfile extends Component {
             }
         )
     }
-   
+
     confirmar() {
 
         let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
 
-        if (this.state.usuario.tipoVinculo !== "aluno" || (this.state.usuario.tipoVinculo === "aluno" && this.state.usuario.curso !== "")) {    
-                if (regexNome.test(this.state.usuario.nome)) {
+        if (this.state.usuario.tipoVinculo !== "aluno" || (this.state.usuario.tipoVinculo === "aluno" && this.state.usuario.curso !== "")) {
+            if (regexNome.test(this.state.usuario.nome)) {
 
-                    this.editarUsuario();
-                       
-                } else {
-                        
-                    alert("Nome inválido! Não são aceitos números ou caracteres especiais.");
-                }
-         }else{
-             alert("Preencha o campo 'CURSO'!");
-         }
+                this.editarUsuario();
+
+            } else {
+
+                alert("Nome inválido! Não são aceitos números ou caracteres especiais.");
+            }
+        } else {
+            alert("Preencha o campo 'CURSO'!");
+        }
     }
-    
-    carregarImagem(){
-        
+
+    carregarImagem() {
+
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
-        
+
         let seletorImagem = (
             <form method="post" encType="multipart/form-data"
                   onSubmit={(event) => {
@@ -228,22 +228,22 @@ class UserProfile extends Component {
                         }
                     ]}
                 />
-                
+
                 <Button
-                       disabled={this.state.desable}
-                       style={{width: "100%"}}
-                       className="btnSaveif"
-                       block
-                       fill
-                       type="submit"
-                       >
-                       Alterar Perfil
-                </Button>   
-                
-                
+                    disabled={this.state.desable}
+                    style={{width: "100%"}}
+                    className="btnSaveif"
+                    block
+                    fill
+                    type="submit"
+                >
+                    Alterar Perfil
+                </Button>
+
+
             </form>
-        );       
-        
+        );
+
         if (this.state.error !== "") {
             $imagePreview = (
                 <Alert bsStyle="error">
@@ -253,12 +253,11 @@ class UserProfile extends Component {
         }
 
         if (imagePreviewUrl) {
-            $imagePreview = <img src={imagePreviewUrl} width="100%"/>;
+            $imagePreview = <img src={imagePreviewUrl} width="100%" alt="Pré-visualização da imagem"/>;
         }
 
         if (this.state.loading) {
-            $imagePreview = (<img src={boia} className="boia ld ld-cycle"/>);
-            // $imagePreview = (<ReactLoading type="spinningBubbles" className="loading" color="#ED3846"/>);
+            $imagePreview = (<img src={boia} alt="Boia loading" className="boia ld ld-cycle"/>);
         }
 
         if (this.state.success) {
@@ -279,12 +278,12 @@ class UserProfile extends Component {
             </div>
         );
     }
-    
-    render() {
-        
-        let campoCurso = null;
-        let erroCadastro = "";     
 
+    render() {
+
+        let campoCurso = null;
+        // Estou comentando essa variavel porque ela nao esta sendo usada. Caso necessario, podem remover o comentario. Giordano
+        // let erroCadastro = "";
 
         if (this.state.usuario.tipoVinculo === "aluno" && this.state.listaCurso) {
             campoCurso =
@@ -310,15 +309,16 @@ class UserProfile extends Component {
                 </Row>
         } else {
             campoCurso = "";
-        }     
-        
-        if (this.state.avisoUsuario !== "") {
-            erroCadastro =
-                <div>
-                    <HelpBlock>{this.state.avisoUsuario}</HelpBlock>
-                </div>
         }
-        
+
+        // Estou comentando essa verificacao porque ela nao esta sendo usada. Caso necessario, podem remover o comentario. Giordano
+        // if (this.state.avisoUsuario !== "") {
+        //     erroCadastro =
+        //         <div>
+        //             <HelpBlock>{this.state.avisoUsuario}</HelpBlock>
+        //         </div>
+        // }
+
         if (this.state.sucesso)
             return this.state.sucesso;
         else return (
@@ -330,25 +330,25 @@ class UserProfile extends Component {
                                 title="Editar Perfil"
                                 content={
                                     <form onSubmit={(event) => {
-                                            event.preventDefault();
-                                            this.confirmar()
-                                        }}>
-                                  
+                                        event.preventDefault();
+                                        this.confirmar()
+                                    }}>
+
                                         <Row>
                                             <FormGroup controlId="formHorizontalNome" className="col-md-12">
                                                 <ControlLabel>Nome</ControlLabel>
-                                                    <FormControl
-                                                        type="text"
-                                                        value={this.state.usuario.nome}
-                                                        onChange={(e) => this.setValor("nome", e.target.value)}  
-                                                        required
-                                                    />
+                                                <FormControl
+                                                    type="text"
+                                                    value={this.state.usuario.nome}
+                                                    onChange={(e) => this.setValor("nome", e.target.value)}
+                                                    required
+                                                />
                                             </FormGroup>
                                         </Row>
 
                                         <Row>
                                             <FormGroup controlId="formControlSelectVinculo"
-                                                           className="col-md-12">
+                                                       className="col-md-12">
                                                 <ControlLabel>Vínculo</ControlLabel>
                                                 <FormControl
                                                     componentClass="select"
@@ -356,12 +356,12 @@ class UserProfile extends Component {
                                                     value={this.state.usuario.tipoVinculo}
                                                     onChange={(evento) => this.setValor("tipoVinculo", evento.target.value)}
                                                     required>
-                                                    
-                                                       <option value="">-- Selecione --</option>
-                                                       <option value="aluno">Aluno</option>
-                                                       <option value="professor">Professor</option>
-                                                       <option value="servidor">Servidor Técnico</option>
-                                                       
+
+                                                    <option value="">-- Selecione --</option>
+                                                    <option value="aluno">Aluno</option>
+                                                    <option value="professor">Professor</option>
+                                                    <option value="servidor">Servidor Técnico</option>
+
                                                 </FormControl>
                                             </FormGroup>
                                         </Row>
@@ -369,40 +369,40 @@ class UserProfile extends Component {
                                         {campoCurso}
 
                                         <Row>
-                                                <Col md={12}>
-                                                    <FormGroup controlId="formControlsTextarea">
-                                                        <ControlLabel>Sobre mim (opcional)</ControlLabel>
-                                                        <FormControl
-                                                            rows="5" componentClass="textarea"
-                                                            bsClass="form-control"
-                                                            placeholder="Fale um pouco sobre você..."
-                                                            value={this.state.usuario.sobreUsuario}
-                                                            onChange={(e) => this.setValor("sobreUsuario", e.target.value)}
-                                                        />
-                                                    </FormGroup>
-                                                </Col>
+                                            <Col md={12}>
+                                                <FormGroup controlId="formControlsTextarea">
+                                                    <ControlLabel>Sobre mim (opcional)</ControlLabel>
+                                                    <FormControl
+                                                        rows="5" componentClass="textarea"
+                                                        bsClass="form-control"
+                                                        placeholder="Fale um pouco sobre você..."
+                                                        value={this.state.usuario.sobreUsuario ? this.state.usuario.sobreUsuario : ""}
+                                                        onChange={(e) => this.setValor("sobreUsuario", e.target.value)}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
                                         </Row>
-                                        
+
                                         {this.carregarImagem()}
-                                                                                                                 
-                                        
+
+
                                         <div className="clearfix"/>
-                                        
+
                                     </form>
                                 }
                             />
                         </Col>
-                        
+
                         <Col md={4}>
                             <UserCard
-                                
+
                                 avatar={this.state.avatar}
                                 name={this.state.nome}
-                                curso={(this.state.curso)?this.state.curso.nome:""}
+                                curso={(this.state.curso) ? this.state.curso.nome : ""}
                                 description={this.state.desc}
 
                             />
-                                                                                        
+
                         </Col>
 
                     </Row>

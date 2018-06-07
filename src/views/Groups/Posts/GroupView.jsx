@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Grid, Col, Row } from 'react-bootstrap';
+import React, {Component} from 'react';
+import {Col, Grid, Row} from 'react-bootstrap';
 import Alert from "react-bootstrap/es/Alert";
 import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
@@ -28,7 +28,7 @@ class GroupView extends Component {
             paginaAtual:0,
             tipoAlert: "",
             msgAlert: ""
-        }
+        };
         
         //alert(this.state.topico.id);
         //alert(this.state.grupo.id);
@@ -188,8 +188,7 @@ class GroupView extends Component {
         console.log(date);
 
         if(date !== undefined){
-        let dateString = date;
-        let dateParts = dateString.split("-");
+            let dateParts = date.split("-");
 
         return dateParts[2] +"/"+ dateParts[1] +"/"+ dateParts[0];
         }else{

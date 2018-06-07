@@ -35,8 +35,6 @@ export default class CreateGroupElement extends React.Component {
                 this.categoryService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listarCategorias: sucesso});
-                        console.log("Sucesso");
-                        console.log(this.state.listarCategorias);
                     },
                     (erro) => {
                         console.log(erro);
@@ -80,7 +78,6 @@ export default class CreateGroupElement extends React.Component {
                         return anterior;
                         }
                 );
-
     }
     */
     setCategory(valor) {
@@ -136,21 +133,21 @@ export default class CreateGroupElement extends React.Component {
             if (this.state.group.id && this.state.page2 !== true) {
                 this.setState({page2: true});
                 //this.props.editar();   
-             
+
             } else if (this.state.group.id && this.state.page2 === true) {
                 this.setState({page2: false});
                 this.props.alert();
                 this.setBotao("none");
-               
+
                 this.props.confirmar();
             } else {
                 this.setState({page2: true});
-              
+
                 if (regexNome.test(this.state.group.nome)) {
                     this.props.inserir(this.state.group, this.state.categoria);
                     this.setNomeBotao("Criar grupo");
                     this.setErrorGrupo("", "");
-              
+
                 } else this.setErrorGrupo("error", "Não é permitido caracteres especiais!");
             }
         } else {
@@ -234,7 +231,6 @@ export default class CreateGroupElement extends React.Component {
 
                         </div>
 
-
                         <FormGroup style={{display: this.props.privacy}} disabled={this.props.disabled}>
                             <ControlLabel>Privacidade</ControlLabel><br/>
 
@@ -261,27 +257,29 @@ export default class CreateGroupElement extends React.Component {
                             <ControlLabel>Convidados</ControlLabel><br/>
 
                             <div className="chip" style={{width: '200px'}}
-                                 chip={this.state.chip}
-                                 docked={false}
-                                 onRequestChange={(chip) => this.setState({chip})}
+                                // chip={this.state.chip}
+                                // docked={false}
+                                // onRequestChange={(chip) => this.setState({chip})}
                             >
                                 <img src={avatar} alt="Person" width="96" height="96"/>
 
                                 John Doe
 
-                                <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
+                                <span className="closebtn" style={{float: 'right'}}
+                                      onClick={this.fechaChip}>&times;</span>
                             </div>
 
                             <div className="chip" style={{width: '200px'}}
-                                 chip={this.state.chip}
-                                 docked={false}
-                                 onRequestChange={(chip) => this.setState({chip})}
+                                // chip={this.state.chip}
+                                // docked={false}
+                                // onRequestChange={(chip) => this.setState({chip})}
                             >
                                 <img src={avatar} alt="Person" width="96" height="96"/>
 
                                 John Doe
 
-                                <span class="closebtn" style={{float: 'right'}} onClick={this.fechaChip}>&times;</span>
+                                <span className="closebtn" style={{float: 'right'}}
+                                      onClick={this.fechaChip}>&times;</span>
                             </div>
                         </FormGroup>
 
@@ -290,7 +288,7 @@ export default class CreateGroupElement extends React.Component {
                             pullRight
                             fill
 
-                            onClick={(e) => {
+                            onClick={() => {
                                 this.createGroup()
                             }}
                             style={{display: this.state.botao}}
@@ -312,13 +310,10 @@ export default class CreateGroupElement extends React.Component {
                                         </Button>
                                         */}
 
-                        <div className="clearfix"></div>
+                        <div className="clearfix"/>
                     </form>
                 }
-
             />
-
-
         );
     }
 }

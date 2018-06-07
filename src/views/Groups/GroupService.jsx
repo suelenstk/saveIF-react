@@ -77,7 +77,6 @@ export default class GroupService extends ServicoRest {
     }
     
     solicitar(id, idUsuario, sucesso, erro) {
-        console.log(idUsuario);
         fetch(`api/grupos/${id}/solicitar/${idUsuario}`, {
             method: "POST",
             headers: new Headers({

@@ -33,7 +33,7 @@ class LoadingPage extends Component {
         } else return (
             <div className="wrapper">
                 <div className="logoRefresh">
-                    <img src={logo}/>
+                    <img src={logo} alt="Logo principal"/>
                 </div>
             </div>
         );

@@ -18,28 +18,22 @@ class Notifications extends React.Component {
             listaNotifUsuario: this.listarNotificacaoUsuario(0)
         });
 
-        
-
     }
 
     listarNotificacaoUsuario(pagina) {
-  
+
         notificationService.listarNotificacaoUsuario(
             this.props.user.id, pagina,
-                (sucesso) => {          
-            this.setState({listaNotifUsuario: sucesso});
- 
-        },
-                (erro) => {
-            console.log("Erro:");
-            console.log(erro);
-        }
+            (sucesso) => {
+                this.setState({listaNotifUsuario: sucesso});
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
         );
         this.setState({pagina: pagina});
     }
-
-
-
 
 
     render() {
@@ -59,11 +53,10 @@ class Notifications extends React.Component {
                                     btnSecondName={"Agora não"}
                                 />
                             </Col>
-                        </Row> 
+                        </Row>
                     })}
                 </div>
         } else {
-            console.log("entrou no else");
             campoNotifUsuario =
                 <div style={{margin: "20px"}}>
                     <p>Você não tem notificações</p>
@@ -74,7 +67,7 @@ class Notifications extends React.Component {
             <div className="content">
                 <Grid fluid>
                     <div className="content">
-                    <h4 className="title">Notificações de usuário</h4>
+                        <h4 className="title">Notificações de usuário</h4>
 
                         {campoNotifUsuario}
 
