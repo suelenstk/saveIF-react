@@ -11,6 +11,7 @@ import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Pager from "react-bootstrap/es/Pager";
 import servicoLogin from "../../../login/ServicoLogin";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class GroupView extends Component {
 
@@ -27,8 +28,12 @@ class GroupView extends Component {
             topico:{id:this.props.idt},
             paginaAtual:0,
             tipoAlert: "",
-            msgAlert: ""
+            msgAlert: "",
+            items: Array.from({ length: 1 }),
+            hasMore: true
         };
+        
+
         
         //alert(this.state.topico.id);
         //alert(this.state.grupo.id);
@@ -37,16 +42,45 @@ class GroupView extends Component {
         this.groupService = new GroupService();
         this.topicService = new TopicService();
 
-        (this.state.topico.id)? this.listarPostEspecifico(0):this.listar(0);
-        this.listarGrupo();
+        (this.state.topico.id)? this.listarPostEspecifico(this.state.paginaAtual):this.listar(this.state.paginaAtual);
+        this.listarGrupo();      
+        
 
     }
+    
+
+  fetchMoreData = () => {   
+    
+        
+    if (this.state.items.length >= this.state.pagina.totalPages) {
+      this.setState({ hasMore: false });
+      return;
+    }
+    // a fake async api call like which sends
+    // 20 more records in .5 secs   
+    
+    
+    setTimeout(() => {
+             
+       this.setState({
+           
+            items: this.state.items.concat(Array.from({ length: 1 }))
+      });
+    }, 500);
+    
+    this.state.paginaAtual++;  
+    this.listar(this.state.paginaAtual);
+    console.log(this.state.paginaAtual);
+    
+  };
 
     setarItem(paginaResultado) {
+        
         console.log(paginaResultado);
         this.setState({
             pagina: paginaResultado
-        });
+        });      
+       
     }
 
     setarTopico(topico) {
@@ -196,22 +230,14 @@ class GroupView extends Component {
         }
     }
     
+    
+    
     render() {
         
         //console.log(this.state.topico.criadorTopico);
         //<PostList posts={this.state.pagina}/>   
         
-        let statusNext = true;
-        let statusPrev = true;
-        //alert(this.state.pagina.totalPages);
-        
-        if (this.state.paginaAtual > 0) {
-            statusPrev = false;
-        }
-
-        if (this.state.paginaAtual < this.state.pagina.totalPages - 1) {
-            statusNext = false;
-        }
+        //alert(this.state.pagina.totalPages);    
         
         let aviso=null;
     
@@ -248,7 +274,6 @@ class GroupView extends Component {
                 </div>
                 
                 
-                
                 <Grid fluid>
                 {aviso}
                     <Row>
@@ -259,8 +284,28 @@ class GroupView extends Component {
                                 content={
                                 
                                 <from>
+                                    <InfiniteScroll
+                                        dataLength={this.state.items.length}
+                                        next={this.fetchMoreData}
+                                        hasMore={this.state.hasMore}
+                                        loader={<h4>Loading...</h4>}
+                                        endMessage={
+                                                <p style={{ textAlign: "center" }}>
+                                                        <b>Yay! You have seen it all</b>
+                                                </p>
+                                        }
+                                        >
+                                         
+                                        {this.state.items.map((i, index) => (
+                                            
+                                            <div key={i}>                                                                                         
+                                                <PostList posts={this.state.pagina}/>                                                                                                        
+                                            </div>
+                                                                                     
+                                        ))}
+                                    </InfiniteScroll>
+                
                                     
-                                    <PostList posts={this.state.pagina}/>
                                     
                                     
                         
@@ -278,38 +323,12 @@ class GroupView extends Component {
                                         <div className="clearfix"></div>
                                         
                                 </from>
+                                
+                                    
 
                          }
                          
-                         legend={
-                    <Pager style={{marginTop:25}}>
-                        
-                    {(!statusPrev)? <Pager.Item                           
-                            previous
-                            disabled={statusPrev}
-                            
-                            onClick={(e) => {
-                                this.listar(this.state.paginaAtual - 1);
-                                this.state.paginaAtual--;
-                            }}
-                        >
-                            &lt; Anterior
-                            
-                        </Pager.Item>:""}
-                    {(!statusNext)?    
-                        <Pager.Item
-                            next
-                            disabled={statusNext}
-                            onClick={(e) => {
-                                this.listar(this.state.paginaAtual + 1);
-                                this.state.paginaAtual++;
-                            }}
-                        >
-                            Próxima &gt;
-                        </Pager.Item>
-                        :""}
-                    </Pager>
-                }
+                       
                     />
                     </Col>
                     
