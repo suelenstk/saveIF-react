@@ -21,10 +21,25 @@ export class AlertNotification extends Component {
                 }
                 <span data-notify="icon" className="pe-7s-bell"/>
                 <span data-notify="message">
-                    {this.props.message}
-                <a href={this.props.link}>
-                    {this.props.textoLink}
-                </a>    
+                    {/*usuario com link, caso exista*/}
+                    {this.props.textoUsuario != null ?
+                        this.props.textoUsuario
+                        : ""}
+
+                    {/* TODO habilitar quando a tarefa 1.12 Ver perfil dos usuarios estiver implementada */}
+                    {/*<a href={this.props.linkUsuario}>*/}
+                    {/*{this.props.textoUsuario}*/}
+                    {/*</a> :*/}
+                    {/*""}*/}
+
+                    {/*mensagem principal vinda do servidor*/}
+                    {this.props.mensagem}
+
+                    {/*grupo com link, que sempre existira, na modelagem atual*/}
+                    <a href={this.props.linkGrupo}>
+                    {this.props.textoGrupo}
+                </a>
+
                 </span>
 
 

@@ -28,7 +28,7 @@ class ServicoLogin {
         }).catch(erro);
     }
 
-    validarLogin() {
+    validarLogin(sucesso) {
 
         fetch(`api/usuarios/validarLogin`, {
                 headers: new Headers({
@@ -41,6 +41,7 @@ class ServicoLogin {
                 resposta.json().then((dados) => {
                     this.dados = dados;
                     this.token = sessionStorage.getItem("token");
+                    sucesso();
                 })
 
             } else {

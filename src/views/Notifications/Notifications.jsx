@@ -46,9 +46,11 @@ class Notifications extends React.Component {
                         return <Row>
                             <Col md={10}>
                                 <AlertNotification
-                                    message={"Você " + notificacao.descricao}
-                                    link={notificacao.link}
-                                    textoLink={notificacao.textoLink}
+                                    linkUsuario={notificacao.linkUsuario}
+                                    textoUsuario={notificacao.textoUsuario}
+                                    mensagem={notificacao.descricao}
+                                    linkGrupo={notificacao.linkGrupo}
+                                    textoGrupo={notificacao.textoGrupo}
                                     btnFirstName={"Aceitar"}
                                     btnSecondName={"Agora não"}
                                 />
@@ -68,9 +70,7 @@ class Notifications extends React.Component {
                 <Grid fluid>
                     <div className="content">
                         <h4 className="title">Notificações de usuário</h4>
-
                         {campoNotifUsuario}
-
                         <h4 className="title">Convites para grupos(modelo estático)</h4>
                         <Row>
                             <Col md={10}>
@@ -100,7 +100,6 @@ class Notifications extends React.Component {
                                 />
                             </Col>
                         </Row>
-
                     </div>
                 </Grid>
             </div>

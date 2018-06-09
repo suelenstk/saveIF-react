@@ -65,7 +65,7 @@ export default class GroupList extends Component {
         let botoes = [];
         this.state.flagGrupo = true;
 
-        let verificar = this.verificarIntegrante(this.props.user, grupo.integrantesGrupo);
+        let verificar = this.verificarUsuario(this.props.user, grupo.integrantesGrupo);
         //let botao = <Link to={`/GroupEnter`}>
         //Verificar rota certa
         let rota = (this.props.rota === "MyGroups" || verificar) ?
@@ -92,7 +92,7 @@ export default class GroupList extends Component {
 
     }
 
-    verificarIntegrante(id, integrantesGrupo) {
+    verificarUsuario(id, integrantesGrupo) {
 
         for (let i = 0; i < integrantesGrupo.length; i++) {
             //console.log(id);
@@ -203,8 +203,12 @@ export default class GroupList extends Component {
                                             }}/>
                                         </p>
 
-                                        <p style={{fontWeight: "bold"}}>{(this.verificarIntegrante(this.props.user, grupo.integrantesGrupo) && this.props.rota !== "MyGroups") ?
-                                            "Você é integrante desse grupo" : ""}</p>
+                                        <p style={{fontWeight: "bold"}}>
+                                            {(this.verificarUsuario(this.props.user, grupo.integrantesGrupo) && this.props.rota !== "MyGroups") ?
+                                                "Você é integrante desse grupo" :
+                                                (this.verificarUsuario(this.props.user, grupo.solicitantesGrupo) ?
+                                                    "Você já solicitou a participação neste grupo" :
+                                                    "")}</p>
 
 
                                         {this.botaoVerMais(grupo)}
