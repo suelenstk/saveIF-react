@@ -11,7 +11,7 @@ import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Pager from "react-bootstrap/es/Pager";
 import servicoLogin from "../../../login/ServicoLogin";
-import InfiniteScroll from "react-infinite-scroll-component";
+
 
 class GroupView extends Component {
 
@@ -21,16 +21,14 @@ class GroupView extends Component {
 
         this.state = {
             show: false,
-            pagina: {},
+            pagina: "",
             post:{},
             loading: "none",
             grupo:{id:this.props.id},
             topico:{id:this.props.idt},
             paginaAtual:0,
             tipoAlert: "",
-            msgAlert: "",
-            items: Array.from({ length: 1 }),
-            hasMore: true
+            msgAlert: ""
         };
         
 
@@ -48,31 +46,6 @@ class GroupView extends Component {
 
     }
     
-
-  fetchMoreData = () => {   
-    
-        
-    if (this.state.items.length >= this.state.pagina.totalPages) {
-      this.setState({ hasMore: false });
-      return;
-    }
-    // a fake async api call like which sends
-    // 20 more records in .5 secs   
-    
-    
-    setTimeout(() => {
-             
-       this.setState({
-           
-            items: this.state.items.concat(Array.from({ length: 1 }))
-      });
-    }, 500);
-    
-    this.state.paginaAtual++;  
-    this.listar(this.state.paginaAtual);
-    console.log(this.state.paginaAtual);
-    
-  };
 
     setarItem(paginaResultado) {
         
@@ -284,26 +257,9 @@ class GroupView extends Component {
                                 content={
                                 
                                 <from>
-                                    <InfiniteScroll
-                                        dataLength={this.state.items.length}
-                                        next={this.fetchMoreData}
-                                        hasMore={this.state.hasMore}
-                                        loader={<h4>Loading...</h4>}
-                                        endMessage={
-                                                <p style={{ textAlign: "center" }}>
-                                                        <b>Yay! You have seen it all</b>
-                                                </p>
-                                        }
-                                        >
-                                         
-                                        {this.state.items.map((i, index) => (
-                                            
-                                            <div key={i}>                                                                                         
+                                                                                                                     
                                                 <PostList posts={this.state.pagina}/>                                                                                                        
-                                            </div>
-                                                                                     
-                                        ))}
-                                    </InfiniteScroll>
+                                            
                 
                                     
                                     
@@ -325,7 +281,6 @@ class GroupView extends Component {
                                 </from>
                                 
                                     
-
                          }
                          
                        
@@ -361,8 +316,7 @@ class GroupView extends Component {
                                         this.loading("none");
                                         this.setAlert ("Post realizado com sucesso!", "success");
                                         this.setState({show: false});   
-                                        this.listarPostEspecifico(0);
-                                        this.listar(0);
+                                        (this.state.topico.id)? this.listarPostEspecifico(this.state.paginaAtual):this.listar(this.state.paginaAtual);
                                 },
                                 (erro)=>{
                                 console.log("Erro!");

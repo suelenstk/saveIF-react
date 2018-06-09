@@ -17,7 +17,7 @@ export default class PostService {
             }
         };
 
-        fetch(`api/grupos/${id}/geral?pagina=` + pagina, {
+        fetch(`api/grupos/${id}/geral`, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
 
@@ -40,7 +40,7 @@ export default class PostService {
             }
         };
 
-        fetch(`api/grupos/${id}/posts/${idt}?pagina=` + pagina, {
+        fetch(`api/grupos/${id}/posts/${idt}`, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
 
