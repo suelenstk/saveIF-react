@@ -23,8 +23,6 @@ class RightCard extends React.Component {
         console.log(this.state.chip);
     }
 
-    //fechaChip = () => this.setState({chip: false});
-
     render() {
         return (
             <Col md={4}>
@@ -50,9 +48,11 @@ class RightCard extends React.Component {
                             <UserSearch 
                             adicionaListaConvite={(usuario) => {
                                 this.props.adicionaConvidado (usuario);
-                            }}/>
+                            }}
+                            convidados={this.props.convidados}
+                            />     
                         </div>
-                        <button onClick={(e) => { this.props.confirmar(); console.log (this.props.convidados)}} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Pular esta etapa &gt;&gt;</button>
+                        <button onClick={(e) => { this.props.confirmar(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Pular esta etapa &gt;&gt;</button>
 
                     </Row>
 

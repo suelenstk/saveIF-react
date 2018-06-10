@@ -8,7 +8,6 @@ import ServicoLogin from '../../login/ServicoLogin';
 import Button from "react-bootstrap/es/Button";
 import listUserService from "../../services/ListUserService";
 import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
-import avatar from "../../assets/img/faces/face-3.jpg";
 
 class UserSearch extends React.Component {
     constructor(props) {
@@ -28,8 +27,9 @@ class UserSearch extends React.Component {
         listUserService.pesquisarPaginado(
             this.state.nome, pagina,
             (sucesso) => {
+
                 this.setState({listaUsuario: sucesso});
-                // console.log(this.state.listaUsuario);
+                console.log(this.state.listaUsuario);
             },
             (erro) => {
                 console.log(erro);
@@ -49,7 +49,7 @@ class UserSearch extends React.Component {
         this.setState({nome: nome});
         this.setState({pagina: 0});
         this.sleep(200).then(() => {
-            this.pesquisar(this.state.pagina);
+        this.pesquisar(this.state.pagina);
         });
     }
 
@@ -58,6 +58,7 @@ class UserSearch extends React.Component {
         console.log("userId = " + usuario.id);
         console.log("userName = " + usuario.nome);
         this.props.adicionaListaConvite (usuario);
+     
     }
 
     render() {
@@ -67,7 +68,7 @@ class UserSearch extends React.Component {
             campoUsuario =
                 <div>
                     {this.state.listaUsuario.content.map((usuario) => {
-                        return <UserChip
+                            return <UserChip
                             usuario={usuario}
                             key={usuario.id}
                             nome={usuario.nome}

@@ -24,7 +24,8 @@ class GroupPage extends React.Component {
             page: "1",
             group: {},
             category: {},
-            convidados: []
+            convidados: [],
+            convidadosLista: []
         };
 
         this.groupService = new GroupService();
@@ -32,11 +33,9 @@ class GroupPage extends React.Component {
     }
 
     setLista(categorias) {
-
         this.setState({
             category: categorias
         });
-
     }
 
     setAlert(valor) {
@@ -168,10 +167,28 @@ class GroupPage extends React.Component {
                                     );
                                 }}
 
+                                removeLista={(usuario) => {
+                                    let i=0;
+                                    while(i<this.state.convidadosLista.length){
+                                        
+                                        if (this.state.convidadosLista[i].id===usuario.id){
+                                            console.log("Teste"+this.state.convidadosLista[i]);
+                                            this.state.convidados.splice (i-1, 1);
+
+                                            this.setState({
+                                                convidadosLista: this.state.convidados
+                                            });
+
+                                            i=this.state.convidadosLista.length;
+                                        }
+                                        i++;
+                                    }                                   
+                                }}
+
                                 page={this.state.page}
                                 group={this.state.group}
 
-                                convidados={this.state.convidados}
+                                convidados={this.state.convidadosLista}
                             />
                         </Col>
 
@@ -187,10 +204,16 @@ class GroupPage extends React.Component {
                             }}
                             adicionaConvidado={(usuario) => {
                                 
-                                this.state.convidados.push(usuario);
-                               
+                                if (this.state.convidadosLista.indexOf(usuario)==-1){
+                                    this.state.convidados.push(usuario);
+
+                                    this.setState({
+                                        convidadosLista: this.state.convidados
+                                    });
+                                        console.log (this.state.convidados);
+                                }                               
                             }}
-                            convidados={this.state.convidados}
+                            convidados={this.state.convidadosLista}
                         />
 
                     </Row>

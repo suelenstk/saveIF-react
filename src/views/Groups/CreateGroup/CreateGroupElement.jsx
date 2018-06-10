@@ -12,6 +12,7 @@ import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import avatar from "../../../assets/img/faces/face-3.jpg";
 import CategoryService from '../../../services/CategoryService';
 import {UserChip} from '../../../elements/UserChip/UserChip';
+import ServicoLogin from '../../../login/ServicoLogin';
 
 export default class CreateGroupElement extends React.Component {
 
@@ -27,7 +28,8 @@ export default class CreateGroupElement extends React.Component {
             listarCategorias: "",
             botao: "",
             cadastro: "",
-            visualizar: "none"
+            visualizar: "none",
+            convidados: this.props.convidados
         };
         this.categoryService = new CategoryService();
 
@@ -78,23 +80,10 @@ export default class CreateGroupElement extends React.Component {
         });
     }
 
-    /*
-    setCategoria(valor){
-        this.setState(
-                (anterior)=>
-                        {
-                        anterior.group.categoria=valor;
-                        return anterior;
-                        }
-                );
-
-    }
-    */
     setCategory(valor) {
         this.setState({
             categoria: valor
         });
-
     }
 
     setPrivacidade(valor) {
@@ -157,28 +146,42 @@ export default class CreateGroupElement extends React.Component {
 
     render() {
 
-        let campoUsuario = null;
+        let campoConvidados = null;
 
         if (this.props.convidados.length>0) {
-            campoUsuario =
+            console.log (this.props.convidados);
+            campoConvidados =
                 <div>
-                    {this.props.convidados.content.map((usuario) => {
+                    {this.props.convidados.map((usuario) => {
                         return <UserChip
                             usuario={usuario}
                             key={usuario.id}
                             nome={usuario.nome}
-                            avatar={avatar}
+                            avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
+                            ServicoLogin.getAuthorizationGet()}
                             alt={usuario.nome}
                             class="addUserbtn"
-                            icone="pe-7s-add-user"
+                            icone="pe-7s-close-circle"
                             evento={(e) => {
-                                //this.adicionarUsuario(e);
+                                this.props.removeLista(e);
                             }}
                         />
                     })}
+                    <Button
+                            bsStyle="danger"
+                            pullRight
+                            fill
+
+                            onClick={(e) => {
+                                this.props.convidarParticipantes;
+                            }}
+                            style={{ display: this.state.botao }}
+                        >
+                            Convidar
+                        </Button>
                 </div>
         } else {
-            campoUsuario =
+            campoConvidados =
                 <div style={{ margin: "20px" }}>
                     <p>Nenhum usuário adicionado!</p>
                 </div>
@@ -315,11 +318,10 @@ export default class CreateGroupElement extends React.Component {
                     title="Convidados"
                     content={
                         <div>
-                            <FormGroup controlId="formControlsConvidados" className="col-md-12">
-                                <ControlLabel>Convidados</ControlLabel><br />
+                          
+                                {campoConvidados}
 
-                                {campoUsuario}
-
+                            {/*
                                 <div className="chip" style={{ width: '200px' }}
                                     chip={this.state.chip}
                                     docked={false}
@@ -329,10 +331,13 @@ export default class CreateGroupElement extends React.Component {
 
                                     John Doe
 
-                                <span class="closebtn" style={{ float: 'right' }} onClick={this.fechaChip}>&times;</span>
-                                </div>
+                                <span class="closebtn" style={{ float: 'right' }} onClick={(e) => {
+                                this.fechaChip(true)
+                            }}>&times;</span>
+                                </div>*/}
 
-                            </FormGroup>
+                      
+                        
                             <div className="clearfix"></div>
                         </div>
                     }
