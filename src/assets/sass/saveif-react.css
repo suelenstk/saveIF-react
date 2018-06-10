@@ -907,8 +907,7 @@ body > .navbar-collapse[data-color="purple"]:after {
     position: absolute;
     top: 50%;
     margin-top: -15px;
-    color: #777777;
-  }
+    color: #777777; }
   .alert button.close {
     position: absolute;
     right: 10px;

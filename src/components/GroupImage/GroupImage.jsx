@@ -25,6 +25,11 @@ class GroupImage extends React.Component {
         this._handleImageChange = this._handleImageChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
         //this.listaCategorias();
+
+        this.setState ({imagePreviewUrl: "/api/grupos/" + this.props.id + "/imagem?" +
+                                            servicoLogin.getAuthorizationGet()});
+        console.log ({imagePreviewUrl: "/api/grupos/" + this.props.id + "/imagem?" +
+        servicoLogin.getAuthorizationGet()});
     }
 
     _handleSubmit(form) {
@@ -106,7 +111,6 @@ class GroupImage extends React.Component {
         }
     }
 
-
     render() {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
@@ -153,6 +157,9 @@ class GroupImage extends React.Component {
 
         if (imagePreviewUrl) {
             $imagePreview = <img src={imagePreviewUrl} alt="Pré-visualização de imagem" width="100%"/>;
+        }else {
+            $imagePreview = <img src={"/api/grupos/" + this.props.id + "/imagem?" +
+                                            servicoLogin.getAuthorizationGet()} alt="Pré-visualização de imagem" width="100%"/>;
         }
 
         if (this.state.loading) {

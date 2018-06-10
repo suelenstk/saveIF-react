@@ -7,7 +7,7 @@ export default class GroupService extends ServicoRest {
         super("api/grupos");
     }
 
-    listarGrupoIntegrantes(id,pagina, sucesso, erro) {
+    listarGrupoIntegrantes(id, pagina, sucesso, erro) {
 
 
         let trataFetch = (resultado) => {
@@ -30,7 +30,7 @@ export default class GroupService extends ServicoRest {
         }).then(trataFetch);
     }
 
-    listarParticipantes(id,pagina, sucesso, erro) {
+    listarParticipantes(id, pagina, sucesso, erro) {
 
 
         let trataFetch = (resultado) => {
@@ -53,7 +53,7 @@ export default class GroupService extends ServicoRest {
         }).then(trataFetch);
     }
 
-    listarGrupoEspecifico(id,sucesso, erro) {
+    listarGrupoEspecifico(id, sucesso, erro) {
 
 
         let trataFetch = (resultado) => {
@@ -75,7 +75,7 @@ export default class GroupService extends ServicoRest {
             method: "GET"
         }).then(trataFetch);
     }
-    
+
     solicitar(id, idUsuario, sucesso, erro) {
         fetch(`api/grupos/${id}/solicitar/${idUsuario}`, {
             method: "POST",
@@ -94,7 +94,29 @@ export default class GroupService extends ServicoRest {
 
         });
     }
-    
+
+    atualizar(group, id, idCategoria, sucesso, erro) {
+        console.log(idCategoria);
+        fetch(`api/grupos/${id}/${idCategoria}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(group)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
+
+
     
 
 }

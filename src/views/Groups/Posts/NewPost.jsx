@@ -81,6 +81,8 @@ export default class NewPost extends React.Component {
             this.setErrorTitulo("", "");
             this.props.inserir(this.state.post, arquivo);
             this.setExtensaoArquivo(null, null);
+            this.setTitulo("");
+            this.setTexto("");
         }
         if (!this.state.post.titulo) {
             this.setErrorTitulo("error", "Campo Titulo não pode ser vazio!");

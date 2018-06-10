@@ -23,7 +23,7 @@ export default class PostList extends React.Component {
     }    
         
     data(date) {
-        console.log(date);
+        //console.log(date);
 
         let dateParts = date.split("-");
 
@@ -49,7 +49,7 @@ export default class PostList extends React.Component {
     render() {
            
        this.state.posts = Array.from(this.props.posts);
-       console.log(this.state.posts[0]);   
+       //console.log(this.state.posts[0]);   
        
          if (this.state.posts != "") {
            

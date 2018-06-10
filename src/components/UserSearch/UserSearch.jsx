@@ -4,11 +4,11 @@ import {FormControl, FormGroup} from 'react-bootstrap';
 import InputGroup from "react-bootstrap/es/InputGroup";
 import {Card} from '../../components/Card/Card.jsx';
 import {UserChip} from '../../elements/UserChip/UserChip';
-
-import avatar from "../../assets/img/default-avatar.png";
+import ServicoLogin from '../../login/ServicoLogin';
 import Button from "react-bootstrap/es/Button";
 import listUserService from "../../services/ListUserService";
 import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
+import avatar from "../../assets/img/faces/face-3.jpg";
 
 class UserSearch extends React.Component {
     constructor(props) {
@@ -57,6 +57,7 @@ class UserSearch extends React.Component {
     adicionarUsuario(usuario) {
         console.log("userId = " + usuario.id);
         console.log("userName = " + usuario.nome);
+        this.props.adicionaListaConvite (usuario);
     }
 
     render() {
@@ -70,7 +71,8 @@ class UserSearch extends React.Component {
                             usuario={usuario}
                             key={usuario.id}
                             nome={usuario.nome}
-                            avatar={avatar}
+                            avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
+                            ServicoLogin.getAuthorizationGet()}
                             alt={usuario.nome}
                             class="addUserbtn"
                             icone="pe-7s-add-user"
