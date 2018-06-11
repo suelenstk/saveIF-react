@@ -1,10 +1,28 @@
 import ServicoRest from "../ServicoRest";
 import servicoLogin from "../login/ServicoLogin";
 
-export default class UserService extends  ServicoRest {
-        constructor(){
-            super("api/usuarios/");
-        }
+export default class UserService extends ServicoRest {
+    constructor() {
+        super("api/usuarios/");
+    }
+    
+    solicitarParticipacao(idUsuario, idGrupo, sucesso, erro) {
+        fetch(`api/usuarios/${idUsuario}/grupos/${idGrupo}`, {
+            method: "POST",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization()
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
 
     consultarExistencia(email, sucesso, erro) {
 
@@ -23,11 +41,12 @@ export default class UserService extends  ServicoRest {
         }).then(trataFetch);
     }
 
-    solicitarParticipacao(idUsuario, idGrupo, sucesso, erro) {
-        fetch(`api/usuarios/${idUsuario}/grupos/${idGrupo}`, {
-            method: "POST",
+    aceitarConvite(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
+        fetch(`api/usuarios/${idUsuario}/convite/${idGrupo}/aceite/${idNotificacao}`, {
+            method: "PUT",
             headers: new Headers({
-                'Authorization': servicoLogin.getAuthorization()
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
             })
         }).then((resultado) => {
             if (resultado.ok) {
@@ -37,8 +56,25 @@ export default class UserService extends  ServicoRest {
                     (resultadoErro) => erro(resultadoErro)
                 )
             }
-
         });
     }
-        
+
+    recusarConvite(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
+        fetch(`api/usuarios/${idUsuario}/convite/${idGrupo}/negacao/${idNotificacao}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
+
 }

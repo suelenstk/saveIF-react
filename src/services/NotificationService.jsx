@@ -45,6 +45,24 @@ class NotificationService{
         }).then(trataFetch);
     }
 
+    apagar(id, sucesso, erro) {
+        fetch(`/api/notificacoes/${id}`, {
+                headers: new Headers({
+                    'Authorization': servicoLogin.getAuthorization()
+                }),
+                method: "DELETE"
+            }
+        ).then((resposta) => {
+            if (resposta.ok) {
+                sucesso();
+            } else {
+                resposta.json().then(erro);
+            }
+
+        });
+
+    }
+
 }
 
 let notificationService = new NotificationService();

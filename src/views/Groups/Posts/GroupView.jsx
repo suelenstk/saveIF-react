@@ -284,9 +284,7 @@ class GroupView extends Component {
                                 content={
 
                                     <from>
-
-                                        <PostList posts={this.state.pagina} />
-
+                                        
                                         <Button
                                             bsStyle="danger"
                                             pullRight
@@ -298,6 +296,9 @@ class GroupView extends Component {
                                         >
                                             Novo Post
                                         </Button>
+                                        
+                                        <PostList posts={this.state.pagina} />
+                                        
                                         <div className="clearfix"></div>
 
                                     </from>
