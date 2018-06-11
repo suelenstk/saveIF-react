@@ -93,6 +93,19 @@ class Notifications extends React.Component {
         );
     }
 
+    excluirNotificacao(idNotificacao) {
+        notificationService.apagar(
+            idNotificacao,
+            (sucesso) => {
+                this.listarNotificacaoUsuario(this.state.pagina);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
+    }
+
 
     render() {
         let campoNotifUsuario = null;
@@ -111,6 +124,7 @@ class Notifications extends React.Component {
                                     textoGrupo={notificacao.textoGrupo}
                                     btnCloseEvent={notificacao.tipo !== "mensagem" ? "disable" :
                                         () => {
+                                            this.excluirNotificacao(notificacao.id);
 
                                         }}
                                     btnFirstName={notificacao.tipo === "solicitacao" ? "Confirmar" :

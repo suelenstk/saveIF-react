@@ -14,6 +14,9 @@ export class AlertNotification extends Component {
                         aria-hidden="true"
                         className="close"
                         onClick={(e) => {
+                            if (this.props.btnCloseEvent) {
+                                this.props.btnCloseEvent();
+                            }
                         }}
                     >
                         &#x2715;
