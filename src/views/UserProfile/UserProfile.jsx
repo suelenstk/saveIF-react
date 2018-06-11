@@ -79,6 +79,9 @@ class UserProfile extends Component {
     _handleSubmit(form) {
         this.setState({loading: true});
         let formData = new FormData(form);
+        if(this.state.imagePreviewUrl === null)
+            this.state.imagePreviewUrl="";
+            //alert(this.state.imagePreviewUrl);
         fetch("/api/usuarios/" + this.state.usuario.id + "/imagem", {
             method: "POST",
 
@@ -94,13 +97,10 @@ class UserProfile extends Component {
 
             this.sleep(3000).then(() => {
                 if (resultado.ok) {
-                    this.sleep(2000).then(() => {
-                        this.setState({concluded: <Redirect to={"/user"}/>});
-                    });
-                    this.setState(
-                        (anterior) => {
-                            return anterior;
-                        }
+                   this.setState(
+                      (anterior) => {
+                        return anterior;
+                       }
                     );
                 } else {
                     resultado.json().then(
@@ -172,8 +172,8 @@ class UserProfile extends Component {
         this.UserService.editar(this.state.usuario.id, usuario,
             () => {
                 this.setState({cadastro: false});
-                alert("Perfil alterado com sucesso!");
-                this.setState({sucesso: <Redirect to="/"/>})
+                //alert("Perfil alterado com sucesso!");
+               // this.setState({sucesso: <Redirect to="/"/>})
             },
             (erro) => {
                 console.log("Erro!");
@@ -260,15 +260,6 @@ class UserProfile extends Component {
             $imagePreview = (<img src={boia} alt="Boia loading" className="boia ld ld-cycle"/>);
         }
 
-        if (this.state.success) {
-            $imagePreview = (
-                <Alert bsStyle="success">
-                    Imagem enviada com sucesso! <i className="pe-7s-check ld ldt-jump-in"/>
-                </Alert>
-            );
-            seletorImagem = "";
-        }
-
         if (this.state.concluded) {
             return this.state.concluded;
         } else return (
@@ -282,6 +273,8 @@ class UserProfile extends Component {
     render() {
 
         let campoCurso = null;
+        let $msg = null;
+        let $perfil = null;
         // Estou comentando essa variavel porque ela nao esta sendo usada. Caso necessario, podem remover o comentario. Giordano
         // let erroCadastro = "";
 
@@ -319,10 +312,17 @@ class UserProfile extends Component {
         //         </div>
         // }
 
-        if (this.state.sucesso)
-            return this.state.sucesso;
-        else return (
+        if (this.state.success){
+           $msg = (
+               <Alert bsStyle="success">
+                 Perfil alterado com sucesso! <i className="pe-7s-check Id Idt-jump-in"/>                   
+               </Alert> 
+              );
+        }
+        
+         return (
             <div className="content">
+                               
                 <Grid fluid>
                     <Row>
                         <Col md={8}>
@@ -384,8 +384,8 @@ class UserProfile extends Component {
                                         </Row>
 
                                         {this.carregarImagem()}
-
-
+                                        {$msg}
+                                                
                                         <div className="clearfix"/>
 
                                     </form>
