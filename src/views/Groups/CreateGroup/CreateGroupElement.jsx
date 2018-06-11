@@ -11,7 +11,7 @@ import { Card } from '../../../components/Card/Card.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import avatar from "../../../assets/img/faces/face-3.jpg";
 import CategoryService from '../../../services/CategoryService';
-import {UserChip} from '../../../elements/UserChip/UserChip';
+import { UserChip } from '../../../elements/UserChip/UserChip';
 import ServicoLogin from '../../../login/ServicoLogin';
 
 export default class CreateGroupElement extends React.Component {
@@ -52,6 +52,15 @@ export default class CreateGroupElement extends React.Component {
     componentWillReceiveProps(proximoEstado) {
         this.setState({ group: proximoEstado.group });
 
+    }
+
+    convidarUsuarios() {
+        let i = 0;
+        while (i < this.props.convidados.length) {            
+            this.props.convidar(this.props.convidados[i].id);
+            console.log (this.props.convidados[i].id);
+            i++;
+        }
     }
 
     setNome(valor) {
@@ -148,8 +157,8 @@ export default class CreateGroupElement extends React.Component {
 
         let campoConvidados = null;
 
-        if (this.props.convidados.length>0) {
-            console.log (this.props.convidados);
+        if (this.props.convidados.length > 0) {
+            console.log(this.props.convidados);
             campoConvidados =
                 <div>
                     {this.props.convidados.map((usuario) => {
@@ -158,7 +167,7 @@ export default class CreateGroupElement extends React.Component {
                             key={usuario.id}
                             nome={usuario.nome}
                             avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
-                            ServicoLogin.getAuthorizationGet()}
+                                ServicoLogin.getAuthorizationGet()}
                             alt={usuario.nome}
                             class="addUserbtn"
                             icone="pe-7s-close-circle"
@@ -167,17 +176,17 @@ export default class CreateGroupElement extends React.Component {
                             }}
                         />
                     })}
+                    <br /><br />
                     <Button
-                            bsStyle="danger"
-                            pullRight
-                            fill
+                        bsStyle="danger"
+                        pullRight
+                        fill
 
-                            onClick={(e) => {
-                                this.props.convidarParticipantes;
-                            }}
-                            style={{ display: this.state.botao }}
-                        >
-                            Convidar
+                        onClick={() => {
+                            this.convidarUsuarios();
+                        }}
+                    >
+                        Convidar
                         </Button>
                 </div>
         } else {
@@ -315,11 +324,11 @@ export default class CreateGroupElement extends React.Component {
                 />
 
                 <Card
-                    title="Convidados"
+                    title="Convidar Participantes"
                     content={
                         <div>
-                          
-                                {campoConvidados}
+
+                            {campoConvidados}
 
                             {/*
                                 <div className="chip" style={{ width: '200px' }}
@@ -336,8 +345,8 @@ export default class CreateGroupElement extends React.Component {
                             }}>&times;</span>
                                 </div>*/}
 
-                      
-                        
+
+
                             <div className="clearfix"></div>
                         </div>
                     }

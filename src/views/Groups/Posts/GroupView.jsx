@@ -44,10 +44,7 @@ class GroupView extends Component {
 
         (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
         this.listarGrupo();
-
-
     }
-
 
     setarItem(paginaResultado) {
 
@@ -290,11 +287,6 @@ class GroupView extends Component {
 
                                         <PostList posts={this.state.pagina} />
 
-
-
-
-
-
                                         <Button
                                             bsStyle="danger"
                                             pullRight
@@ -309,18 +301,14 @@ class GroupView extends Component {
                                         <div className="clearfix"></div>
 
                                     </from>
-
-
                                 }
-
-
                             />
                         </Col>
 
                         <TopicCard
                             idGrupo={this.state.grupo.id}
                             mostraErro={(erro, tipo) => { this.setAlert(erro, tipo); }}
-                  
+
                         />
 
                     </Row>

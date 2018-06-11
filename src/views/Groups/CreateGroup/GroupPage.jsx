@@ -8,6 +8,7 @@ import RightCard from './RightCard';
 import GroupService from '../GroupService.jsx';
 import CategoryService from "../../../services/CategoryService";
 import servicoLogin from '../../../login/ServicoLogin'
+import UserService from '../../../services/UserService'
 import GroupImage from '../../../components/GroupImage/GroupImage';
 import Redirect from "react-router-dom/es/Redirect";
 
@@ -28,6 +29,7 @@ class GroupPage extends React.Component {
             convidadosLista: []
         };
 
+        this.userService = new UserService();
         this.groupService = new GroupService();
         this.categoryService = new CategoryService();
     }
@@ -173,7 +175,7 @@ class GroupPage extends React.Component {
                                         
                                         if (this.state.convidadosLista[i].id===usuario.id){
                                             console.log("Teste"+this.state.convidadosLista[i]);
-                                            this.state.convidados.splice (i-1, 1);
+                                            this.state.convidados.splice (i, 1);
 
                                             this.setState({
                                                 convidadosLista: this.state.convidados
@@ -183,6 +185,18 @@ class GroupPage extends React.Component {
                                         }
                                         i++;
                                     }                                   
+                                }}
+
+                                convidar={(idUsuario) => {
+                                    this.userService.solicitarParticipacao(idUsuario, this.state.group.id,
+                                        (sucesso) => {
+                                            alert("Convites enviados com sucesso!");
+                                        },
+                                        (erro) => {
+                                            console.log("Erro!");
+                                            console.log(erro);
+                                        }
+                                    );
                                 }}
 
                                 page={this.state.page}

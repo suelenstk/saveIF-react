@@ -29,15 +29,13 @@ export default class EditGroup extends React.Component {
                 this.groupService.listarGrupoEspecifico(this.props.idGrupo,
                     (sucesso) => {
                         this.setState({ group: sucesso, categoria: sucesso.categoria.id });
-                        console.log("Sucesso");
-                        console.log(this.state.group);
-                        this.setCategoria(this.state.group.categoria.id);
                     },
                     (erro) => {
                         console.log(erro);
-                    }
-                )
+                    }                 
+                )            
             )
+            
         });
 
         this.setState({
@@ -58,7 +56,6 @@ export default class EditGroup extends React.Component {
 
     componentWillReceiveProps(proximoEstado) {
         this.setState({ group: proximoEstado.group });
-
     }
 
     setNome(valor) {
@@ -172,6 +169,7 @@ export default class EditGroup extends React.Component {
                             required
                         >
 
+                            
                             <option value={this.state.group.categoria.id} key={this.state.group.categoria.id}>{this.state.group.categoria.nome}</option> 
                             {this.state.listarCategorias.map((categoria) => {
                                 if (this.state.group.categoria.id!=categoria.id){
