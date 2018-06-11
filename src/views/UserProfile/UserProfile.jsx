@@ -57,19 +57,27 @@ class UserProfile extends Component {
             )
         });
 
-        //  this.setState({
-        //      curso: (
-        //          courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
-        //              (sucesso) => {
-        //                  this.setState({curso: sucesso});
-        //                  console.log(this.state.curso);
-        //              },
-        //              (erro) => {
-        //                  console.log(erro);
-        //              }
-        //          )
-        //      )
-        // });
+        if(this.props.user.tipoVinculo === 'aluno'){
+            
+            this.setState({
+             
+            
+             curso: (
+                  courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
+                     (sucesso) => {
+                         this.setState({curso: sucesso});
+                        console.log(this.state.curso);
+                      },
+                      (erro) => {
+                          console.log(erro);
+                      }
+                  )
+              )
+           
+      
+              
+            });
+       }
 
         this._handleImageChange = this._handleImageChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -118,13 +126,21 @@ class UserProfile extends Component {
         if (file) {
             let num = file.name.split(".").length;
             let name = file.name.split(".")[num - 1].toLowerCase();
-            if (name === "png" || name === "tiff" || name === "jpg" || name === "jpeg" || name === "bmp") {
-                this.setState({error: ""});
-                return true;
-            } else {
-                this.setState({error: "Formato inválido! São aceitos apenas arquivos no formato de imagem."});
+            
+            //console.log(file.size);
+            if(file.size <= 1048576 ){
+                if (name === "png" || name === "tiff" || name === "jpg" || name === "jpeg" || name === "bmp") {
+                    this.setState({error: ""});
+                    return true;
+                } else {
+                    this.setState({error: "Formato inválido! São aceitos apenas arquivos no formato de imagem."});
+                    return false;
+                }
+            }else{
+                this.setState({error: "A imagem não pode ser maior que 1mb."});
                 return false;
             }
+            
         } else {
             this.setState({error: ""});
             return false;
@@ -253,7 +269,7 @@ class UserProfile extends Component {
         }
 
         if (imagePreviewUrl) {
-            $imagePreview = <img src={imagePreviewUrl} width="100%" alt="Pré-visualização da imagem"/>;
+            $imagePreview = <img src={imagePreviewUrl} width="30%" alt="Pré-visualização da imagem"/>;
         }
 
         if (this.state.loading) {
@@ -262,8 +278,8 @@ class UserProfile extends Component {
 
         if (this.state.concluded) {
             return this.state.concluded;
-        } else return (
-            <div>
+        } else return (           
+            <div>                              
                 {$imagePreview}
                 {seletorImagem}
             </div>
