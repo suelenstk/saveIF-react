@@ -1,8 +1,8 @@
 import React from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
+import {Col, Grid, Row} from 'react-bootstrap';
 import Alert from "react-bootstrap/es/Alert";
 
-import { Card } from '../../../components/Card/Card.jsx';
+import {Card} from '../../../components/Card/Card.jsx';
 import CreateGroupElement from './CreateGroupElement';
 import RightCard from './RightCard';
 import GroupService from '../GroupService.jsx';
@@ -188,8 +188,8 @@ class GroupPage extends React.Component {
                                 }}
 
                                 convidar={(idUsuario) => {
-                                    this.userService.solicitarParticipacao(idUsuario, this.state.group.id,
-                                        (sucesso) => {
+                                    this.groupService.convidarParticipante(this.state.group.id, idUsuario,
+                                        () => {
                                             alert("Convites enviados com sucesso!");
                                         },
                                         (erro) => {

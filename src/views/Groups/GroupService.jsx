@@ -76,6 +76,26 @@ export default class GroupService extends ServicoRest {
         }).then(trataFetch);
     }
 
+
+    convidarParticipante(idGrupo, idUsuario, sucesso, erro) {
+        fetch(`api/grupos/${idGrupo}/convite/${idUsuario}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
+
     solicitar(id, idUsuario, sucesso, erro) {
         fetch(`api/grupos/${id}/solicitar/${idUsuario}`, {
             method: "POST",
@@ -130,7 +150,6 @@ export default class GroupService extends ServicoRest {
             }
         });
     }
-
 
 
     atualizar(group, id, idCategoria, sucesso, erro) {

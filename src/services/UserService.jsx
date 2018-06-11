@@ -5,24 +5,6 @@ export default class UserService extends ServicoRest {
     constructor() {
         super("api/usuarios/");
     }
-    
-    solicitarParticipacao(idUsuario, idGrupo, sucesso, erro) {
-        fetch(`api/usuarios/${idUsuario}/grupos/${idGrupo}`, {
-            method: "POST",
-            headers: new Headers({
-                'Authorization': servicoLogin.getAuthorization()
-            })
-        }).then((resultado) => {
-            if (resultado.ok) {
-                sucesso();
-            } else {
-                resultado.json().then(
-                    (resultadoErro) => erro(resultadoErro)
-                )
-            }
-
-        });
-    }
 
     consultarExistencia(email, sucesso, erro) {
 

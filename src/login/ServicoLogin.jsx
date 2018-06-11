@@ -45,7 +45,7 @@ class ServicoLogin {
                 })
 
             } else {
-                console.log("erro" + resposta.json().then());
+                console.log("erro " + resposta.json().then());
             }
 
         }).catch();
