@@ -7,7 +7,8 @@ export class AlertNotification extends Component {
     render() {
         return (
             <Alert bsStyle="info" className="alert-with-icon">
-                {(this.props.btnCloseEvent) ?
+                {(this.props.btnCloseEvent === "disable") ?
+                    <Button className="close" style={{display: "none"}}/> :
                     <Button
                         type="button"
                         aria-hidden="true"
@@ -16,18 +17,17 @@ export class AlertNotification extends Component {
                         }}
                     >
                         &#x2715;
-                    </Button> :
-                    <Button className="close" style={{display: "none"}}/>
+                    </Button>
                 }
                 <span data-notify="icon" className="pe-7s-bell"/>
                 <span data-notify="message">
                     {/*usuario com link, caso exista*/}
-                    {this.props.textoUsuario != null ?
+                    {this.props.textoUsuario !== "" ?
                         this.props.textoUsuario
                         : ""}
 
                     {/* TODO habilitar quando a tarefa 1.12 Ver perfil dos usuarios estiver implementada */}
-                    {/*<a href={this.props.linkUsuario}>*/}
+                    {/*<a href={"/#/usuarios/" + this.props.linkUsuario}>*/}
                     {/*{this.props.textoUsuario}*/}
                     {/*</a> :*/}
                     {/*""}*/}
@@ -36,33 +36,35 @@ export class AlertNotification extends Component {
                     {this.props.mensagem}
 
                     {/*grupo com link, que sempre existira, na modelagem atual*/}
-                    <a href={this.props.linkGrupo}>
+                    <a href={"/#/MyGroups/" + this.props.linkGrupo + "/geral"}>
                     {this.props.textoGrupo}
                 </a>
 
                 </span>
 
 
-                {(this.props.btnFirstName) ?
+                {(this.props.btnFirstName === "disable") ? "" :
                     <Button
                         className="btnFirstAction"
-                        onClick={(e) => {
+                        onClick={() => {
                             if (this.props.btnFirstEvent) {
+                                this.props.btnFirstEvent();
                             }
                         }}
                     >
                         {this.props.btnFirstName}
-                    </Button> : ""}
-                {(this.props.btnSecondName) ?
+                    </Button>}
+                {(this.props.btnSecondName === "disable") ? "" :
                     <Button
                         className="btnSecondAction"
-                        onClick={(e) => {
+                        onClick={() => {
                             if (this.props.btnSecondEvent) {
+                                this.props.btnSecondEvent();
                             }
                         }}
                     >
                         {this.props.btnSecondName}
-                    </Button> : ""}
+                    </Button>}
             </Alert>
         );
     }

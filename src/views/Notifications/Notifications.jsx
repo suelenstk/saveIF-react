@@ -4,6 +4,11 @@ import Row from "react-bootstrap/es/Row";
 import Col from "react-bootstrap/es/Col";
 import AlertNotification from "../../elements/AlertNotification/AlertNotification";
 import notificationService from "../../services/NotificationService";
+import GroupService from "../Groups/GroupService";
+import UserService from "../../services/UserService";
+import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
+import servicoLogin from "../../login/ServicoLogin";
+
 
 class Notifications extends React.Component {
     constructor(props) {
@@ -17,7 +22,8 @@ class Notifications extends React.Component {
         this.setState({
             listaNotifUsuario: this.listarNotificacaoUsuario(0)
         });
-
+        this.groupService = new GroupService();
+        this.userService = new UserService();
     }
 
     listarNotificacaoUsuario(pagina) {
@@ -35,6 +41,58 @@ class Notifications extends React.Component {
         this.setState({pagina: pagina});
     }
 
+    aceitarSolicitacao(idGrupo, idUsuario, idNotificacao) {
+        this.groupService.aceitarSolicitacao(
+            idGrupo, idUsuario, idNotificacao,
+            () => {
+                this.listarNotificacaoUsuario(this.state.pagina);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
+    }
+
+    recusarSolicitacao(idGrupo, idUsuario, idNotificacao) {
+        this.groupService.recusarSolicitacao(
+            idGrupo, idUsuario, idNotificacao,
+            () => {
+                this.listarNotificacaoUsuario(this.state.pagina);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
+    }
+
+    aceitarConvite(idGrupo, idNotificacao) {
+        this.userService.aceitarConvite(
+            idGrupo, servicoLogin.getUsuario(), idNotificacao,
+            () => {
+                this.listarNotificacaoUsuario(this.state.pagina);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
+    }
+
+    recusarConvite(idGrupo, idNotificacao) {
+        this.userService.recusarConvite(
+            idGrupo, servicoLogin.getUsuario(), idNotificacao,
+            () => {
+                this.listarNotificacaoUsuario(this.state.pagina);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
+    }
+
 
     render() {
         let campoNotifUsuario = null;
@@ -43,7 +101,7 @@ class Notifications extends React.Component {
             campoNotifUsuario =
                 <div>
                     {this.state.listaNotifUsuario.content.map((notificacao) => {
-                        return <Row>
+                        return <Row key={notificacao.id}>
                             <Col md={10}>
                                 <AlertNotification
                                     linkUsuario={notificacao.linkUsuario}
@@ -51,8 +109,28 @@ class Notifications extends React.Component {
                                     mensagem={notificacao.descricao}
                                     linkGrupo={notificacao.linkGrupo}
                                     textoGrupo={notificacao.textoGrupo}
-                                    btnFirstName={"Aceitar"}
-                                    btnSecondName={"Agora não"}
+                                    btnCloseEvent={notificacao.tipo !== "mensagem" ? "disable" :
+                                        () => {
+
+                                        }}
+                                    btnFirstName={notificacao.tipo === "solicitacao" ? "Confirmar" :
+                                        (notificacao.tipo === "convite" ? "Aceitar" : "disable")}
+                                    btnFirstEvent={() => {
+                                        if (notificacao.tipo === "solicitacao") {
+                                            this.aceitarSolicitacao(notificacao.linkGrupo, notificacao.linkUsuario, notificacao.id);
+                                        } else if (notificacao.tipo === "convite") {
+                                            this.aceitarConvite(notificacao.linkGrupo, notificacao.id);
+                                        }
+                                    }}
+                                    btnSecondName={notificacao.tipo === "solicitacao" ? "Excluir solicitação" :
+                                        (notificacao.tipo === "convite" ? "Recusar" : "disable")}
+                                    btnSecondEvent={() => {
+                                        if (notificacao.tipo === "solicitacao") {
+                                            this.recusarSolicitacao(notificacao.linkGrupo, notificacao.linkUsuario, notificacao.id);
+                                        } else if (notificacao.tipo === "convite") {
+                                            this.recusarConvite(notificacao.linkGrupo, notificacao.id);
+                                        }
+                                    }}
                                 />
                             </Col>
                         </Row>
@@ -71,37 +149,15 @@ class Notifications extends React.Component {
                     <div className="content">
                         <h4 className="title">Notificações de usuário</h4>
                         {campoNotifUsuario}
-                        <h4 className="title">Convites para grupos(modelo estático)</h4>
-                        <Row>
-                            <Col md={10}>
-                                <AlertNotification
-                                    message={"Você foi convidado a participar do grupo Desenvolvimento de sistemas 2"}
-                                    btnFirstName={"Aceitar"}
-                                    btnSecondName={"Agora não"}
-                                />
-                            </Col>
-                        </Row>
-                        <h4 className="title">Solicitações de participação em grupos(modelo estático)</h4>
-                        <Row>
-                            <Col md={10}>
-                                <AlertNotification
-                                    message={"Pedro Silva solicitou participação no grupo Teste de Software"}
-                                    btnFirstName={"Confirmar"}
-                                    btnSecondName={"Excluir solicitação"}
-                                />
-                            </Col>
-                        </Row>
-                        <h4 className="title">Atualizações de grupos(modelo estático)</h4>
-                        <Row>
-                            <Col md={10}>
-                                <AlertNotification
-                                    btnCloseEvent={true}
-                                    message={"O grupo ADS tem novas mensagens"}
-                                />
-                            </Col>
-                        </Row>
                     </div>
                 </Grid>
+                <PaginationSaveIf
+                    lista={this.state.listaNotifUsuario}
+                    pagina={this.state.pagina}
+                    setPagina={(pagina) => {
+                        this.listarNotificacaoUsuario(pagina);
+                    }}
+                />
             </div>
         );
     }

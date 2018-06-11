@@ -95,6 +95,44 @@ export default class GroupService extends ServicoRest {
         });
     }
 
+    aceitarSolicitacao(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
+        fetch(`api/grupos/${idGrupo}/inscricao/${idUsuario}/aceite/${idNotificacao}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
+
+    recusarSolicitacao(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
+        fetch(`api/grupos/${idGrupo}/inscricao/${idUsuario}/negacao/${idNotificacao}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
+
+
+
     atualizar(group, id, idCategoria, sucesso, erro) {
         console.log(idCategoria);
         fetch(`api/grupos/${id}/${idCategoria}`, {
@@ -116,7 +154,5 @@ export default class GroupService extends ServicoRest {
         });
     }
 
-
-    
 
 }

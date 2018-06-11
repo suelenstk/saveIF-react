@@ -1,9 +1,10 @@
 import ServicoRest from "../ServicoRest";
+import servicoLogin from "../login/ServicoLogin";
 
-export default class UserService extends  ServicoRest {
-        constructor(){
-            super("api/usuarios/");
-        }
+export default class UserService extends ServicoRest {
+    constructor() {
+        super("api/usuarios/");
+    }
 
     consultarExistencia(email, sucesso, erro) {
 
@@ -21,5 +22,41 @@ export default class UserService extends  ServicoRest {
             method: "GET"
         }).then(trataFetch);
     }
-        
+
+    aceitarConvite(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
+        fetch(`api/usuarios/${idUsuario}/convite/${idGrupo}/aceite/${idNotificacao}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
+
+    recusarConvite(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
+        fetch(`api/usuarios/${idUsuario}/convite/${idGrupo}/negacao/${idNotificacao}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
+
 }
