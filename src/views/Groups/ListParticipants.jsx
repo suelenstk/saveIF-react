@@ -8,7 +8,7 @@ class ListParticipants extends Component {
         super(props);
         this.state = {chip: true, flagParticipante: false};
 
-        console.log(this.state.chip);
+        //console.log(this.state.chip);
     }
 
     render() {
@@ -28,7 +28,7 @@ class ListParticipants extends Component {
                     >{this.setState({flagGrupo: true})})}</UserChip>
 
                 })}
-                {(!this.state.flagParticipante) ? "Este grupo não possui integrantes!" : ""}
+                
             </div>
 
         } else {
