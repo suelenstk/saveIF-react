@@ -9,7 +9,6 @@ import PostList from './PostList';
 import NewPost from './NewPost';
 import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
-import Pager from "react-bootstrap/es/Pager";
 import servicoLogin from "../../../login/ServicoLogin";
 import EditGroup from '../EditGroup';
 

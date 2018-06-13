@@ -19,7 +19,7 @@ class UserProfile extends Component {
     constructor(props) {
 
         super(props);
-        console.log(this.props.user);
+        //console.log(this.props.user);
 
         this.state = {
             avisoUsuario: "",
@@ -48,7 +48,7 @@ class UserProfile extends Component {
                 courseService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listaCurso: sucesso});
-                        console.log(this.state.listaCurso);
+                        //console.log(this.state.listaCurso);
                     },
                     (erro) => {
                         console.log(erro);
@@ -66,7 +66,7 @@ class UserProfile extends Component {
                   courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
                      (sucesso) => {
                          this.setState({curso: sucesso});
-                        console.log(this.state.curso);
+                        //console.log(this.state.curso);
                       },
                       (erro) => {
                           console.log(erro);
@@ -225,12 +225,9 @@ class UserProfile extends Component {
         let $imagePreview = null;
 
         let seletorImagem = (
-            <form method="post" encType="multipart/form-data"
-                  onSubmit={(event) => {
-                      event.preventDefault();
-                      this._handleSubmit(event.target);
-                  }}>
-                <FormInputs
+          <div>
+  
+               <FormInputs
                     ncols={["col-md-6"]}
                     proprieties={[
                         {
@@ -255,9 +252,8 @@ class UserProfile extends Component {
                 >
                     Alterar Perfil
                 </Button>
-
-
-            </form>
+                
+            </div>
         );
 
         if (this.state.error !== "") {
@@ -347,6 +343,7 @@ class UserProfile extends Component {
                                 content={
                                     <form onSubmit={(event) => {
                                         event.preventDefault();
+                                        this._handleSubmit(event.target);
                                         this.confirmar()
                                     }}>
 
@@ -415,6 +412,7 @@ class UserProfile extends Component {
                                 avatar={this.state.avatar}
                                 name={this.state.nome}
                                 curso={(this.state.curso) ? this.state.curso.nome : ""}
+                                email={this.state.usuario.email}
                                 description={this.state.desc}
 
                             />

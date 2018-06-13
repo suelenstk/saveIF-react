@@ -15,6 +15,8 @@ export class UserCard extends Component{
                                 {this.props.name}
                             <br />
                             <small>{this.props.curso}</small>
+                             <br />
+                             <small>{this.props.email}</small>
                         </h4>
                     </div>
                     <p className="description text-center">

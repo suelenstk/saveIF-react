@@ -16,7 +16,7 @@ export default class GroupList extends Component {
         this.state = {
             paginaAtual: 0,
             grupo: {},
-            flagGrupo: false
+            
         };
 
         this.groupService = new GroupService();
@@ -63,7 +63,7 @@ export default class GroupList extends Component {
     botaoVerMais(grupo) {
 
         let botoes = [];
-        this.state.flagGrupo = true;
+        
 
         let verificar = this.verificarUsuario(this.props.user, grupo.integrantesGrupo);
         //let botao = <Link to={`/GroupEnter`}>
@@ -222,7 +222,7 @@ export default class GroupList extends Component {
                             }
                         />
                     })}
-                    {(!this.state.flagGrupo) ? "Você não esta inscrito em nenhum grupo" : ""}
+                    
                 </Col>
 
                 <Pager>

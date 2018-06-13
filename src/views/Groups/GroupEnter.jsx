@@ -20,7 +20,7 @@ class GroupEnter extends Component {
             pagina: ""
         };
 
-        console.log(this.props.id);
+        //console.log(this.props.id);
         this.GroupService = new GroupService();
         this.listarGrupo();
         this.listarParticipantes();
@@ -57,7 +57,7 @@ class GroupEnter extends Component {
     listarGrupo() {
         this.GroupService.listarGrupoEspecifico(this.state.id,
             (resultado) => {
-                console.log(resultado);
+               // console.log(resultado);
                 this.setarGrupo(resultado);
             },
             (erro) => {
