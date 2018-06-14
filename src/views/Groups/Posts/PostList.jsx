@@ -9,17 +9,20 @@ const imgStyle = {
     marginRight: '55px',
 };
 
+let posts = Array.from({length: 10});
+
 export default class PostList extends React.Component {
+    
 
     constructor(props) {
 
         super(props);
-        this.state = {
+        this.state = {           
             items: Array.from({length: 10}),
-            posts: Array.from({length: 10}),
             hasMore: true
         };
-
+        
+        //console.log(posts);
     }
 
     data(date) {
@@ -32,26 +35,29 @@ export default class PostList extends React.Component {
     }
 
     fetchMoreData = () => {
-        if (this.state.items.length >= this.state.posts.length) {
-            this.setState({hasMore: false});
-            return;
+        
+        if (this.state.items.length >= this.posts.length) {
+                this.setState({hasMore: false});
+                return;
         }
-        // a fake async api call like which sends
-        // 20 more records in .5 secs
-        setTimeout(() => {
-            this.setState({
-                items: this.state.items.concat(Array.from({length: 10}))
-            });
+            
+        
+            // a fake async api call like which sends
+            // 20 more records in .5 secs
+            setTimeout(() => {
+        this.setState({
+              items: this.state.items.concat(Array.from({length: 10}))
+        });
         }, 1000);
     };
 
 
     render() {
 
-        this.state.posts = Array.from(this.props.posts);
+        this.posts = Array.from(this.props.posts);
 
-        if (this.state.posts !== "") {
-
+        if (posts !== "") {
+            if(this.posts.length !== 0){
             return <Row>
 
                 <Col md={12}>
@@ -64,20 +70,20 @@ export default class PostList extends React.Component {
 
                         {this.state.items.map((i, index) => {
 
-                            if (this.state.posts[index] != null) {
+                            if (this.posts[index] != null) {
                                 return <Card
-                                    title={this.state.posts[index].titulo}
+                                    title={this.posts[index].titulo}
                                     ctAllGroups
                                     content={
                                         <Row>
                                             <Col lg={12} md={12} sm={12} xs={12}>
                                                 <div style={imgStyle}>
-                                                    {(this.state.posts[index].anexoPost) ?
+                                                    {(this.posts[index].anexoPost) ?
                                                         <Image src={anexoTeste} responsive width={30}/> : ""}
                                                     {/*<p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>*/}
                                                 </div>
-                                                <p className="h5">{this.state.posts[index].texto}</p>
-                                                <small>Por {this.state.posts[index].autorPost.nome}, {this.data(this.state.posts[index].dataPostagem)}.</small>
+                                                <p className="h5">{this.posts[index].texto}</p>
+                                                <small>Por {this.posts[index].autorPost.nome}, {this.data(this.posts[index].dataPostagem)}.</small>
                                             </Col>
                                         </Row>
                                     }
@@ -92,6 +98,9 @@ export default class PostList extends React.Component {
                     </InfiniteScroll>
                 </Col>
             </Row>
+             } else {
+                return <div></div>
+            }
         } else {
             return <div></div>
         }

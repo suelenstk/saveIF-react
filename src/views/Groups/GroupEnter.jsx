@@ -123,7 +123,7 @@ class GroupEnter extends Component {
 
         if (this.state.grupo.nome !== "")
             return (
-                <div className="content">
+                <div className="content" >
 
                     <Grid fluid>
                         <Row>

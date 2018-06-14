@@ -184,6 +184,7 @@ class UserProfile extends Component {
                 this.setState({cadastro: false});
                 //alert("Perfil alterado com sucesso!");
                 // this.setState({sucesso: <Redirect to="/"/>})
+                
             },
             (erro) => {
                 console.log("Erro!");
@@ -274,15 +275,17 @@ class UserProfile extends Component {
                 {seletorImagem}
             </div>
         );
+       
     }
 
     render() {
 
         let campoCurso = null;
         let $msg = null;
+        let $red = null;
         // Estou comentando essa variavel porque ela nao esta sendo usada. Caso necessario, podem remover o comentario. Giordano
         // let erroCadastro = "";
-
+       
         if (this.state.usuario.tipoVinculo === "aluno" && this.state.listaCurso) {
             campoCurso =
                 <Row>
@@ -291,7 +294,7 @@ class UserProfile extends Component {
                         <FormControl
                             componentClass="select"
                             placeholder="curso"
-                            value={this.state.usuario.curso}
+                            value={this.state.usuario.curso.id}
                             onChange={(e) => this.setValor("curso", e.target.value)}
                             required
                         >
@@ -322,7 +325,10 @@ class UserProfile extends Component {
                 <Alert bsStyle="success">
                     Perfil alterado com sucesso! <i className="pe-7s-check Id Idt-jump-in"/>
                 </Alert>
+                
             );
+            $red = window.location.reload();
+               
         }
 
         return (
@@ -390,7 +396,9 @@ class UserProfile extends Component {
                                         </Row>
 
                                         {this.carregarImagem()}
+                                        
                                         {$msg}
+                                        
 
                                         <div className="clearfix"/>
 
@@ -411,6 +419,8 @@ class UserProfile extends Component {
                             />
 
                         </Col>
+                        
+                        {$red}
 
                     </Row>
                 </Grid>

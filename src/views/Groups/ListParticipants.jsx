@@ -25,11 +25,12 @@ class ListParticipants extends Component {
                         //nomeBtn="addUserbtn"
                         //icone="pe-7s-add-user"
                         largura="30%"
-                    >{this.setState({flagGrupo: true})})}</UserChip>
+                    ></UserChip>
 
                 })}
                 
             </div>
+            
 
         } else {
             return <div></div>
