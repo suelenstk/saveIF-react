@@ -56,11 +56,13 @@ export default class CreateGroupElement extends React.Component {
 
     convidarUsuarios() {
         let i = 0;
-        while (i < this.props.convidados.length) {            
-            this.props.convidar(this.props.convidados[i].id);
-            console.log (this.props.convidados[i].id);
+        let idsUsuarios=[];
+        while (i < this.props.convidados.length) {     
+            idsUsuarios[i]=this.props.convidados[i].id;     
             i++;
         }
+        console.log (idsUsuarios);
+        this.props.convidar(idsUsuarios);
     }
 
     setNome(valor) {

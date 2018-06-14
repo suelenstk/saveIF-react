@@ -77,13 +77,14 @@ export default class GroupService extends ServicoRest {
     }
 
 
-    convidarParticipante(idGrupo, idUsuario, sucesso, erro) {
-        fetch(`api/grupos/${idGrupo}/convite/${idUsuario}`, {
+    convidarParticipante(idGrupo, idsUsuarios, sucesso, erro) {
+        fetch(`api/grupos/${idGrupo}/convite/${idsUsuarios}`, {
             method: "PUT",
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
                 'Content-Type': 'application/json'
-            })
+            }),
+            body: JSON.stringify(idsUsuarios)
         }).then((resultado) => {
             if (resultado.ok) {
                 sucesso();
