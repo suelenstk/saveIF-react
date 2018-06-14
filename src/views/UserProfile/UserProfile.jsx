@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {Col, ControlLabel, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
-// import HelpBlock from "react-bootstrap/es/HelpBlock";
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Card} from '../../components/Card/Card.jsx';
 import {UserCard} from '../../components/UserCard/UserCard.jsx';
 import UserService from '../../services/UserService';
 import courseService from "../../services/CourseService";
-import {Redirect} from "react-router-dom";
 import ServicoLogin from '../../login/ServicoLogin';
 import servicoLogin from '../../login/ServicoLogin';
 import {FormInputs} from '../../components/FormInputs/FormInputs.jsx';
@@ -19,7 +17,6 @@ class UserProfile extends Component {
     constructor(props) {
 
         super(props);
-        //console.log(this.props.user);
 
         this.state = {
             avisoUsuario: "",
@@ -48,7 +45,6 @@ class UserProfile extends Component {
                 courseService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listaCurso: sucesso});
-                        //console.log(this.state.listaCurso);
                     },
                     (erro) => {
                         console.log(erro);
@@ -57,27 +53,26 @@ class UserProfile extends Component {
             )
         });
 
-        if(this.props.user.tipoVinculo === 'aluno'){
-            
+        if (this.props.user.tipoVinculo === 'aluno') {
+
             this.setState({
-             
-            
-             curso: (
-                  courseService.recuperar((this.state.usuario.curso.id)?this.state.usuario.curso.id:this.state.usuario.curso,
-                     (sucesso) => {
-                         this.setState({curso: sucesso});
-                        //console.log(this.state.curso);
-                      },
-                      (erro) => {
-                          console.log(erro);
-                      }
-                  )
-              )
-           
-      
-              
+
+
+                curso: (
+                    courseService.recuperar((this.state.usuario.curso.id) ? this.state.usuario.curso.id : this.state.usuario.curso,
+                        (sucesso) => {
+                            this.setState({curso: sucesso});
+                            //console.log(this.state.curso);
+                        },
+                        (erro) => {
+                            console.log(erro);
+                        }
+                    )
+                )
+
+
             });
-       }
+        }
 
         this._handleImageChange = this._handleImageChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -87,9 +82,8 @@ class UserProfile extends Component {
     _handleSubmit(form) {
         this.setState({loading: true});
         let formData = new FormData(form);
-        if(this.state.imagePreviewUrl === null)
-            this.state.imagePreviewUrl="";
-            //alert(this.state.imagePreviewUrl);
+        if (this.state.imagePreviewUrl === null)
+            this.setState({imagePreviewUrl: ""});
         fetch("/api/usuarios/" + this.state.usuario.id + "/imagem", {
             method: "POST",
 
@@ -105,10 +99,10 @@ class UserProfile extends Component {
 
             this.sleep(3000).then(() => {
                 if (resultado.ok) {
-                   this.setState(
-                      (anterior) => {
-                        return anterior;
-                       }
+                    this.setState(
+                        (anterior) => {
+                            return anterior;
+                        }
                     );
                 } else {
                     resultado.json().then(
@@ -126,9 +120,9 @@ class UserProfile extends Component {
         if (file) {
             let num = file.name.split(".").length;
             let name = file.name.split(".")[num - 1].toLowerCase();
-            
+
             //console.log(file.size);
-            if(file.size <= 1048576 ){
+            if (file.size <= 1048576) {
                 if (name === "png" || name === "tiff" || name === "jpg" || name === "jpeg" || name === "bmp") {
                     this.setState({error: ""});
                     return true;
@@ -136,11 +130,11 @@ class UserProfile extends Component {
                     this.setState({error: "Formato inválido! São aceitos apenas arquivos no formato de imagem."});
                     return false;
                 }
-            }else{
+            } else {
                 this.setState({error: "A imagem não pode ser maior que 1mb."});
                 return false;
             }
-            
+
         } else {
             this.setState({error: ""});
             return false;
@@ -189,7 +183,7 @@ class UserProfile extends Component {
             () => {
                 this.setState({cadastro: false});
                 //alert("Perfil alterado com sucesso!");
-               // this.setState({sucesso: <Redirect to="/"/>})
+                // this.setState({sucesso: <Redirect to="/"/>})
             },
             (erro) => {
                 console.log("Erro!");
@@ -225,9 +219,9 @@ class UserProfile extends Component {
         let $imagePreview = null;
 
         let seletorImagem = (
-          <div>
-  
-               <FormInputs
+            <div>
+
+                <FormInputs
                     ncols={["col-md-6"]}
                     proprieties={[
                         {
@@ -252,7 +246,7 @@ class UserProfile extends Component {
                 >
                     Alterar Perfil
                 </Button>
-                
+
             </div>
         );
 
@@ -274,8 +268,8 @@ class UserProfile extends Component {
 
         if (this.state.concluded) {
             return this.state.concluded;
-        } else return (           
-            <div>                              
+        } else return (
+            <div>
                 {$imagePreview}
                 {seletorImagem}
             </div>
@@ -286,7 +280,6 @@ class UserProfile extends Component {
 
         let campoCurso = null;
         let $msg = null;
-        let $perfil = null;
         // Estou comentando essa variavel porque ela nao esta sendo usada. Caso necessario, podem remover o comentario. Giordano
         // let erroCadastro = "";
 
@@ -324,17 +317,17 @@ class UserProfile extends Component {
         //         </div>
         // }
 
-        if (this.state.success){
-           $msg = (
-               <Alert bsStyle="success">
-                 Perfil alterado com sucesso! <i className="pe-7s-check Id Idt-jump-in"/>                   
-               </Alert> 
-              );
+        if (this.state.success) {
+            $msg = (
+                <Alert bsStyle="success">
+                    Perfil alterado com sucesso! <i className="pe-7s-check Id Idt-jump-in"/>
+                </Alert>
+            );
         }
-        
-         return (
+
+        return (
             <div className="content">
-                               
+
                 <Grid fluid>
                     <Row>
                         <Col md={8}>
@@ -398,7 +391,7 @@ class UserProfile extends Component {
 
                                         {this.carregarImagem()}
                                         {$msg}
-                                                
+
                                         <div className="clearfix"/>
 
                                     </form>

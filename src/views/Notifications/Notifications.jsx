@@ -14,14 +14,15 @@ class Notifications extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listaNotifUsuario: "",
             sucesso: "",
             pagina: 0,
+            listaNotifUsuario: ""
         };
 
         this.setState({
             listaNotifUsuario: this.listarNotificacaoUsuario(0)
         });
+
         this.groupService = new GroupService();
         this.userService = new UserService();
     }
@@ -32,13 +33,13 @@ class Notifications extends React.Component {
             this.props.user.id, pagina,
             (sucesso) => {
                 this.setState({listaNotifUsuario: sucesso});
+                this.setState({pagina: pagina});
             },
             (erro) => {
                 console.log("Erro:");
                 console.log(erro);
             }
         );
-        this.setState({pagina: pagina});
     }
 
     aceitarSolicitacao(idGrupo, idUsuario, idNotificacao) {

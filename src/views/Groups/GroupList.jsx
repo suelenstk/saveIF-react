@@ -16,7 +16,7 @@ export default class GroupList extends Component {
         this.state = {
             paginaAtual: 0,
             grupo: {},
-            
+
         };
 
         this.groupService = new GroupService();
@@ -63,7 +63,7 @@ export default class GroupList extends Component {
     botaoVerMais(grupo) {
 
         let botoes = [];
-        
+
 
         let verificar = this.verificarUsuario(this.props.user, grupo.integrantesGrupo);
         //let botao = <Link to={`/GroupEnter`}>
@@ -93,23 +93,19 @@ export default class GroupList extends Component {
     }
 
     verificarUsuario(id, integrantesGrupo) {
-
         for (let i = 0; i < integrantesGrupo.length; i++) {
-            //console.log(id);
             if (id === integrantesGrupo[i].id) {
                 return true;
             }
         }
-
         return false;
-
     }
 
     testarIcone(privacidade) {
-        if (privacidade === "Aberto") {
+        if (privacidade.toLowerCase() === "aberto") {
             return "pe-7s-unlock";
 
-        } else if (privacidade === "Público") {
+        } else if (privacidade.toLowerCase() === "público") {
             return "fa fa-globe";
 
         } else {
@@ -119,10 +115,10 @@ export default class GroupList extends Component {
 
 
     mudarCor(privacidade) {
-        if (privacidade === "Aberto") {
+        if (privacidade.toLowerCase() === "aberto") {
             return "green";
 
-        } else if (privacidade === "Público") {
+        } else if (privacidade.toLowerCase() === "público") {
             return "#2E64FE";
 
         } else {
@@ -131,10 +127,10 @@ export default class GroupList extends Component {
     }
 
     descricao(privacidade) {
-        if (privacidade === "Aberto") {
+        if (privacidade.toLowerCase() === "aberto") {
             return "Grupo onde todos podem participar sem a necessidade de convite ou solicitação.";
 
-        } else if (privacidade === "Público") {
+        } else if (privacidade.toLowerCase() === "público") {
             return "Grupo onde todos podem solicitar a participação e ingressar mediante a aprovação do administrador.";
         } else {
             return "Grupo onde todos podem participar mediante ao convite do administrador.";
@@ -222,7 +218,7 @@ export default class GroupList extends Component {
                             }
                         />
                     })}
-                    
+
                 </Col>
 
                 <Pager>

@@ -6,9 +6,7 @@ import {Card} from '../../../components/Card/Card.jsx';
 import CreateGroupElement from './CreateGroupElement';
 import RightCard from './RightCard';
 import GroupService from '../GroupService.jsx';
-import CategoryService from "../../../services/CategoryService";
 import servicoLogin from '../../../login/ServicoLogin'
-import UserService from '../../../services/UserService'
 import GroupImage from '../../../components/GroupImage/GroupImage';
 import Redirect from "react-router-dom/es/Redirect";
 
@@ -29,16 +27,15 @@ class GroupPage extends React.Component {
             convidadosLista: []
         };
 
-        this.userService = new UserService();
         this.groupService = new GroupService();
-        this.categoryService = new CategoryService();
+        // this.categoryService = new CategoryService();
     }
 
-    setLista(categorias) {
-        this.setState({
-            category: categorias
-        });
-    }
+    // setLista(categorias) {
+    //     this.setState({
+    //         category: categorias
+    //     });
+    // }
 
     setAlert(valor) {
         this.setState({
@@ -46,22 +43,21 @@ class GroupPage extends React.Component {
         });
     }
 
-    listaCategorias() {
-        this.categoryService.listarNaoPaginado(
-            (resultado) => {
-                console.log(resultado);
-                this.setLista(resultado);
-            },
-            (erro) => {
-                console.log("Erro:");
-                console.log(erro);
-            }
-        );
-    }
+    // listaCategorias() {
+    //     this.categoryService.listarNaoPaginado(
+    //         (resultado) => {
+    //             console.log(resultado);
+    //             this.setLista(resultado);
+    //         },
+    //         (erro) => {
+    //             console.log("Erro:");
+    //             console.log(erro);
+    //         }
+    //     );
+    // }
 
 
     inserirComCategorias(item, idCategoria, sucesso, erro) {
-        console.log(item);
         fetch(`api/grupos/${idCategoria}`, {
             method: "POST",
             headers: new Headers({
@@ -81,30 +77,30 @@ class GroupPage extends React.Component {
         });
     }
 
-    editarComCategorias(id, item, idCategoria, sucesso, erro) {
-        console.log(item);
-        fetch(`api/grupos/${id}/${idCategoria}`, {
-            method: "PUT",
-            headers: new Headers({
-                'Authorization': servicoLogin.getAuthorization(),
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify(item)
-        }).then((resultado) => {
-            if (resultado.ok) {
-                sucesso();
-            } else {
-                resultado.json().then(
-                    (resultadoErro) => erro(resultadoErro)
-                )
-            }
-
-        });
-    }
+    // editarComCategorias(id, item, idCategoria, sucesso, erro) {
+    //     console.log(item);
+    //     fetch(`api/grupos/${id}/${idCategoria}`, {
+    //         method: "PUT",
+    //         headers: new Headers({
+    //             'Authorization': servicoLogin.getAuthorization(),
+    //             'Content-Type': 'application/json'
+    //         }),
+    //         body: JSON.stringify(item)
+    //     }).then((resultado) => {
+    //         if (resultado.ok) {
+    //             sucesso();
+    //         } else {
+    //             resultado.json().then(
+    //                 (resultadoErro) => erro(resultadoErro)
+    //             )
+    //         }
+    //
+    //     });
+    // }
 
     btnIrParaGrupo() {
         this.setState({
-            concluded: <Redirect to={"/MyGroups/" + this.state.group.id + "/geral"} />
+            concluded: <Redirect to={"/MyGroups/" + this.state.group.id + "/geral"}/>
         })
     }
 
@@ -113,7 +109,7 @@ class GroupPage extends React.Component {
 
         if (this.state.alert) {
             aviso = <Alert bsStyle="success">
-                <strong>Concluído!</strong> Grupo criado com sucesso. <i className="pe-7s-check ld ldt-jump-in" />
+                <strong>Concluído!</strong> Grupo criado com sucesso. <i className="pe-7s-check ld ldt-jump-in"/>
             </Alert>
         }
 
@@ -146,7 +142,7 @@ class GroupPage extends React.Component {
                                 }}
 
                                 alert={() => {
-                                    this.setState({ alert: false });
+                                    this.setState({alert: false});
                                 }}
 
                                 inserir={(group, idCategoria) => {
@@ -170,21 +166,20 @@ class GroupPage extends React.Component {
                                 }}
 
                                 removeLista={(usuario) => {
-                                    let i=0;
-                                    while(i<this.state.convidadosLista.length){
-                                        
-                                        if (this.state.convidadosLista[i].id===usuario.id){
-                                            console.log("Teste"+this.state.convidadosLista[i]);
-                                            this.state.convidados.splice (i, 1);
+                                    let i = 0;
+                                    while (i < this.state.convidadosLista.length) {
+
+                                        if (this.state.convidadosLista[i].id === usuario.id) {
+                                            this.state.convidados.splice(i, 1);
 
                                             this.setState({
                                                 convidadosLista: this.state.convidados
                                             });
 
-                                            i=this.state.convidadosLista.length;
+                                            i = this.state.convidadosLista.length;
                                         }
                                         i++;
-                                    }                                   
+                                    }
                                 }}
 
                                 convidar={(idUsuario) => {
@@ -207,8 +202,8 @@ class GroupPage extends React.Component {
                         </Col>
 
                         <RightCard
-                            information={this.state.page == "1" ? "" : "none"}
-                            search={this.state.page == "2" ? "" : "none"}
+                            information={this.state.page.toString() === "1" ? "" : "none"}
+                            search={this.state.page.toString() === "2" ? "" : "none"}
                             confirmar={() => {
                                 this.setState({
                                     privacy: "none",
@@ -217,21 +212,20 @@ class GroupPage extends React.Component {
                                 });
                             }}
                             adicionaConvidado={(usuario) => {
-                                
-                                if (this.state.convidadosLista.indexOf(usuario)==-1){
+
+                                if (this.state.convidadosLista.indexOf(usuario) === -1) {
                                     this.state.convidados.push(usuario);
 
                                     this.setState({
                                         convidadosLista: this.state.convidados
                                     });
-                                        console.log (this.state.convidados);
-                                }                               
+                                }
                             }}
                             convidados={this.state.convidadosLista}
                         />
 
                     </Row>
-                    <Row style={{ display: this.state.photo }}>
+                    <Row style={{display: this.state.photo}}>
                         <Col md={8}>
                             <Card
                                 title=""
@@ -241,34 +235,47 @@ class GroupPage extends React.Component {
                                             id={this.state.group.id}
                                         />
                                         <button
-                                            style={{ borderStyle: 'none', float: 'right', color: 'red' }}
+                                            style={{borderStyle: 'none', float: 'right', color: 'red'}}
                                             onClick={() => {
                                                 this.btnIrParaGrupo()
                                             }}
                                         >
                                             Ir para o grupo
                                         </button>
-                                        <div className="clearfix" />
+                                        <div className="clearfix"/>
                                     </div>
                                 }
                             />
                         </Col>
                     </Row>
 
-                    <div style={{ display: 'table' }}>
-                        <div style={{ display: 'table', float: 'left' }}>
-                            <div className="circle" style={{ backgroundColor: this.state.page == "1" ? "red" : "", color: 'white' }}>1</div>
-                            <h4 style={{ float: 'right', padding: '0px 10px 0px 10px' }}>Crie o Grupo</h4>
+                    <div style={{display: 'table'}}>
+                        <div style={{display: 'table', float: 'left'}}>
+                            <div className="circle"
+                                 style={{
+                                     backgroundColor: this.state.page.toString() === "1" ? "red" : "",
+                                     color: 'white'
+                                 }}>1
+                            </div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Crie o Grupo</h4>
                         </div>
 
-                        <div style={{ display: 'table', float: 'left' }}>
-                            <div className="circle" style={{ backgroundColor: this.state.page == "2" ? "red" : "", color: 'white', color: 'white' }}>2</div>
-                            <h4 style={{ float: 'right', padding: '0px 10px 0px 10px' }}>Convide Participantes</h4>
+                        <div style={{display: 'table', float: 'left'}}>
+                            <div className="circle" style={{
+                                backgroundColor: this.state.page.toString() === "2" ? "red" : "",
+                                color: 'white'
+                            }}>2
+                            </div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Convide Participantes</h4>
                         </div>
 
-                        <div style={{ display: 'table', float: 'left' }}>
-                            <div className="circle" style={{ backgroundColor: this.state.page == "3" ? "red" : "", color: 'white', color: 'white' }}>3</div>
-                            <h4 style={{ float: 'right', padding: '0px 10px 0px 10px' }}>Adicione uma foto</h4>
+                        <div style={{display: 'table', float: 'left'}}>
+                            <div className="circle" style={{
+                                backgroundColor: this.state.page.toString() === "3" ? "red" : "",
+                                color: 'white'
+                            }}>3
+                            </div>
+                            <h4 style={{float: 'right', padding: '0px 10px 0px 10px'}}>Adicione uma foto</h4>
                         </div>
                     </div>
                 </Grid>

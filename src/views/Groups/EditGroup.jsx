@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
-import {
-    Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl, Modal, HelpBlock, Radio
-} from 'react-bootstrap';
+import React from 'react';
+import {Col, ControlLabel, FormControl, FormGroup, HelpBlock, Modal, Radio, Row} from 'react-bootstrap';
 
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import CategoryService from '../../services/CategoryService';
@@ -28,21 +25,21 @@ export default class EditGroup extends React.Component {
             group: (
                 this.groupService.listarGrupoEspecifico(this.props.idGrupo,
                     (sucesso) => {
-                        this.setState({ group: sucesso, categoria: sucesso.categoria.id });
+                        this.setState({group: sucesso, categoria: sucesso.categoria.id});
                     },
                     (erro) => {
                         console.log(erro);
-                    }                 
-                )            
+                    }
+                )
             )
-            
+
         });
 
         this.setState({
             listarCategorias: (
                 this.categoryService.listarNaoPaginado(
                     (sucesso) => {
-                        this.setState({ listarCategorias: sucesso });
+                        this.setState({listarCategorias: sucesso});
                         console.log("Sucesso");
                         console.log(this.state.listarCategorias);
                     },
@@ -55,7 +52,7 @@ export default class EditGroup extends React.Component {
     }
 
     componentWillReceiveProps(proximoEstado) {
-        this.setState({ group: proximoEstado.group });
+        this.setState({group: proximoEstado.group});
     }
 
     setNome(valor) {
@@ -158,7 +155,7 @@ export default class EditGroup extends React.Component {
         if (this.state.listarCategorias) {
             campoCategoria =
                 <Row>
-                    
+
                     <FormGroup controlId="formControlsText" className="col-md-12">
                         <ControlLabel>Categoria</ControlLabel>
                         <FormControl
@@ -168,16 +165,15 @@ export default class EditGroup extends React.Component {
                             onChange={(e) => this.setCategoria(e.target.value)}
                             required
                         >
-
-                            
-                            <option value={this.state.group.categoria.id} key={this.state.group.categoria.id}>{this.state.group.categoria.nome}</option> 
+                            <option value={this.state.group.categoria.id}
+                                    key={this.state.group.categoria.id}>{this.state.group.categoria.nome}</option>
                             {this.state.listarCategorias.map((categoria) => {
-                                if (this.state.group.categoria.id!=categoria.id){
-                                return <option
+                                if (this.state.group.categoria.id !== categoria.id) {
+                                    return <option
                                         value={categoria.id}
                                         key={categoria.id}
-                                    >{categoria.nome}</option>      
-                                }           
+                                    >{categoria.nome}</option>
+                                } else return "";
                             })}
                         </FormControl>
                     </FormGroup>
@@ -187,14 +183,16 @@ export default class EditGroup extends React.Component {
         return (
             <Modal
                 show={this.props.showEditGroup}
-                onHide={(event) => { this.props.voltarEditGroup(); }}
+                onHide={(event) => {
+                    this.props.voltarEditGroup();
+                }}
                 container={this}
                 aria-labelledby="contained-modal-title"
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
                         Editar Grupo
-            </Modal.Title>
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form>
@@ -215,9 +213,9 @@ export default class EditGroup extends React.Component {
 
                                     <ControlLabel>Descrição</ControlLabel>
                                     <FormControl rows="5" componentClass="textarea" bsClass="form-control"
-                                        placeholder="Descreva seu grupo"
-                                        value={this.state.group.descricao}
-                                        onChange={(e) => this.setDescricao(e.target.value)}
+                                                 placeholder="Descreva seu grupo"
+                                                 value={this.state.group.descricao}
+                                                 onChange={(e) => this.setDescricao(e.target.value)}
                                     />
                                 </FormGroup>
                             </Col>
@@ -227,20 +225,23 @@ export default class EditGroup extends React.Component {
                             {campoCategoria}
                         </div>
 
-                        <FormGroup style={{ display: this.props.privacy }} disabled={this.props.disabled}>
-                            <ControlLabel>Privacidade</ControlLabel><br />
+                        <FormGroup style={{display: this.props.privacy}} disabled={this.props.disabled}>
+                            <ControlLabel>Privacidade</ControlLabel><br/>
 
                             <FormControl componentClass="radio"
-                                value={this.state.group.tipoPrivacidade}
-                                onChange={(e) => this.setPrivacidade(e.target.value)}
+                                         value={this.state.group.tipoPrivacidade}
+                                         onChange={(e) => this.setPrivacidade(e.target.value)}
                             >
-                                <Radio name="radioGroup" inline value="Aberto" checked={this.state.group.tipoPrivacidade == "Aberto" || this.state.group.tipoPrivacidade == "aberto" ? true : false}>
+                                <Radio name="radioGroup" inline value="Aberto"
+                                       checked={this.state.group.tipoPrivacidade === "Aberto" || this.state.group.tipoPrivacidade === "aberto"}>
                                     Aberto
                                 </Radio>
-                                <Radio name="radioGroup" inline value="Público" checked={this.state.group.tipoPrivacidade == "Público" || this.state.group.tipoPrivacidade == "público" ? true : false}>
+                                <Radio name="radioGroup" inline value="Público"
+                                       checked={this.state.group.tipoPrivacidade === "Público" || this.state.group.tipoPrivacidade === "público"}>
                                     Público
                                 </Radio>
-                                <Radio name="radioGroup" inline value="Privado" checked={this.state.group.tipoPrivacidade == "Privado" || this.state.group.tipoPrivacidade == "privado" ? true : false}>
+                                <Radio name="radioGroup" inline value="Privado"
+                                       checked={this.state.group.tipoPrivacidade === "Privado" || this.state.group.tipoPrivacidade === "privado"}>
                                     Privado
                                 </Radio>
                             </FormControl>
@@ -248,9 +249,9 @@ export default class EditGroup extends React.Component {
                         {erroGrupo}
 
                         <div style={{width: "80%", position: "relative", left: "10%"}}>
-                        <GroupImage
-                            id={this.state.group.id}
-                        />
+                            <GroupImage
+                                id={this.state.group.id}
+                            />
                         </div>
 
                         <Button

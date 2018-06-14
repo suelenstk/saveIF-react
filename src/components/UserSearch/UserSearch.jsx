@@ -27,9 +27,7 @@ class UserSearch extends React.Component {
         listUserService.pesquisarPaginado(
             this.state.nome, pagina,
             (sucesso) => {
-
                 this.setState({listaUsuario: sucesso});
-                console.log(this.state.listaUsuario);
             },
             (erro) => {
                 console.log(erro);

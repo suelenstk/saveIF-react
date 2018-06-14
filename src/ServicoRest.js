@@ -47,7 +47,6 @@ export default class ServicoRest {
     }
 
     inserirSemAutorizacao(item, sucesso, erro) {
-        console.log(item);
         fetch(this.url, {
             method: "POST",
             headers: new Headers({

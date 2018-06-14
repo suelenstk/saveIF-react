@@ -28,8 +28,8 @@ class GroupImage extends React.Component {
 
         this.setState ({imagePreviewUrl: "/api/grupos/" + this.props.id + "/imagem?" +
                                             servicoLogin.getAuthorizationGet()});
-        console.log ({imagePreviewUrl: "/api/grupos/" + this.props.id + "/imagem?" +
-        servicoLogin.getAuthorizationGet()});
+        // console.log ({imagePreviewUrl: "/api/grupos/" + this.props.id + "/imagem?" +
+        // servicoLogin.getAuthorizationGet()});
     }
 
     _handleSubmit(form) {

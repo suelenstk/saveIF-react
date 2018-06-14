@@ -19,33 +19,28 @@ class UserRegistration extends React.Component {
             avisoUsuario: "",
             sucesso: "",
             confirmaSenha: "",
-            listaCurso: "",
             cadastro: true,
             usuario: {
                 email: "",
                 nome: "",
                 novaSenha: "",
                 tipoVinculo: "",
-                curso: null,
+                curso: "",
                 sobreUsuario: ""
-            }
-        };
-
-        this.UserService = new UserService();
-
-        this.setState({
+            },
             listaCurso: (
                 courseService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listaCurso: sucesso});
-                        console.log(this.state.listaCurso);
                     },
                     (erro) => {
                         console.log(erro);
                     }
                 )
             )
-        });
+        };
+
+        this.UserService = new UserService();
     }
 
     consultarEmail() {
@@ -130,7 +125,7 @@ class UserRegistration extends React.Component {
         let campoCurso = null;
         let erroCadastro = "";
 
-        if (this.state.usuario.tipoVinculo === "aluno") {
+        if (this.state.usuario.tipoVinculo.toLowerCase() === "aluno") {
             campoCurso =
                 <Row>
                     <FormGroup controlId="formControlSelectCurso" className="col-md-12">

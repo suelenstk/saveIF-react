@@ -1,17 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React from 'react';
-import { Col, ControlLabel, FormControl, FormGroup, HelpBlock, Radio, Row } from 'react-bootstrap';
+import {Col, ControlLabel, FormControl, FormGroup, HelpBlock, Radio, Row} from 'react-bootstrap';
 
-import { Card } from '../../../components/Card/Card.jsx';
+import {Card} from '../../../components/Card/Card.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
-import avatar from "../../../assets/img/faces/face-3.jpg";
 import CategoryService from '../../../services/CategoryService';
-import { UserChip } from '../../../elements/UserChip/UserChip';
+import {UserChip} from '../../../elements/UserChip/UserChip';
 import ServicoLogin from '../../../login/ServicoLogin';
 
 export default class CreateGroupElement extends React.Component {
@@ -37,9 +30,7 @@ export default class CreateGroupElement extends React.Component {
             listarCategorias: (
                 this.categoryService.listarNaoPaginado(
                     (sucesso) => {
-                        this.setState({ listarCategorias: sucesso });
-                        console.log("Sucesso");
-                        console.log(this.state.listarCategorias);
+                        this.setState({listarCategorias: sucesso});
                     },
                     (erro) => {
                         console.log(erro);
@@ -50,18 +41,17 @@ export default class CreateGroupElement extends React.Component {
     }
 
     componentWillReceiveProps(proximoEstado) {
-        this.setState({ group: proximoEstado.group });
+        this.setState({group: proximoEstado.group});
 
     }
 
     convidarUsuarios() {
         let i = 0;
         let idsUsuarios=[];
-        while (i < this.props.convidados.length) {     
-            idsUsuarios[i]=this.props.convidados[i].id;     
+        while (i < this.props.convidados.length) {
+            idsUsuarios[i] = this.props.convidados[i].id;
             i++;
         }
-        console.log (idsUsuarios);
         this.props.convidar(idsUsuarios);
     }
 
@@ -107,16 +97,14 @@ export default class CreateGroupElement extends React.Component {
 
     }
 
-    setBotao(valor) {
-
-        this.setState(
-            (anterior) => {
-                anterior.botao = valor;
-                return anterior;
-            }
-        );
-
-    }
+    // setBotao(valor) {
+    //     this.setState(
+    //         (anterior) => {
+    //             anterior.botao = valor;
+    //             return anterior;
+    //         }
+    //     );
+    // }
 
     setErrorGrupo(estilo, msg) {
         this.setState({
@@ -125,11 +113,11 @@ export default class CreateGroupElement extends React.Component {
         });
     }
 
-    setNomeBotao(nome) {
-        this.setState({
-            nomeBotao: nome
-        });
-    }
+    // setNomeBotao(nome) {
+    //     this.setState({
+    //         nomeBotao: nome
+    //     });
+    // }
 
     createGroup() {
         let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
@@ -169,7 +157,7 @@ export default class CreateGroupElement extends React.Component {
                             key={usuario.id}
                             nome={usuario.nome}
                             avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
-                                ServicoLogin.getAuthorizationGet()}
+                            ServicoLogin.getAuthorizationGet()}
                             alt={usuario.nome}
                             class="addUserbtn"
                             icone="pe-7s-close-circle"
@@ -178,7 +166,7 @@ export default class CreateGroupElement extends React.Component {
                             }}
                         />
                     })}
-                    <br /><br />
+                    <br/><br/>
                     <Button
                         bsStyle="danger"
                         pullRight
@@ -189,11 +177,11 @@ export default class CreateGroupElement extends React.Component {
                         }}
                     >
                         Convidar
-                        </Button>
+                    </Button>
                 </div>
         } else {
             campoConvidados =
-                <div style={{ margin: "20px" }}>
+                <div style={{margin: "20px"}}>
                     <p>Nenhum usuário adicionado!</p>
                 </div>
         }
@@ -259,9 +247,9 @@ export default class CreateGroupElement extends React.Component {
 
                                     <ControlLabel>Descrição</ControlLabel>
                                     <FormControl rows="5" componentClass="textarea" bsClass="form-control"
-                                        placeholder="Descreva seu grupo"
-                                        value={this.state.group.descricao}
-                                        onChange={(e) => this.setDescricao(e.target.value)}
+                                                 placeholder="Descreva seu grupo"
+                                                 value={this.state.group.descricao}
+                                                 onChange={(e) => this.setDescricao(e.target.value)}
                                     />
                                 </FormGroup>
                             </Col>
@@ -272,12 +260,12 @@ export default class CreateGroupElement extends React.Component {
                         </div>
 
 
-                        <FormGroup style={{ display: this.props.privacy }} disabled={this.props.disabled}>
-                            <ControlLabel>Privacidade</ControlLabel><br />
+                        <FormGroup style={{display: this.props.privacy}} disabled={this.props.disabled}>
+                            <ControlLabel>Privacidade</ControlLabel><br/>
 
                             <FormControl componentClass="radio"
-                                value={this.state.group.tipoPrivacidade}
-                                onChange={(e) => this.setPrivacidade(e.target.value)}
+                                         value={this.state.group.tipoPrivacidade}
+                                         onChange={(e) => this.setPrivacidade(e.target.value)}
 
                             >
                                 <Radio name="radioGroup" inline value="Aberto">
@@ -297,15 +285,15 @@ export default class CreateGroupElement extends React.Component {
                             pullRight
                             fill
 
-                            onClick={(e) => {
+                            onClick={() => {
                                 this.createGroup()
                             }}
-                            style={{ display: this.state.botao }}
+                            style={{display: this.state.botao}}
                         >
                             Criar Grupo
                         </Button>
 
-                        <div className="clearfix"></div>
+                        <div className="clearfix"/>
                     </form>
                 }
             />
@@ -317,10 +305,14 @@ export default class CreateGroupElement extends React.Component {
                     title="Informações"
                     content={
                         <form>
-                            <ControlLabel><strong>Nome do Grupo: </strong>{this.state.group.nome}</ControlLabel> <tr />
-                            <ControlLabel><strong>Descriçao: </strong>{this.state.group.descricao}</ControlLabel> <tr />
-                            <ControlLabel><strong>Categoria: </strong>{this.state.categoria.nome}</ControlLabel> <tr />
-                            <ControlLabel><strong>Privacidade: </strong>{this.state.group.tipoPrivacidade}</ControlLabel>
+                            <ControlLabel><strong>Nome do Grupo: </strong>{this.state.group.nome}</ControlLabel>
+                            <tr/>
+                            <ControlLabel><strong>Descriçao: </strong>{this.state.group.descricao}</ControlLabel>
+                            <tr/>
+                            <ControlLabel><strong>Categoria: </strong>{this.state.categoria.nome}</ControlLabel>
+                            <tr/>
+                            <ControlLabel><strong>Privacidade: </strong>{this.state.group.tipoPrivacidade}
+                            </ControlLabel>
                         </form>
                     }
                 />
@@ -348,8 +340,7 @@ export default class CreateGroupElement extends React.Component {
                                 </div>*/}
 
 
-
-                            <div className="clearfix"></div>
+                            <div className="clearfix"/>
                         </div>
                     }
                 />
