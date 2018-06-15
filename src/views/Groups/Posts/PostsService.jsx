@@ -50,7 +50,7 @@ export default class PostService {
     }
     
     inserirEmTopico(item, idGrupo, idTopico, sucesso, erro) {
-        console.log(item);
+        //console.log(item);
        
         fetch(`api/grupos/${idGrupo}/topicos/${idTopico}/posts`, {
             method: "POST",

@@ -254,7 +254,7 @@ class UserProfile extends Component {
         if (this.state.error !== "") {
             $imagePreview = (
                 <Alert bsStyle="error">
-                    {this.state.error} <i className="pe-7s-close-circle ld ldt-jump-in"/>
+                    {this.state.error}
                 </Alert>
             );
         }

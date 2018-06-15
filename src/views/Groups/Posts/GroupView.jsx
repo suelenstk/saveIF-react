@@ -50,7 +50,7 @@ class GroupView extends Component {
 
     setarItem(paginaResultado) {
 
-        console.log(paginaResultado);
+        //console.log(paginaResultado);
         this.setState({
             pagina: paginaResultado
         });
@@ -84,10 +84,10 @@ class GroupView extends Component {
 
     listar(pagina) {
 
-        console.log(this.state.grupo.id);
+        //console.log(this.state.grupo.id);
         this.postService.listarPostGeral(this.state.grupo.id, pagina,
             (resultado) => {
-                console.log(resultado);
+                //console.log(resultado);
                 this.setarItem(resultado);
             },
             (erro) => {
