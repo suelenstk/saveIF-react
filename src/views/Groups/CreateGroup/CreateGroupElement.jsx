@@ -120,7 +120,7 @@ export default class CreateGroupElement extends React.Component {
     // }
 
     createGroup() {
-        let regexNome = /[a-c]/i;
+        let regexNome = /[a-z]/i;
 
         if (this.state.group.nome &&
             this.state.group.descricao && this.state.group.tipoPrivacidade && this.state.categoria) {
