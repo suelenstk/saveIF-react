@@ -11,6 +11,7 @@ import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import servicoLogin from "../../../login/ServicoLogin";
 import EditGroup from '../EditGroup';
+import Participants from '../Participants';
 import Redirect from "react-router-dom/es/Redirect";
 
 
@@ -31,7 +32,7 @@ class GroupView extends Component {
             paginaAtual: 0,
             tipoAlert: "",
             msgAlert: "",
-            participantes: ""
+            participantes: false
         }
 
 
@@ -231,7 +232,7 @@ class GroupView extends Component {
 
     irParticipants () {
         this.setState({
-            participantes: <Redirect to={"/MyGroups/" + 15 + "/geral"}/>
+            participantes: true
         });
     }
 
@@ -241,10 +242,7 @@ class GroupView extends Component {
         //console.log(this.state.topico.criadorTopico);
         //<PostList posts={this.state.pagina}/>   
 
-        //alert(this.state.pagina.totalPages); 
-        if (this.state.paticipantes){
-            return this.state.participantes;
-        }   
+        //alert(this.state.pagina.totalPages);   
 
         let aviso = null;
 
@@ -271,9 +269,9 @@ class GroupView extends Component {
                     {/*<Button bsStyle="danger"
                             pullRight
                             fill
-                            onClick={(e) => { this.irParticipants(); }} style={{ float: "left" }}>Participantes</Button>*/}
+                            onClick={(e) => { this.irParticipants(); }} style={{ float: "left" }}>Participantes</Button>
                     <button onClick={(e) => { this.abrirEditGroup(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Editar Grupo</button>
-
+                    */}
                     <small>{(this.state.topico.id && this.state.topico.criadorTopico) ?
                         "Criador do Tópico: " + this.state.topico.criadorTopico.nome + ", Data: "
                         + this.data(this.state.topico.dataCriacao) :
@@ -323,6 +321,13 @@ class GroupView extends Component {
                         />
 
                     </Row>
+                                
+                    {/*}
+                    <Participants 
+                    voltarParticipants={() => { this.setState({ participantes: false }); }}
+                    showParticipants={this.state.participantes}
+                    idGrupo={this.state.grupo.id}
+                            />*/}
 
                     <EditGroup
                         voltarEditGroup={() => { this.setState({ showEditGroup: false }); }}

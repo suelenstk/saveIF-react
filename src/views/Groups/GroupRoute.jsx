@@ -40,7 +40,7 @@ export default class GroupRoute extends Component {
                 <Route path="/groups/:id/view" render={(props) => <RotaSolicitacao  {...props}
                                                                                     solicitar={this.props.solicitar}
                                                                                     user={this.props.user}/>}
-                       solicitar={this.props.solicitar} user={this.props.user}/>/>
+                                                                                    solicitar={this.props.solicitar} user={this.props.user}/>/>
 
 
             </Switch>
