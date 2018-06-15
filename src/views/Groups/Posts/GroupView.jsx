@@ -30,7 +30,8 @@ class GroupView extends Component {
             topico: { id: this.props.idt },
             paginaAtual: 0,
             tipoAlert: "",
-            msgAlert: ""
+            msgAlert: "",
+            participantes: ""
         }
 
 
@@ -228,6 +229,11 @@ class GroupView extends Component {
         });
     }
 
+    irParticipants () {
+        this.setState({
+            participantes: <Redirect to={"/MyGroups/" + 15 + "/geral"}/>
+        });
+    }
 
 
     render() {
@@ -235,7 +241,10 @@ class GroupView extends Component {
         //console.log(this.state.topico.criadorTopico);
         //<PostList posts={this.state.pagina}/>   
 
-        //alert(this.state.pagina.totalPages);    
+        //alert(this.state.pagina.totalPages); 
+        if (this.state.paticipantes){
+            return this.state.participantes;
+        }   
 
         let aviso = null;
 
@@ -252,9 +261,6 @@ class GroupView extends Component {
 
 
         return (
-
-
-
             <div className="content">
 
                 <div style={{ padding: 15 }}>
@@ -262,6 +268,10 @@ class GroupView extends Component {
                     <h1 style={{ fontSize: '30px' }}>{this.state.grupo.nome} - {(this.state.topico.id) ?
                         this.state.topico.nome : "Geral"}</h1>
 
+                    {/*<Button bsStyle="danger"
+                            pullRight
+                            fill
+                            onClick={(e) => { this.irParticipants(); }} style={{ float: "left" }}>Participantes</Button>*/}
                     <button onClick={(e) => { this.abrirEditGroup(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Editar Grupo</button>
 
                     <small>{(this.state.topico.id && this.state.topico.criadorTopico) ?
