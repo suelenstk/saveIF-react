@@ -269,9 +269,9 @@ class GroupView extends Component {
                     {/*<Button bsStyle="danger"
                             pullRight
                             fill
-                            onClick={(e) => { this.irParticipants(); }} style={{ float: "left" }}>Participantes</Button>
+                            onClick={(e) => { this.irParticipants(); }} style={{ float: "left" }}>Participantes</Button>*/}
                     <button onClick={(e) => { this.abrirEditGroup(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Editar Grupo</button>
-                    */}
+                    
                     <small>{(this.state.topico.id && this.state.topico.criadorTopico) ?
                         "Criador do Tópico: " + this.state.topico.criadorTopico.nome + ", Data: "
                         + this.data(this.state.topico.dataCriacao) :
