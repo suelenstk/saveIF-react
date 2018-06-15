@@ -120,7 +120,7 @@ export default class CreateGroupElement extends React.Component {
     // }
 
     createGroup() {
-        let regexNome = /^[a-zA-Z\u00C0-\u00FF ]+$/;
+        let regexNome = /[a-c]/i;
 
         if (this.state.group.nome &&
             this.state.group.descricao && this.state.group.tipoPrivacidade && this.state.categoria) {
@@ -135,7 +135,7 @@ export default class CreateGroupElement extends React.Component {
                     this.props.inserir(this.state.group, this.state.categoria);
                     this.setErrorGrupo("", "");
 
-                } else this.setErrorGrupo("error", "Não é permitido caracteres especiais!");
+                } else this.setErrorGrupo("error", "Não é permitido apenas caracteres especiais!");
             }
         } else {
             this.setErrorGrupo("error", "Todos os campos são obrigatórios!");

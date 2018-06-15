@@ -11,6 +11,7 @@ import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import servicoLogin from "../../../login/ServicoLogin";
 import EditGroup from '../EditGroup';
+import Redirect from "react-router-dom/es/Redirect";
 
 
 class GroupView extends Component {
