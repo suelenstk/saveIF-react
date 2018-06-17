@@ -27,12 +27,23 @@ class Recover extends React.Component {
                 email: "",
                 nome: "",
                 novaSenha: "",
+                senha: "",
                 tipoVinculo: "",
                 curso: "",
                 sobreUsuario: ""
             }
         };
         
+    }
+    
+    setValor(atributo, valor) {
+
+        this.setState(
+            (estado) => estado.atributo = valor
+        );
+
+        this.setState({desable: false});
+
     }
     
     render() {
@@ -70,7 +81,8 @@ class Recover extends React.Component {
                                                     <ControlLabel>Senha</ControlLabel>
                                                     <FormControl
                                                         type="password"
-                                                        value=""
+                                                        value={this.state.senha}
+                                                        onChange={(e) => this.setValor(e.target.value)}  
                                                         placeholder="Senha"
                                                         required
                                                     />
@@ -80,7 +92,8 @@ class Recover extends React.Component {
                                                     <ControlLabel> Confirmação de senha</ControlLabel>
                                                     <FormControl
                                                         type="password"
-                                                        value=""
+                                                         value={this.state.novaSenha}
+                                                        onChange={(e) => this.setValor(e.target.value)}  
                                                         placeholder="Confirmação de senha"
                                                         required
                                                     />
@@ -92,7 +105,7 @@ class Recover extends React.Component {
                                                 fill
                                                 type="submit"
                                             >
-                                                Alterar
+                                                Redefinir Senha
                                             </Button>
                                             <div className="clearfix"/>
                                         </form>

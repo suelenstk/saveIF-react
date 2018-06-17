@@ -3,6 +3,8 @@ import {ControlLabel, FormControl, FormGroup, HelpBlock, Modal} from 'react-boot
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Redirect} from "react-router-dom";
 import UserService from '../../services/UserService';
+import { TextNumCode } from './GerarCodigo';
+
 
 export default class RecoverForm extends React.Component {
     
@@ -14,7 +16,8 @@ export default class RecoverForm extends React.Component {
             errorEmail: "",
             msgErroEmail: "",
             email:"",
-            sucesso:""
+            sucesso:"",
+            codigo:"",
         };
         
         this.UserService = new UserService();
@@ -43,8 +46,9 @@ export default class RecoverForm extends React.Component {
         this.UserService.consultarEmail(
             this.state.email,
             (sucesso) => {
-                console.log(sucesso);
+                //console.log(sucesso);
                 this.setState({          
+                    codigo:TextNumCode(10,10),
                     sucesso:<Redirect to="/recover"/>                  
                 });
             },
@@ -67,11 +71,11 @@ export default class RecoverForm extends React.Component {
 
         } else erroEmail = "";
         
-        if (this.state.sucesso)
-            
+        if (this.state.sucesso){
+            console.log(this.state.codigo);
             return this.state.sucesso;
         
-        else return (
+        }else return (
             
             <Modal
                 show={this.props.showRecovery}
