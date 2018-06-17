@@ -24,7 +24,7 @@ export class UserChip extends Component {
                             }
                         }}
                     >
-                       
+                    <i className={this.props.icone}/>  
                     </span> : ""}
             </div>
 

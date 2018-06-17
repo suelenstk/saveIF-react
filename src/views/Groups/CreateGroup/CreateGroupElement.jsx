@@ -97,27 +97,12 @@ export default class CreateGroupElement extends React.Component {
 
     }
 
-    // setBotao(valor) {
-    //     this.setState(
-    //         (anterior) => {
-    //             anterior.botao = valor;
-    //             return anterior;
-    //         }
-    //     );
-    // }
-
     setErrorGrupo(estilo, msg) {
         this.setState({
             errorGrupo: estilo,
             msgErroGrupo: msg
         });
     }
-
-    // setNomeBotao(nome) {
-    //     this.setState({
-    //         nomeBotao: nome
-    //     });
-    // }
 
     createGroup() {
         let regexNome = /[a-z]/i;

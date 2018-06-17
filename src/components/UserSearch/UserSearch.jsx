@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {FormControl, FormGroup} from 'react-bootstrap';
+import { FormControl, FormGroup } from 'react-bootstrap';
 import InputGroup from "react-bootstrap/es/InputGroup";
-import {Card} from '../../components/Card/Card.jsx';
-import {UserChip} from '../../elements/UserChip/UserChip';
+import { Card } from '../../components/Card/Card.jsx';
+import { UserChip } from '../../elements/UserChip/UserChip';
 import ServicoLogin from '../../login/ServicoLogin';
 import Button from "react-bootstrap/es/Button";
 import listUserService from "../../services/ListUserService";
@@ -27,13 +27,13 @@ class UserSearch extends React.Component {
         listUserService.pesquisarPaginado(
             this.state.nome, pagina,
             (sucesso) => {
-                this.setState({listaUsuario: sucesso});
+                this.setState({ listaUsuario: sucesso });
             },
             (erro) => {
                 console.log(erro);
             }
         );
-        this.setState({pagina: pagina});
+        this.setState({ pagina: pagina });
     }
 
     sleep(tempo) {
@@ -44,19 +44,35 @@ class UserSearch extends React.Component {
     // entretanto, isso obriga ele a fazer muitas requisicoes.
     // Podemos remove-lo, caso o desempenho seja mais vantajoso.
     setNome(nome) {
-        this.setState({nome: nome});
-        this.setState({pagina: 0});
+        this.setState({ nome: nome });
+        this.setState({ pagina: 0 });
         this.sleep(200).then(() => {
-        this.pesquisar(this.state.pagina);
+            this.pesquisar(this.state.pagina);
         });
     }
 
+    setColorIcon() {
+        this.setState({
+            colorIcon: "red"
+        });
+    }
+
+    removeUsuarioLista(convidado) {
+        this.state.listaUsuario.content.map((usuario, index, array) => {
+            if (usuario.id === convidado.id) {
+                array.splice(index, 1); 
+            }
+        });
+
+    }
+
     // Esse metodo adiciona a acao ao botao do chip
-    adicionarUsuario(usuario) {
-        console.log("userId = " + usuario.id);
-        console.log("userName = " + usuario.nome);
-        this.props.adicionaListaConvite (usuario);
-     
+    adicionarUsuario(convidado) {
+        console.log("userId = " + convidado.id);
+        console.log("userName = " + convidado.nome);
+        this.setColorIcon();
+        this.props.adicionaListaConvite(convidado);
+        this.removeUsuarioLista(convidado);
     }
 
     render() {
@@ -66,15 +82,16 @@ class UserSearch extends React.Component {
             campoUsuario =
                 <div>
                     {this.state.listaUsuario.content.map((usuario) => {
-                            return <UserChip
+                        return <UserChip
                             usuario={usuario}
                             key={usuario.id}
                             nome={usuario.nome}
                             avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
-                            ServicoLogin.getAuthorizationGet()}
+                                ServicoLogin.getAuthorizationGet()}
                             alt={usuario.nome}
                             class="addUserbtn"
                             icone="pe-7s-add-user"
+                            colorIcon={this.state.colorIcon}
                             evento={(e) => {
                                 this.adicionarUsuario(e);
                             }}
@@ -83,7 +100,7 @@ class UserSearch extends React.Component {
                 </div>
         } else {
             campoUsuario =
-                <div style={{margin: "20px"}}>
+                <div style={{ margin: "20px" }}>
                     <p>Nenhum usuário encontrado!</p>
                 </div>
         }
@@ -92,7 +109,7 @@ class UserSearch extends React.Component {
             <Card
                 title="Pesquisar usuários"
                 content={
-                    <div style={{overflow: "auto", height: "415px"}}>
+                    <div style={{ overflow: "auto", height: "415px" }}>
                         <form onSubmit={(event) => {
                             event.preventDefault();
                             this.pesquisar(0)
@@ -101,7 +118,7 @@ class UserSearch extends React.Component {
                                 <InputGroup>
                                     <InputGroup.Button>
                                         <Button className="btnSearch" type="submit">
-                                            <i className="fa fa-search"/>
+                                            <i className="fa fa-search" />
                                         </Button>
                                     </InputGroup.Button>
                                     <FormControl
