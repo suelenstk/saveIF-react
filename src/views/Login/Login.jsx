@@ -7,6 +7,7 @@ import servicoLogin from "../../login/ServicoLogin";
 import ControlLabel from "react-bootstrap/es/ControlLabel";
 import HelpBlock from "react-bootstrap/es/HelpBlock";
 import Navbar from "react-bootstrap/es/Navbar";
+import RecoverForm from '../UserRegistration/RecoverForm';
 
 import {Link} from 'react-router-dom';
 
@@ -16,6 +17,7 @@ class Login extends Component {
         super(props);
         this.state = {
             avisoLogin: "",
+            showRecovery: false,
             login: {
                 usuario: "",
                 senha: ""
@@ -28,6 +30,12 @@ class Login extends Component {
         this.setState(
             (estado) => estado.login[atributo] = valor
         );
+    }
+    
+    abrirRecovery() {
+        this.setState({
+            showRecovery: true
+        });
     }
 
     login() {
@@ -101,9 +109,9 @@ class Login extends Component {
                                         />
                                     </FormGroup>
                                     <div>
-                                        <a href="">
-                                            Esqueceu sua senha?
-                                        </a>
+                                        <button onClick={(e) => { this.abrirRecovery(); }} 
+                                            type="button"
+                                            style={{ border: "0", backgroundColor: "transparent",color:"red", float: "right" }}>Eesqueceu sua senha?</button>
                                         <br/>
                                     </div>
                                     <Button
@@ -132,6 +140,13 @@ class Login extends Component {
                             </div>
                         </Col>
                     </Row>
+                    
+                    <RecoverForm
+                        voltarRecovery={() => { this.setState({ showRecovery: false }); }}
+                        showRecovery={this.state.showRecovery}                      
+                    />
+                    
+                    
                 </Grid>
             </div>
         );

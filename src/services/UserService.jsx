@@ -22,6 +22,23 @@ export default class UserService extends ServicoRest {
             method: "GET"
         }).then(trataFetch);
     }
+    
+    consultarEmail(email, sucesso, erro) {
+
+        let trataFetch = (resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`api/usuarios/email?email=${email}`, {
+            method: "GET"
+        }).then(trataFetch);
+    }
 
     aceitarConvite(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
         fetch(`api/usuarios/${idUsuario}/convite/${idGrupo}/aceite/${idNotificacao}`, {
