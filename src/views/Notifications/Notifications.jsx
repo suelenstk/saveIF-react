@@ -9,7 +9,6 @@ import UserService from "../../services/UserService";
 import PaginationSaveIf from "../../elements/PaginationSaveIf/PaginationSaveIf";
 import servicoLogin from "../../login/ServicoLogin";
 
-
 class Notifications extends React.Component {
     constructor(props) {
         super(props);
@@ -27,19 +26,31 @@ class Notifications extends React.Component {
         this.userService = new UserService();
     }
 
-    listarNotificacaoUsuario(pagina) {
+    sleep(tempo) {
+        return new Promise((e) => setTimeout(e, tempo));
+    }
 
-        notificationService.listarNotificacaoUsuario(
-            this.props.user.id, pagina,
-            (sucesso) => {
-                this.setState({listaNotifUsuario: sucesso});
-                this.setState({pagina: pagina});
-            },
-            (erro) => {
-                console.log("Erro:");
-                console.log(erro);
+    async listarNotificacaoUsuario(pagina) {
+
+        while (true) {
+            notificationService.listarNotificacaoUsuario(
+                this.props.user.id, pagina,
+                (sucesso) => {
+                    this.setState({listaNotifUsuario: sucesso});
+                    this.setState({pagina: pagina});
+                },
+                (erro) => {
+                    console.log("Erro:");
+                    console.log(erro);
+                }
+            );
+            let url = window.location.href;
+            let currentPath = (url.split("http://localhost:3000/#")[url.split("http://localhost:3000/#").length - 1]).toLowerCase();
+            if (currentPath !== "/notifications") {
+                break;
             }
-        );
+            await this.sleep(1000);
+        }
     }
 
     aceitarSolicitacao(idGrupo, idUsuario, idNotificacao) {

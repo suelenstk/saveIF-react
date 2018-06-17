@@ -7,6 +7,7 @@ import imagine from '../../assets/img/sidebar-3.jpg';
 import logo from '../../assets/img/reactlogo.png';
 
 import sideBarRoutes from '../../routes/sideBar';
+import BadgeNotification from "../../elements/BadgeNotification/BadgeNotification";
 
 class Sidebar extends Component {
     constructor(props) {
@@ -52,7 +53,10 @@ class Sidebar extends Component {
                                             key={key}>
                                             <NavLink to={prop.path} className="nav-link" activeClassName="active">
                                                 <i className={prop.icon}/>
-                                                <p>{prop.name}</p>
+                                                <p>
+                                                    {prop.name}
+                                                </p>
+                                                {prop.path === "/notifications" ? <BadgeNotification/> : ""}
                                             </NavLink>
                                         </li>
                                     );

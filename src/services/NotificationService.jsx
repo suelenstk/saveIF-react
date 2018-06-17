@@ -1,6 +1,6 @@
 import servicoLogin from "../login/ServicoLogin";
 
-class NotificationService{
+class NotificationService {
 
     listarNotificacaoUsuario(id, pagina, sucesso, erro) {
 
@@ -61,6 +61,25 @@ class NotificationService{
 
         });
 
+    }
+
+    numeroNotificacoesUsuario(id, sucesso, erro) {
+
+        let trataFetch = (resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+        fetch(`/api/usuarios/${id}/numeronotificacoes`, {
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+            }),
+            method: "GET"
+        }).then(trataFetch);
     }
 
 }

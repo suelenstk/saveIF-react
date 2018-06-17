@@ -801,3 +801,20 @@ a, p, .alert-info a {
     width: 90px;
     height: 90px;
 }
+
+#notification {
+    position: absolute;
+    background-color: #FB404B;
+    text-align: center;
+    border-radius: 10px;
+    min-width: 18px;
+    padding: 0 5px;
+    height: 18px;
+    font-size: 12px;
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: 18px;
+    top: 5px;
+    left: 38px;
+    /*right: 40px;*/
+}
