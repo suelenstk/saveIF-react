@@ -816,5 +816,13 @@ a, p, .alert-info a {
     line-height: 18px;
     top: 5px;
     left: 38px;
-    /*right: 40px;*/
+}
+
+#topicIcon {
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+    margin: 7px 0 0 -5;
+    height: 35px;
+    width: 35px;
 }
