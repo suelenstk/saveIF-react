@@ -251,6 +251,7 @@ export default class EditGroup extends React.Component {
                         <div style={{width: "80%", position: "relative", left: "10%"}}>
                             <GroupImage
                                 id={this.state.group.id}
+                                
                             />
                         </div>
 

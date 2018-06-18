@@ -28,6 +28,7 @@ class UserSearch extends React.Component {
             this.state.nome, pagina,
             (sucesso) => {
                 this.setState({ listaUsuario: sucesso });
+                this.removeUsuarioLista();
             },
             (erro) => {
                 console.log(erro);
@@ -57,13 +58,15 @@ class UserSearch extends React.Component {
         });
     }
 
-    removeUsuarioLista(convidado) {
-        this.state.listaUsuario.content.map((usuario, index, array) => {
-            if (usuario.id === convidado.id) {
-                array.splice(index, 1); 
-            }
-        });
+    removeUsuarioLista() {
+        let i = 0;
 
+        if (this.state.listaUsuario.totalPages && this.props.convidados) {
+            while (i < this.props.convidados.length) {
+                this.state.listaUsuario.content.map((usuario, index, array) => this.props.convidados[i].id == usuario.id ? array.splice(index, 1) : "");
+                i++;
+            }
+        }
     }
 
     // Esse metodo adiciona a acao ao botao do chip
@@ -72,7 +75,7 @@ class UserSearch extends React.Component {
         console.log("userName = " + convidado.nome);
         this.setColorIcon();
         this.props.adicionaListaConvite(convidado);
-        this.removeUsuarioLista(convidado);
+        this.removeUsuarioLista();
     }
 
     render() {

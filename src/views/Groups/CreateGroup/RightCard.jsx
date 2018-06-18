@@ -24,19 +24,19 @@ class RightCard extends React.Component {
                                     <h3>Grupo Aberto <i className="pe-7s-unlock"
                                                         style={{fontWeight: "bold", color: "green", marginLeft: 5}}/>
                                     </h3>
-                                    <p>É um grupo onde todos podem participar sem a necessidade de convite ou
+                                    <p style={{textAlign: "justify"}}>É um grupo onde todos podem participar sem a necessidade de convite ou
                                         solicitação.</p>
                                     <h3>Grupo Público <i className="fa fa-globe" style={{
                                         fontWeight: "bold",
                                         color: "#2E64FE",
                                         marginLeft: 5
                                     }}/></h3>
-                                    <p>É um grupo onde todos podem solicitar a participação e ingressar mediante a
+                                    <p style={{textAlign: "justify"}}>É um grupo onde todos podem solicitar a participação e ingressar mediante a
                                         aprovação do administrador.</p>
                                     <h3>Grupo Privado <i className="pe-7s-lock"
                                                          style={{fontWeight: "bold", color: "red", marginLeft: 5}}/>
                                     </h3>
-                                    <p>É um grupo onde todos podem participar mediante o convite do administrador.</p>
+                                    <p style={{textAlign: "justify"}}>É um grupo onde todos podem participar mediante o convite do administrador.</p>
                                 </div>
                             }
                         />
