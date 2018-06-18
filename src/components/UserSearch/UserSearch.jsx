@@ -15,7 +15,8 @@ class UserSearch extends React.Component {
         this.state = {
             listaUsuario: "",
             nome: "",
-            pagina: 0
+            pagina: 0,
+            grupo: this.props.grupo
         };
 
         this.setState({
@@ -24,7 +25,7 @@ class UserSearch extends React.Component {
     }
 
     pesquisar(pagina) {
-        listUserService.pesquisarPaginado(
+        listUserService.pesquisarPaginado (
             this.state.nome, pagina,
             (sucesso) => {
                 this.setState({ listaUsuario: sucesso });
@@ -36,6 +37,22 @@ class UserSearch extends React.Component {
         );
         this.setState({ pagina: pagina });
     }
+
+/*
+    pesquisar(pagina) {
+        listUserService.pesquisarPaginadoNaoEstaGrupo(
+            this.state.nome, pagina, this.state.grupo.id,
+            (sucesso) => {
+                this.setState({ listaUsuario: sucesso });
+                this.removeUsuarioLista();
+            },
+            (erro) => {
+                console.log(erro);
+            }
+        );
+        this.setState({ pagina: pagina });
+    }
+*/
 
     sleep(tempo) {
         return new Promise((e) => setTimeout(e, tempo));
@@ -60,7 +77,6 @@ class UserSearch extends React.Component {
 
     removeUsuarioLista() {
         let i = 0;
-
         if (this.state.listaUsuario.totalPages && this.props.convidados) {
             while (i < this.props.convidados.length) {
                 this.state.listaUsuario.content.map((usuario, index, array) => this.props.convidados[i].id == usuario.id ? array.splice(index, 1) : "");

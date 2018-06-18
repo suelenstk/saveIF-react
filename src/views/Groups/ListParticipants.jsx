@@ -13,7 +13,7 @@ class ListParticipants extends Component {
 
     render() {
         if (this.props.pagina.content) {
-
+            console.log(this.props.pagina);
             return <div className="content">
                 {this.props.pagina.content.map((usuario) => {
                     return <UserChip
