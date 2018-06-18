@@ -23,7 +23,6 @@ class GroupPage extends React.Component {
             page: "1",
             group: {},
             category: {},
-            convidados: [],
             convidadosLista: []
         };
 
@@ -167,16 +166,18 @@ class GroupPage extends React.Component {
 
                                 removeLista={(usuario) => {
                                     let i = 0;
+                                    let convidados = this.state.convidadosLista;
+
                                     while (i < this.state.convidadosLista.length) {
 
                                         if (this.state.convidadosLista[i].id === usuario.id) {
-                                            this.state.convidados.splice(i, 1);
+                                            convidados.splice(i, 1);
 
                                             this.setState({
-                                                convidadosLista: this.state.convidados
+                                                convidadosLista: convidados
                                             });
 
-                                            i = this.state.convidadosLista.length;
+                                            i = convidados.length;
                                         }
                                         i++;
                                     }
@@ -212,13 +213,13 @@ class GroupPage extends React.Component {
                                 });
                             }}
                             adicionaConvidado={(usuario) => {
-
+                                let convidados = this.state.convidadosLista;
                                 if (this.state.convidadosLista.indexOf(usuario) === -1) {
-                                    this.state.convidados.push(usuario);
-
+                                    convidados.push(usuario);
                                     this.setState({
-                                        convidadosLista: this.state.convidados
+                                        convidadosLista: convidados
                                     });
+                                   
                                 }
                             }}
                             convidados={this.state.convidadosLista}

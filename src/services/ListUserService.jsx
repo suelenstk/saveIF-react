@@ -47,7 +47,29 @@ class ListUserService extends ServicoRest{
 
     }
 
+    /*
+    pesquisarPaginadoNaoEstaGrupo(nome, pagina, idGrupo, sucesso, erro) {
+        let trataFetch = (resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch("/api/usuarios/pesquisar/nome?contem=" + nome + "&pagina=" + pagina + "naoParticipa=" + idGrupo, {
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+            }),
+            method: "GET"
+        }).then(trataFetch);
+    }
+*/
 }
+
+
 
 let listUserService = new ListUserService();
 
