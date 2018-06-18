@@ -294,7 +294,7 @@ class UserProfile extends Component {
                         <FormControl
                             componentClass="select"
                             placeholder="curso"
-                            value={this.state.usuario.curso.id}
+                            value={(this.state.usuario.curso !== null)?this.state.usuario.curso.id:""}
                             onChange={(e) => this.setValor("curso", e.target.value)}
                             required
                         >
