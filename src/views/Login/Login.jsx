@@ -75,7 +75,7 @@ class Login extends Component {
                     <Row>
                         <Col md={6} className="logoLogin">
                             <div>
-                                <a className="navbar-brand" href="">
+                                <a href="">
                                     <img src={logo} className="img-responsive" alt="logo_image"/>
                                 </a>
                             </div>
