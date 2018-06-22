@@ -12,6 +12,7 @@ import logo from '../../assets/img/reactlogo.png';
 import HelpBlock from "react-bootstrap/es/HelpBlock";
 import {Redirect} from "react-router-dom";
 import Link from "react-router-dom/es/Link";
+import UserService from '../../services/UserService';
 
 
 class Recover extends React.Component {
@@ -19,36 +20,71 @@ class Recover extends React.Component {
     constructor(props) {
         super(props);
         
-        this.state = {
-            
-            confirmaSenha: "",
-            
+        this.state = {           
+            avisoUsuario: "",
+            sucesso: "",
+            confirmarSenha: "",
+            codigo:"",
             usuario: {
-                email: "",
-                nome: "",
                 novaSenha: "",
-                senha: "",
-                tipoVinculo: "",
-                curso: "",
-                sobreUsuario: ""
+                senha: ""
             }
         };
         
+        this.UserService = new UserService();         
+        
     }
     
-    setValor(atributo, valor) {
-
+    setUsuario(atributo, valor) {     
         this.setState(
-            (estado) => estado.atributo = valor
+            (estado) => estado.usuario[atributo] = valor
         );
-
-        this.setState({desable: false});
-
+    }
+    
+    setCodigo(valor){
+        this.setState(
+            (estado) => estado.codigo = valor
+        );
+    }
+    
+    setConfirmarSenha(valor){
+        this.setState(
+            (estado) => estado.confirmarSenha = valor
+        );
+    }
+    
+    alterarSenha() {
+        let usuario = this.state.usuario;
+        let codigo = this.state.codigo;
+        this.UserService.alterarSenha(codigo,usuario,
+            (sucesso) => {
+                this.setState({cadastro: false});
+                //alert("Usuário cadastrado com sucesso!");
+                this.setState({sucesso: <Redirect to="/"/>});
+            },
+            (erro) => {
+                console.log("Erro!");
+                console.log(erro);
+                this.setState({
+                    avisoUsuario: "Erro inesperado no cadastro:\n" + erro.message + "\nInforme ao administrador do sistema."
+                });
+            }
+        )
+    } 
+    
+    confirmar(){
+        if(this.state.usuario.novaSenha && this.state.confirmarSenha){
+            if (this.state.usuario.novaSenha === this.state.confirmarSenha) {               
+                this.alterarSenha();                            
+            } 
+        }
     }
     
     render() {
-        
-        return (
+               
+        if (this.state.sucesso)
+            return this.state.sucesso;
+        else return (
             <div className="wrapper">
                 <Navbar className="navbarLogin">
                     <Navbar.Brand className="logoInicial">
@@ -63,15 +99,19 @@ class Recover extends React.Component {
                                 <Card
                                     title="Recuperar Senha"
                                     content={
-                                        <form>
+                                        <form onSubmit={(event) => {
+                                            event.preventDefault();
+                                            this.confirmar()
+                                        }}>
                                             
                                             <Row>
                                                 <FormGroup controlId="formHorizontalNome" className="col-md-12">
                                                     <ControlLabel>Cole o código enviado para E-mail informado</ControlLabel>
                                                     <FormControl
                                                         type="text"
-                                                        value=""
-                                                        placeholder=""
+                                                        value={this.state.codigo}
+                                                        onChange={(e) => this.setCodigo(e.target.value)}
+                                                        placeholder="Código de Verificação"
                                                         required
                                                     />
                                                 </FormGroup>
@@ -81,8 +121,8 @@ class Recover extends React.Component {
                                                     <ControlLabel>Senha</ControlLabel>
                                                     <FormControl
                                                         type="password"
-                                                        value={this.state.senha}
-                                                        onChange={(e) => this.setValor(e.target.value)}  
+                                                        value={this.state.usuario.novaSenha}
+                                                        onChange={(e) => this.setUsuario("novaSenha",e.target.value)}  
                                                         placeholder="Senha"
                                                         required
                                                     />
@@ -92,8 +132,8 @@ class Recover extends React.Component {
                                                     <ControlLabel> Confirmação de senha</ControlLabel>
                                                     <FormControl
                                                         type="password"
-                                                         value={this.state.novaSenha}
-                                                        onChange={(e) => this.setValor(e.target.value)}  
+                                                         value={this.state.confirmarSenha}
+                                                        onChange={(e) => this.setConfirmarSenha(e.target.value)}
                                                         placeholder="Confirmação de senha"
                                                         required
                                                     />

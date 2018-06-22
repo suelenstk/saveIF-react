@@ -39,7 +39,46 @@ export default class UserService extends ServicoRest {
             method: "GET"
         }).then(trataFetch);
     }
+    
+    alterarSenha(codigo, usuario, sucesso, erro) {
+        //console.log(item);
+        fetch(`api/usuarios/recuperar?codigo=${codigo}`, {
+            method: "PUT",
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(usuario)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
 
+        });
+    }
+    
+    inserirCodigoRecuperacao(usuarioCodigo, sucesso, erro) {
+        fetch(`api/usuarios/code`, {
+            method: "POST",
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(usuarioCodigo)
+        }).then((resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+
+        });
+    }
+    
     aceitarConvite(idGrupo, idUsuario, idNotificacao, sucesso, erro) {
         fetch(`api/usuarios/${idUsuario}/convite/${idGrupo}/aceite/${idNotificacao}`, {
             method: "PUT",

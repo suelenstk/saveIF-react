@@ -17,7 +17,10 @@ export default class RecoverForm extends React.Component {
             msgErroEmail: "",
             email:"",
             sucesso:"",
-            codigo:"",
+            usuarioCodigo: {
+                usuarioCodigo:"",
+                codigo:""
+            }
         };
         
         this.UserService = new UserService();
@@ -48,9 +51,14 @@ export default class RecoverForm extends React.Component {
             (sucesso) => {
                 //console.log(sucesso);
                 this.setState({          
-                    codigo:TextNumCode(10,10),
-                    sucesso:<Redirect to="/recover"/>                  
-                });
+                    sucesso:<Redirect to="/recover"/>,
+                    usuarioCodigo:{
+                        id:sucesso.id,
+                        usuarioCodigo:sucesso,
+                        codigo:TextNumCode(10,10)
+                    }
+                });               
+                
             },
             (erro) => {
                 //console.log(erro);
@@ -59,6 +67,21 @@ export default class RecoverForm extends React.Component {
         );
             
             
+    }
+    
+    inserirCodigo(usuario){
+        
+        this.UserService.inserirCodigoRecuperacao(usuario,
+            () => {
+                this.setState({sucesso:<Redirect to="/recover"/>})
+            },
+            (erro) => {
+                //console.log(erro);
+                this.setErrorEmail("error",erro.message);
+            }
+        )
+        
+        
     }
     
     render(){
@@ -72,7 +95,11 @@ export default class RecoverForm extends React.Component {
         } else erroEmail = "";
         
         if (this.state.sucesso){
-            console.log(this.state.codigo);
+            
+            //console.log(this.state.usuarioCodigo);
+            
+            this.inserirCodigo(this.state.usuarioCodigo);
+                
             return this.state.sucesso;
         
         }else return (
