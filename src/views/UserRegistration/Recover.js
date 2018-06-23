@@ -63,10 +63,10 @@ class Recover extends React.Component {
                 this.setState({sucesso: <Redirect to="/"/>});
             },
             (erro) => {
-                console.log("Erro!");
-                console.log(erro);
+                //console.log("Erro!");
+                //console.log(erro);
                 this.setState({
-                    avisoUsuario: "Erro inesperado no cadastro:\n" + erro.message + "\nInforme ao administrador do sistema."
+                    avisoUsuario: erro.message
                 });
             }
         )
@@ -76,12 +76,24 @@ class Recover extends React.Component {
         if(this.state.usuario.novaSenha && this.state.confirmarSenha){
             if (this.state.usuario.novaSenha === this.state.confirmarSenha) {               
                 this.alterarSenha();                            
-            } 
+            }else{
+                this.setState({confirmaSenha: "",
+                               avisoUsuario:"As senhas digitadas não coincidem!"});
+            }          
         }
     }
     
     render() {
                
+        let erroCadastro = "";       
+               
+        if (this.state.avisoUsuario !== "") {
+            erroCadastro =
+                <div>
+                    <HelpBlock>{this.state.avisoUsuario}</HelpBlock>
+                </div>
+        }     
+        
         if (this.state.sucesso)
             return this.state.sucesso;
         else return (
@@ -103,7 +115,7 @@ class Recover extends React.Component {
                                             event.preventDefault();
                                             this.confirmar()
                                         }}>
-                                            
+                                            {erroCadastro}
                                             <Row>
                                                 <FormGroup controlId="formHorizontalNome" className="col-md-12">
                                                     <ControlLabel>Cole o código enviado para E-mail informado</ControlLabel>
