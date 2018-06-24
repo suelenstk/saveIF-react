@@ -3,6 +3,8 @@ import {Col, Image, Row} from 'react-bootstrap';
 import Card from '../../../components/Card/Card';
 import anexoTeste from '../../../img/anexoTeste.JPG';
 import InfiniteScroll from "react-infinite-scroll-component";
+import { UserChip } from '../../../elements/UserChip/UserChip';
+import ServicoLogin from '../../../login/ServicoLogin';
 
 const imgStyle = {
     float: 'right',
@@ -50,6 +52,17 @@ export default class PostList extends React.Component {
         });
         }, 1000);
     };
+    
+    exibirAutor(usuario){
+        return <div style={{"margin-top":"1%"}}><UserChip
+            usuario={usuario}
+            key={usuario.id}
+            nome={usuario.nome}
+            avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
+                ServicoLogin.getAuthorizationGet()}
+            alt={usuario.nome}
+        /></div>
+    }
 
 
     render() {
@@ -83,7 +96,9 @@ export default class PostList extends React.Component {
                                                     {/*<p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>*/}
                                                 </div>
                                                 <p className="h5">{this.posts[index].texto}</p>
-                                                <small>Por {this.posts[index].autorPost.nome}, {this.data(this.posts[index].dataPostagem)}.</small>
+                                                <small>Postado por:
+                                                {this.exibirAutor(this.posts[index].autorPost)}
+                                                Data da postagem: {this.data(this.posts[index].dataPostagem)}.</small>
                                             </Col>
                                         </Row>
                                     }

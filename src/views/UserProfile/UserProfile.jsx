@@ -85,7 +85,7 @@ class UserProfile extends Component {
         if (this.state.imagePreviewUrl === null)
             this.setState({imagePreviewUrl: ""});
         fetch("/api/usuarios/" + this.state.usuario.id + "/imagem", {
-            method: "POST",
+            method: "PUT",
 
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization()
@@ -232,7 +232,7 @@ class UserProfile extends Component {
                             bsClass: "form-control",
                             placeholder: "File",
                             name: "arquivo",
-                            onChange: this._handleImageChange
+                            onChange:this._handleImageChange
                         }
                     ]}
                 />
