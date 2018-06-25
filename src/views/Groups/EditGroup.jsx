@@ -34,8 +34,8 @@ export default class EditGroup extends React.Component {
                 this.categoryService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listarCategorias: sucesso});
-                        console.log("Sucesso");
-                        console.log(this.state.listarCategorias);
+                        // console.log("Sucesso");
+                        // console.log(this.state.listarCategorias);
                     },
                     (erro) => {
                         console.log(erro);

@@ -56,7 +56,7 @@ class GroupEnter extends Component {
     listarGrupo() {
         this.GroupService.listarGrupoEspecifico(this.state.id,
             (resultado) => {
-               // console.log(resultado);
+                // console.log(resultado);
                 this.setarGrupo(resultado);
             },
             (erro) => {
@@ -122,7 +122,7 @@ class GroupEnter extends Component {
 
         if (this.state.grupo.nome !== "")
             return (
-                <div className="content" >
+                <div className="content">
 
                     <Grid fluid>
                         <Row>

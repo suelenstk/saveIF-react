@@ -3,7 +3,7 @@ import {Col, Image, Row} from 'react-bootstrap';
 import Card from '../../../components/Card/Card';
 import anexoTeste from '../../../img/anexoTeste.JPG';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { UserChip } from '../../../elements/UserChip/UserChip';
+import {UserChip} from '../../../elements/UserChip/UserChip';
 import ServicoLogin from '../../../login/ServicoLogin';
 
 const imgStyle = {
@@ -54,7 +54,7 @@ export default class PostList extends React.Component {
     };
     
     exibirAutor(usuario){
-        return <div style={{"margin-top":"1%"}}><UserChip
+        return <div style={{marginTop: "1%"}}><UserChip
             usuario={usuario}
             key={usuario.id}
             nome={usuario.nome}
@@ -85,6 +85,7 @@ export default class PostList extends React.Component {
 
                             if (this.posts[index] != null) {
                                 return <Card
+                                    key={index}
                                     title={this.posts[index].titulo}
                                     ctAllGroups
                                     content={
@@ -105,7 +106,7 @@ export default class PostList extends React.Component {
 
                                 />
                             } else {
-                                return <div></div>
+                                return <div key={index}/>
                             }
 
 

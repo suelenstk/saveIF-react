@@ -8,8 +8,6 @@ export default class GroupService extends ServicoRest {
     }
 
     listarGrupoIntegrantes(id, pagina, sucesso, erro) {
-
-
         let trataFetch = (resultado) => {
 
             if (resultado.ok) {
@@ -20,19 +18,15 @@ export default class GroupService extends ServicoRest {
                 )
             }
         };
-
         fetch(`api/grupos/integrantes/${id}?pagina=` + pagina, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
-
             }),
             method: "GET"
         }).then(trataFetch);
     }
 
     listarParticipantes(id, pagina, sucesso, erro) {
-
-
         let trataFetch = (resultado) => {
 
             if (resultado.ok) {
@@ -43,21 +37,16 @@ export default class GroupService extends ServicoRest {
                 )
             }
         };
-
         fetch(`api/usuario/participantes/${id}?pagina=` + pagina, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
-
             }),
             method: "GET"
         }).then(trataFetch);
     }
 
     listarGrupoEspecifico(id, sucesso, erro) {
-
-
         let trataFetch = (resultado) => {
-
             if (resultado.ok) {
                 resultado.json().then(sucesso)
             } else {
@@ -66,11 +55,9 @@ export default class GroupService extends ServicoRest {
                 )
             }
         };
-
         fetch(`api/grupos/${id}`, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
-
             }),
             method: "GET"
         }).then(trataFetch);

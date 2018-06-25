@@ -10,7 +10,7 @@ export default class TopicCard extends Component {
         this.state = {
             topic: {},
             lista: {},
-            idGrupoAtual: this.props.idGrupo,
+            grupo: this.props.grupo,
         };
 
         this.topicService = new TopicService();
@@ -23,12 +23,13 @@ export default class TopicCard extends Component {
     render() {
         return (
             <TopicRoute
-                idGrupo={this.state.idGrupoAtual}
+                grupo={this.state.grupo}
                 erroTopico={this.state.erro}
-                inserir={(topic) => {
-                    this.topicService.inserirEmGrupo(topic, this.state.idGrupoAtual,
+                inserir={(topic, sucesso) => {
+                    this.topicService.inserirEmGrupo(topic, this.state.grupo.id,
                         () => {
                             this.propsErro("Tópico criado com sucesso.", "success");
+                            sucesso();
                         },
                         (erro) => {
                             console.log("Erro!");

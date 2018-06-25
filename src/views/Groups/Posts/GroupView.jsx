@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Grid, Col, Row } from 'react-bootstrap';
+import React, {Component} from 'react';
+import {Col, Grid, Row} from 'react-bootstrap';
 import Alert from "react-bootstrap/es/Alert";
-import { Card } from '../../../components/Card/Card.jsx';
+import {Card} from '../../../components/Card/Card.jsx';
 import PostService from './PostsService';
 import TopicService from '../CreateTopic/TopicService';
 import GroupService from '../GroupService';
@@ -20,26 +20,34 @@ class GroupView extends Component {
 
         super(props);
 
+        this.groupService = new GroupService();
+        this.postService = new PostService();
+        this.topicService = new TopicService();
+
         this.state = {
             show: false,
             showEditGroup: false,
             pagina: {},
             post: {},
             loading: "none",
-            grupo: { id: this.props.id },
-            topico: { id: this.props.idt },
+            topico: {id: this.props.idt},
             paginaAtual: 0,
             tipoAlert: "",
             msgAlert: "",
-            participantes: false
-        }
+            participantes: false,
+            grupo: this.groupService.listarGrupoEspecifico(this.props.id,
+                (resultado) => {
+                    this.setState({grupo: resultado});
+                    (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
+                },
+                (erro) => {
+                    console.log("Erro:");
+                    console.log(erro);
+                }
+            )
+        };
 
-        this.postService = new PostService();
-        this.groupService = new GroupService();
-        this.topicService = new TopicService();
-
-        (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
-        this.listarGrupo();
+        // (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
     }
 
     setarItem(paginaResultado) {
@@ -74,8 +82,9 @@ class GroupView extends Component {
     }
 
     listar(pagina) {
-        this.postService.listarPostGeral(this.state.grupo.id, pagina,
+        this.postService.listarPostGeral(this.props.id, pagina,
             (resultado) => {
+                //console.log(resultado);
                 this.setarItem(resultado);
             },
             (erro) => {
@@ -83,7 +92,6 @@ class GroupView extends Component {
                 console.log(erro);
             }
         );
-
     }
 
     listarPostEspecifico(pagina) {
@@ -97,13 +105,10 @@ class GroupView extends Component {
                 console.log(erro);
             }
         );
-
         this.listarTopicoEspecifico();
-
     }
 
     listarTopicoEspecifico() {
-
         this.topicService.listarTopicosEspecifico(this.state.topico.id,
             (resultado) => {
                 console.log(resultado);
@@ -122,7 +127,6 @@ class GroupView extends Component {
             grupo: resultado
         });
     }
-
 
 
     listarGrupo() {
@@ -164,6 +168,7 @@ class GroupView extends Component {
                         anterior.update = anterior.update + 1;
                         console.log("Mudou");
 
+
                         return anterior;
                     }
                 );
@@ -172,13 +177,12 @@ class GroupView extends Component {
                     (resultadoErro) => {
                         this.setAlert(resultadoErro + "!", "danger");
                     }
-
                 )
             }
         });
 
         this.loading("none");
-        this.setState({ show: false });
+        this.setState({show: false});
 
     }
 
@@ -213,17 +217,16 @@ class GroupView extends Component {
         });
     }
 
-    irParticipants () {
+    irParticipants() {
         this.setState({
             participantes: <Redirect to={"/MyGroups/" + this.state.grupo.id + "/participantes"}/>
         });
     }
 
-
     render() {
 
         if (this.state.participantes) {
-            return this.state.participantes; 
+            return this.state.participantes;
         }
         let aviso = null;
 
@@ -238,15 +241,16 @@ class GroupView extends Component {
             </Alert>
         }
 
-
-        return (
+        if (!this.state.grupo) {
+            return <div/>;
+        } else return (
             <div className="content">
 
-                <div style={{ padding: 15 }}>
+                <div style={{padding: 15}}>
 
-                    <h1 style={{ fontSize: '30px' }}>{this.state.grupo.nome} - {(this.state.topico.id) ?
+                    <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - {(this.state.topico.id) ?
                         this.state.topico.nome : "Geral"}</h1>
-                    
+
                     <small>{(this.state.topico.id && this.state.topico.criadorTopico) ?
                         "Criador do Tópico: " + this.state.topico.criadorTopico.nome + ", Data: "
                         + this.data(this.state.topico.dataCriacao) :
@@ -256,24 +260,29 @@ class GroupView extends Component {
                     <Button bsStyle="default"
                             bsSize="small"
                             fill
-                            onClick={(e) => { this.irParticipants(); }}>Participantes</Button>
+                            onClick={(e) => {
+                                this.irParticipants();
+                            }}>
+                        Participantes
+                    </Button>
 
-                    <Button onClick={(e) => { this.abrirEditGroup(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Editar Grupo</Button>
+                    <Button onClick={(e) => {
+                        this.abrirEditGroup();
+                    }} style={{border: "0", backgroundColor: "transparent", color: "red", float: "right"}}
+                    >
+                        Editar Grupo
+                    </Button>
 
                 </div>
-
 
                 <Grid fluid>
                     {aviso}
                     <Row>
-
                         <Col md={8}>
                             <Card
                                 title="Postagens"
                                 content={
-
                                     <from>
-                                        
                                         <Button
                                             bsStyle="danger"
                                             pullRight
@@ -285,24 +294,22 @@ class GroupView extends Component {
                                         >
                                             Novo Post
                                         </Button>
-                                        
-                                        <PostList posts={this.state.pagina} />
-                                        
-                                        <div className="clearfix"></div>
+
+                                        <PostList posts={this.state.pagina}/>
+
+                                        <div className="clearfix"/>
 
                                     </from>
                                 }
                             />
                         </Col>
-
                         <TopicCard
-                            idGrupo={this.state.grupo.id}
-                            mostraErro={(erro, tipo) => { this.setAlert(erro, tipo); }}
-
+                            grupo={this.state.grupo}
+                            mostraErro={(erro, tipo) => {
+                                this.setAlert(erro, tipo);
+                            }}
                         />
-
                     </Row>
-                                
                     {/*}
                     <Participants 
                     voltarParticipants={() => { this.setState({ participantes: false }); }}
@@ -310,35 +317,41 @@ class GroupView extends Component {
                     idGrupo={this.state.grupo.id}
                             />*/}
 
-                    {this.state.showEditGroup?<EditGroup
-                        voltarEditGroup={() => { this.setState({ showEditGroup: false }); }}
-                        showEditGroup={this.state.showEditGroup}
-                        idGrupo={this.state.grupo.id}
+                    {this.state.showEditGroup ? <EditGroup
+                            voltarEditGroup={() => {
+                                this.setState({showEditGroup: false});
+                            }}
+                            showEditGroup={this.state.showEditGroup}
+                            idGrupo={this.state.grupo.id}
 
-                        editar={(group, id, idCategoria) => {
-                            this.groupService.atualizar(group, id, idCategoria,
-                                (grupo) => {
-                                    alert("Grupo alterado com sucesso!");
-                                    this.setState({
-                                        group: grupo,
-                                    });
-                                },
-                                (erro) => {
-                                    console.log("Erro!");
-                                    console.log(erro);
-                                }
-                            );
-                        }}
-                        group={this.state.grupo}
-                    />
-                    :""}
+                            editar={(group, id, idCategoria) => {
+                                this.groupService.atualizar(group, id, idCategoria,
+                                    (grupo) => {
+                                        alert("Grupo alterado com sucesso!");
+                                        this.setState({
+                                            group: grupo,
+                                        });
+                                    },
+                                    (erro) => {
+                                        console.log("Erro!");
+                                        console.log(erro);
+                                    }
+                                );
+                            }}
+                            group={this.state.grupo}
+                        />
+                        : ""}
 
                     <NewPost
-                        voltar={() => { this.setState({ show: false }); }}
+                        voltar={() => {
+                            this.setState({show: false});
+                        }}
                         show={this.state.show}
                         loading={this.state.loading}
 
-                        upload={(anexo) => { this.upload(anexo); }}
+                        upload={(anexo) => {
+                            this.upload(anexo);
+                        }}
                         inserir={(post, anexo) => {
                             this.loading("");
                             let topicoId;
@@ -354,7 +367,7 @@ class GroupView extends Component {
                                     }
                                     this.loading("none");
                                     this.setAlert("Post realizado com sucesso!", "success");
-                                    this.setState({ show: false });
+                                    this.setState({show: false});
                                     (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
                                 },
                                 (erro) => {
@@ -370,7 +383,6 @@ class GroupView extends Component {
                     />
 
                 </Grid>
-
             </div>
         );
     }

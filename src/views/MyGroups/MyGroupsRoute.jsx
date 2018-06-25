@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import GroupEnter from '../Groups/GroupEnter';
 import GroupList from '../Groups/GroupList';
 import GroupView from '../Groups/Posts/GroupView';
 import Participants from '../Groups/Participants';
 
-import {
-Route,
-Switch
-} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 class RotaLista extends Component {
  render() {
@@ -38,7 +35,7 @@ class RotaPosts extends Component {
 class RotaPostEspecifico extends Component {
 
  render() {
-    console.log(this.props.match.params.idt);
+     // console.log(this.props.match.params.idt);
     return <GroupView id={this.props.match.params.id}
                        idt={this.props.match.params.idt}/>;
  }
@@ -57,8 +54,6 @@ class RotaListaParticipantes extends Component {
 export default class MyGroupsRoute extends Component {
 
  render() {
-
-  //console.log(this.props.pagina);
 
   return <div>
    <Switch>

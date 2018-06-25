@@ -8,13 +8,13 @@ import TopicService from './TopicService';
 import {Link} from 'react-router-dom';
 import Pager from "react-bootstrap/es/Pager";
 import UserChip from "../../../elements/UserChip/UserChip";
+import servicoLogin from "../../../login/ServicoLogin";
 
 export default class NewTopic extends React.Component {
 
     constructor(props) {
-
-
         super(props);
+
         this.state = {
             topic: this.props.topic,
             campoNomeTopico: "none",
@@ -22,19 +22,27 @@ export default class NewTopic extends React.Component {
             topico: {titulo: "teste"},
             pagina: 0,
             campoTopico: false,
-            error: "",
+            error: null,
             msgErro: "",
-            erroTopico: this.props.erroTopico
+            erroTopico: this.props.erroTopico,
+            grupo: this.props.grupo,
+            coordenador: false
         };
-
+        this.verificarCoordenador();
         this.topicService = new TopicService();
-
         this.listarTopicos(0);
+    }
 
+    verificarCoordenador() {
+        this.state.grupo.coordenadoresGrupo.map((usuario) => {
+            if (usuario.id === servicoLogin.getUsuario()) {
+                this.state.coordenador = true;
+            }
+        });
     }
 
     listarTopicos(pagina) {
-        this.topicService.listarTopicosGrupo(this.props.idGrupo, pagina,
+        this.topicService.listarTopicosGrupo(this.state.grupo.id, pagina,
             (resultado) => {
                 console.log(resultado);
                 this.setarTopico(resultado);
@@ -45,7 +53,6 @@ export default class NewTopic extends React.Component {
             }
         );
     }
-
 
     setarTopico(resultado) {
         this.setState({
@@ -64,7 +71,6 @@ export default class NewTopic extends React.Component {
                 return anterior;
             }
         );
-
     }
 
     setConfigNovoTopico() {
@@ -84,8 +90,7 @@ export default class NewTopic extends React.Component {
             });
         }
         this.setNome("");
-        this.setError("");
-
+        this.setError(null);
     }
 
     setError(estilo, msg) {
@@ -103,37 +108,37 @@ export default class NewTopic extends React.Component {
             this.setError("error", "Tópico " + nome + " não pode ser utilizado!");
             return true;
         } else {
-            this.setError("", "");
+            this.setError(null, "");
             return false;
         }
     }
 
     confirmar() {
-
         if (this.verificaSeErroMudou()) {
 
         } else if (this.state.topic.nome) {
-            this.props.inserir(this.state.topic);
+            this.props.inserir(this.state.topic,
+                (sucesso) => {
+                    console.log(sucesso);
+                    this.listarTopicos(this.state.pagina);
+                    console.log("Topico criado! e atualizado??");
+                }
+            );
             this.setConfigNovoTopico();
-            this.listarTopicos(this.state.pagina);
-
         } else {
             this.setError("error", "Campo nome não pode ser vazio!");
         }
     }
 
     verTopico(id, topico) {
-
         return (topico.nome === 'Geral') ? `MyGroups/${id}/geral` : `MyGroups/${id}/posts/${topico.id}`;
     }
 
     render() {
-
         let erroTopico = null;
 
         let statusNext = true;
         let statusPrev = true;
-        //alert(this.state.pagina.totalPages);
 
         if (this.state.pagina > 0) {
             statusPrev = false;
@@ -187,10 +192,11 @@ export default class NewTopic extends React.Component {
                             <div>
                                 <Table responsive>
                                     {this.state.topico.content.map((topico) => {
-                                        return <Link to={{pathname: `/${this.verTopico(this.props.idGrupo, topico)}`}}>
+                                        return <Link key={topico.id}
+                                                     to={{pathname: `/${this.verTopico(this.state.grupo.id, topico)}`}}>
                                             <UserChip
-                                                value={this.props.idGrupo}
-                                                key={this.props.idGrupo}
+                                                value={this.state.grupo.id}
+                                                key={this.state.grupo.id}
                                                 nome={topico.nome}
                                                 alt={topico.nome}
                                                 topico="pe-7s-folder"
@@ -214,32 +220,38 @@ export default class NewTopic extends React.Component {
                                             </FormGroup>
                                             {erroTopico}
                                         </td>
-                                        <td><Button style={{borderStyle: "none", display: this.state.campoNomeTopico}}
-                                                    onClick={() => {
-                                                        this.confirmar();
-                                                    }}><img src={done} alt="" width="25px" height="20px"/></Button></td>
+                                        <td>
+                                            <Button
+                                                style={{borderStyle: "none", display: this.state.campoNomeTopico}}
+                                                onClick={() => {
+                                                    this.confirmar();
+                                                }}
+                                            >
+                                                <img src={done} alt="" width="25px" height="20px"/>
+                                            </Button>
+                                        </td>
                                     </tr>
                                 </Table>
 
-                                <Button
-                                    bsStyle="danger"
-                                    pullRight
-                                    fill
-                                    block
-                                    onClick={() => {
-                                        this.setConfigNovoTopico();
-                                    }}
-                                >
-                                    {this.state.adicionarTopico}
-                                </Button>
+                                {this.state.coordenador ?
+                                    <Button
+                                        bsStyle="danger"
+                                        pullRight
+                                        fill
+                                        block
+                                        onClick={() => {
+                                            this.setConfigNovoTopico();
+                                        }}
+                                    >
+                                        {this.state.adicionarTopico}
+                                    </Button> : ""
+                                }
                                 <div className="clearfix"/>
+                                <br/>
                             </div>
                         }
-
                     />
                 </Col>
-
-
             );
         else
             return <div/>
