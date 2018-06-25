@@ -86,7 +86,7 @@ export default class InviteUsers extends React.Component {
             i++;
         }
         this.groupService.convidarParticipante(this.state.idGrupo, idsUsuarios,
-            () => {
+            (sucesso) => {
                 alert("Convites enviados com sucesso!");
                 let convidados=[];
                 this.setState({

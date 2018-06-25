@@ -21,9 +21,8 @@ export default class EditGroup extends React.Component {
         this.categoryService = new CategoryService();
         this.groupService = new GroupService();
 
-        this.setState({
-            group: (
-                this.groupService.listarGrupoEspecifico(this.props.idGrupo,
+
+            this.groupService.listarGrupoEspecifico(this.props.idGrupo,
                     (sucesso) => {
                         this.setState({group: sucesso, categoria: sucesso.categoria.id});
                     },
@@ -31,12 +30,7 @@ export default class EditGroup extends React.Component {
                         console.log(erro);
                     }
                 )
-            )
-
-        });
-
-        this.setState({
-            listarCategorias: (
+           
                 this.categoryService.listarNaoPaginado(
                     (sucesso) => {
                         this.setState({listarCategorias: sucesso});
@@ -47,8 +41,6 @@ export default class EditGroup extends React.Component {
                         console.log(erro);
                     }
                 )
-            )
-        });
     }
 
     componentWillReceiveProps(proximoEstado) {
@@ -152,7 +144,7 @@ export default class EditGroup extends React.Component {
 
         let campoCategoria = null;
 
-        if (this.state.listarCategorias) {
+        if (this.state.listarCategorias&&this.state.group) {
             campoCategoria =
                 <Row>
 

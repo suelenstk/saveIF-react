@@ -310,7 +310,7 @@ class GroupView extends Component {
                     idGrupo={this.state.grupo.id}
                             />*/}
 
-                    <EditGroup
+                    {this.state.showEditGroup?<EditGroup
                         voltarEditGroup={() => { this.setState({ showEditGroup: false }); }}
                         showEditGroup={this.state.showEditGroup}
                         idGrupo={this.state.grupo.id}
@@ -331,6 +331,7 @@ class GroupView extends Component {
                         }}
                         group={this.state.grupo}
                     />
+                    :""}
 
                     <NewPost
                         voltar={() => { this.setState({ show: false }); }}
