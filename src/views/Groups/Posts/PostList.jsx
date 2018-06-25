@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {UserChip} from '../../../elements/UserChip/UserChip';
 import ServicoLogin from '../../../login/ServicoLogin';
 
+
 const imgStyle = {
     float: 'right',
     marginRight: '55px',
@@ -54,14 +55,17 @@ export default class PostList extends React.Component {
     };
     
     exibirAutor(usuario){
-        return <div style={{marginTop: "1%"}}><UserChip
+        return <div style={{marginTop: "1%"}}>
+          <UserChip
             usuario={usuario}
+            perfil={true}
             key={usuario.id}
             nome={usuario.nome}
             avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
                 ServicoLogin.getAuthorizationGet()}
             alt={usuario.nome}
-        /></div>
+        />
+         </div>
     }
 
 
@@ -101,7 +105,9 @@ export default class PostList extends React.Component {
                                                 {this.exibirAutor(this.posts[index].autorPost)}
                                                 Data da postagem: {this.data(this.posts[index].dataPostagem)}.</small>
                                             </Col>
-                                        </Row>
+                                            
+                                          
+                                        </Row>       
                                     }
 
                                 />
@@ -112,6 +118,8 @@ export default class PostList extends React.Component {
 
                         })}
                     </InfiniteScroll>
+                    
+                    
                 </Col>
             </Row>
              } else {

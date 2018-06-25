@@ -44,7 +44,7 @@ export default class NewTopic extends React.Component {
     listarTopicos(pagina) {
         this.topicService.listarTopicosGrupo(this.state.grupo.id, pagina,
             (resultado) => {
-                console.log(resultado);
+                //console.log(resultado);
                 this.setarTopico(resultado);
             },
             (erro) => {

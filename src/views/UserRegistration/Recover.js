@@ -95,6 +95,7 @@ class Recover extends React.Component {
                
         let erroCadastro = "";      
         let alterar = (this.props.match.params.email === "Email")? false:true;
+        let $msg = null;
                
         if (this.state.avisoUsuario !== "") {
             erroCadastro =
@@ -105,14 +106,14 @@ class Recover extends React.Component {
         
         if (this.state.sucesso){
             
-            this.sleep(3000).then(() => {
-                <Alert bsStyle="success">
+            
+              $msg = (<Alert bsStyle="success">
                     Senha alterada com sucesso!
-                </Alert>;
-            });
+              </Alert>);
+            
+        }
         
-            return this.state.sucesso;
-        }else return (
+        return (
             <div className="wrapper">
                 <Navbar className="navbarLogin">
                     <Navbar.Brand className="logoInicial">
@@ -132,6 +133,7 @@ class Recover extends React.Component {
                                             this.confirmar()
                                         }}>
                                             {erroCadastro}
+                                            {$msg}
                                             <Row>
                                                 <FormGroup controlId="formHorizontalEmail" className="col-md-12">
                                                     <ControlLabel>E-mail: </ControlLabel>
@@ -202,6 +204,7 @@ class Recover extends React.Component {
                         </Row>
                     </Grid>
                 </div>
+                {this.state.sucesso}
             </div>
         );
         

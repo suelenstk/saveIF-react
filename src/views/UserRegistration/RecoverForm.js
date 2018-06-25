@@ -4,7 +4,6 @@ import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Redirect} from "react-router-dom";
 import UserService from '../../services/UserService';
 import { TextNumCode } from './GerarCodigo';
-import Link from "react-router-dom/es/Link";
 
 
 export default class RecoverForm extends React.Component {
