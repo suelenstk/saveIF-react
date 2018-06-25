@@ -4,6 +4,7 @@ import Button from '../../elements/CustomButton/CustomButton.jsx';
 import {Redirect} from "react-router-dom";
 import UserService from '../../services/UserService';
 import { TextNumCode } from './GerarCodigo';
+import Link from "react-router-dom/es/Link";
 
 
 export default class RecoverForm extends React.Component {
@@ -42,6 +43,14 @@ export default class RecoverForm extends React.Component {
         });
     }
     
+    enviarSCodigo(){     
+      this.setErrorEmail("","");
+
+      this.setState({          
+                    sucesso:<Redirect to={`/recover/${"Email"}`}/>,
+      });                
+    }
+    
     enviar(){
        
       this.setErrorEmail("","");
@@ -51,7 +60,7 @@ export default class RecoverForm extends React.Component {
             (sucesso) => {
                 //console.log(sucesso);
                 this.setState({          
-                    sucesso:<Redirect to="/recover"/>,
+                    sucesso:<Redirect to={`/recover/${sucesso.email}`}/>,
                     usuarioCodigo:{
                         id:sucesso.id,
                         usuarioCodigo:sucesso,
@@ -73,7 +82,7 @@ export default class RecoverForm extends React.Component {
         
         this.UserService.inserirCodigoRecuperacao(usuario,
             () => {
-                this.setState({sucesso:<Redirect to="/recover"/>})
+                this.setState({sucesso:<Redirect to={`/recover/${usuario.usuarioCodigo.id}`}/>})
             },
             (erro) => {
                 //console.log(erro);
@@ -97,8 +106,9 @@ export default class RecoverForm extends React.Component {
         if (this.state.sucesso){
             
             //console.log(this.state.usuarioCodigo);
-            
-            this.inserirCodigo(this.state.usuarioCodigo);
+            if(this.state.usuarioCodigo.usuarioCodigo !== ""){
+                this.inserirCodigo(this.state.usuarioCodigo);
+            }
                 
             return this.state.sucesso;
         
@@ -133,16 +143,30 @@ export default class RecoverForm extends React.Component {
                             />
                         </FormGroup>
                       
+                                                                      
+                        <Button
+                            bsStyle="danger"
+                            pullRight
+                            fill
+                            style={{"margin-left":"5%"}}
+                            onClick={(e) => {
+                                this.enviar();
+                            }}
+                        >
+                            Enviar
+                            
+                        </Button>
+                        
                         <Button
                             bsStyle="danger"
                             pullRight
                             fill
 
                             onClick={(e) => {
-                                this.enviar();
+                                this.enviarSCodigo();
                             }}
                         >
-                            Enviar
+                            Já tenho código
                             
                         </Button>
 

@@ -40,6 +40,22 @@ export default class UserService extends ServicoRest {
         }).then(trataFetch);
     }
     
+    recuperar(id, sucesso, erro){
+        let trataFetch = (resultado) => {
+            if (resultado.ok) {
+                resultado.json().then(sucesso)
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        };
+
+        fetch(`api/usuarios/recuperar/${id}`, {
+            method: "GET"
+        }).then(trataFetch);
+    }
+    
     alterarSenha(codigo, usuario, sucesso, erro) {
         //console.log(item);
         fetch(`api/usuarios/recuperar?codigo=${codigo}`, {

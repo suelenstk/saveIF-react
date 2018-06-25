@@ -13,6 +13,7 @@ import HelpBlock from "react-bootstrap/es/HelpBlock";
 import {Redirect} from "react-router-dom";
 import Link from "react-router-dom/es/Link";
 import UserService from '../../services/UserService';
+import Alert from "react-bootstrap/es/Alert";
 
 
 class Recover extends React.Component {
@@ -27,9 +28,12 @@ class Recover extends React.Component {
             codigo:"",
             usuario: {
                 novaSenha: "",
-                senha: ""
+                senha: "",
+                email:this.props.match.params.email
             }
         };
+        
+        //console.log(this.props.match.params.email);
         
         this.UserService = new UserService();         
         
@@ -83,9 +87,14 @@ class Recover extends React.Component {
         }
     }
     
+    sleep(tempo) {
+        return new Promise((e) => setTimeout(e, tempo));
+    }
+    
     render() {
                
-        let erroCadastro = "";       
+        let erroCadastro = "";      
+        let alterar = (this.props.match.params.email === "Email")? false:true;
                
         if (this.state.avisoUsuario !== "") {
             erroCadastro =
@@ -94,9 +103,16 @@ class Recover extends React.Component {
                 </div>
         }     
         
-        if (this.state.sucesso)
+        if (this.state.sucesso){
+            
+            this.sleep(3000).then(() => {
+                <Alert bsStyle="success">
+                    Senha alterada com sucesso!
+                </Alert>;
+            });
+        
             return this.state.sucesso;
-        else return (
+        }else return (
             <div className="wrapper">
                 <Navbar className="navbarLogin">
                     <Navbar.Brand className="logoInicial">
@@ -116,6 +132,19 @@ class Recover extends React.Component {
                                             this.confirmar()
                                         }}>
                                             {erroCadastro}
+                                            <Row>
+                                                <FormGroup controlId="formHorizontalEmail" className="col-md-12">
+                                                    <ControlLabel>E-mail: </ControlLabel>
+                                                    <FormControl
+                                                        type="text"
+                                                        value={(this.state.usuario.email === "Email")?"":this.state.usuario.email}
+                                                        onChange={(e) => this.setUsuario("email",e.target.value)} 
+                                                        placeholder="Digite seu E-mail"
+                                                        required
+                                                        disabled={alterar}
+                                                    />
+                                                </FormGroup>
+                                            </Row>                                                
                                             <Row>
                                                 <FormGroup controlId="formHorizontalNome" className="col-md-12">
                                                     <ControlLabel>Cole o código enviado para E-mail informado</ControlLabel>

@@ -111,7 +111,7 @@ class Login extends Component {
                                     <div>
                                         <button onClick={(e) => { this.abrirRecovery(); }} 
                                             type="button"
-                                            style={{ border: "0", backgroundColor: "transparent",color:"red", float: "right" }}>Eesqueceu sua senha?</button>
+                                            style={{ border: "0", backgroundColor: "transparent",color:"red", float: "right" }}>Esqueceu sua senha?</button>
                                         <br/>
                                     </div>
                                     <Button

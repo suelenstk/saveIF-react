@@ -112,7 +112,7 @@ class App extends Component {
                                                 user={servicoLogin.logado()}
                                             />
                                         );
-
+                              
 
                                     if (prop.redirect)
                                         return (
