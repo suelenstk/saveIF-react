@@ -16,14 +16,17 @@ class UserSearch extends React.Component {
             listaUsuario: "",
             nome: "",
             pagina: 0,
-            grupo: this.props.grupo
+            idGrupo: this.props.idGrupo
         };
 
-        this.setState({
-            listaUsuario: this.pesquisar(0)
-        });
+        this.pesquisar(0);
     }
 
+    componentWillReceiveProps(proximoEstado) {
+        this.setState({grupo: proximoEstado.grupo});
+    }
+
+    /*
     pesquisar(pagina) {
         listUserService.pesquisarPaginado (
             this.state.nome, pagina,
@@ -37,12 +40,12 @@ class UserSearch extends React.Component {
         );
         this.setState({ pagina: pagina });
     }
+*/
 
-/*
     pesquisar(pagina) {
         listUserService.pesquisarPaginadoNaoEstaGrupo(
-            this.state.nome, pagina, this.state.grupo.id,
-            (sucesso) => {
+            this.state.nome, pagina, this.state.idGrupo,
+            (sucesso) => {        
                 this.setState({ listaUsuario: sucesso });
                 this.removeUsuarioLista();
             },
@@ -52,7 +55,6 @@ class UserSearch extends React.Component {
         );
         this.setState({ pagina: pagina });
     }
-*/
 
     sleep(tempo) {
         return new Promise((e) => setTimeout(e, tempo));

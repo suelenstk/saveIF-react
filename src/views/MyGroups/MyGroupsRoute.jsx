@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GroupEnter from '../Groups/GroupEnter';
 import GroupList from '../Groups/GroupList';
 import GroupView from '../Groups/Posts/GroupView';
+import Participants from '../Groups/Participants';
 
 import {
 Route,
@@ -44,6 +45,14 @@ class RotaPostEspecifico extends Component {
 
 }
 
+class RotaListaParticipantes extends Component {
+
+  render() {
+     return <Participants id={this.props.match.params.id}/>;
+  }
+ 
+ }
+
 
 export default class MyGroupsRoute extends Component {
 
@@ -64,6 +73,8 @@ export default class MyGroupsRoute extends Component {
     <Route path="/MyGroups/:id/View" render = {(props) => <RotaVisualizacao  {...props} 
                  user={this.props.user}/>}
                  user={this.props.user}/>/>
+
+    <Route path="/MyGroups/:id/participantes" component={RotaListaParticipantes} />
 
    </Switch>
   </div>

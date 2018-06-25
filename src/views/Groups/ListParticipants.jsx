@@ -8,7 +8,7 @@ class ListParticipants extends Component {
         super(props);
         this.state = {chip: true, flagParticipante: false};
 
-        //console.log(this.state.chip);
+        console.log(this.state.chip);
     }
 
     render() {

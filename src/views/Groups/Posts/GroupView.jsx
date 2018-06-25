@@ -11,6 +11,7 @@ import TopicCard from '../CreateTopic/TopicCard';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import servicoLogin from "../../../login/ServicoLogin";
 import EditGroup from '../EditGroup';
+import Redirect from "react-router-dom/es/Redirect";
 
 
 class GroupView extends Component {
@@ -33,11 +34,6 @@ class GroupView extends Component {
             participantes: false
         }
 
-
-
-        //alert(this.state.topico.id);
-        //alert(this.state.grupo.id);
-
         this.postService = new PostService();
         this.groupService = new GroupService();
         this.topicService = new TopicService();
@@ -47,8 +43,6 @@ class GroupView extends Component {
     }
 
     setarItem(paginaResultado) {
-
-        //console.log(paginaResultado);
         this.setState({
             pagina: paginaResultado
         });
@@ -56,7 +50,6 @@ class GroupView extends Component {
     }
 
     setarTopico(topico) {
-        //console.log(paginaResultado);
         this.setState({
             topico: topico
         });
@@ -81,11 +74,8 @@ class GroupView extends Component {
     }
 
     listar(pagina) {
-
-        //console.log(this.state.grupo.id);
         this.postService.listarPostGeral(this.state.grupo.id, pagina,
             (resultado) => {
-                //console.log(resultado);
                 this.setarItem(resultado);
             },
             (erro) => {
@@ -97,7 +87,6 @@ class GroupView extends Component {
     }
 
     listarPostEspecifico(pagina) {
-
         this.postService.listarPostEspecifico(this.state.grupo.id, this.state.topico.id, pagina,
             (resultado) => {
                 console.log(resultado);
@@ -175,8 +164,6 @@ class GroupView extends Component {
                         anterior.update = anterior.update + 1;
                         console.log("Mudou");
 
-
-
                         return anterior;
                     }
                 );
@@ -196,8 +183,6 @@ class GroupView extends Component {
     }
 
     data(date) {
-        //console.log(date);
-
         if (date !== undefined) {
             let dateParts = date.split("-");
 
@@ -230,18 +215,16 @@ class GroupView extends Component {
 
     irParticipants () {
         this.setState({
-            participantes: true
+            participantes: <Redirect to={"/MyGroups/" + this.state.grupo.id + "/participantes"}/>
         });
     }
 
 
     render() {
 
-        //console.log(this.state.topico.criadorTopico);
-        //<PostList posts={this.state.pagina}/>   
-
-        //alert(this.state.pagina.totalPages);   
-
+        if (this.state.participantes) {
+            return this.state.participantes; 
+        }
         let aviso = null;
 
         if (this.state.msgAlert !== "") {
@@ -263,19 +246,19 @@ class GroupView extends Component {
 
                     <h1 style={{ fontSize: '30px' }}>{this.state.grupo.nome} - {(this.state.topico.id) ?
                         this.state.topico.nome : "Geral"}</h1>
-
-                    {/*<Button bsStyle="danger"
-                            pullRight
-                            fill
-                            onClick={(e) => { this.irParticipants(); }} style={{ float: "left" }}>Participantes</Button>*/}
-                    <button onClick={(e) => { this.abrirEditGroup(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Editar Grupo</button>
                     
                     <small>{(this.state.topico.id && this.state.topico.criadorTopico) ?
                         "Criador do Tópico: " + this.state.topico.criadorTopico.nome + ", Data: "
                         + this.data(this.state.topico.dataCriacao) :
                         +(this.state.grupo.donoGrupo !== undefined) ? "Data: " + this.data(this.state.grupo.dataCriacao)
                             + " - Dono do Grupo: " + this.state.grupo.donoGrupo.nome : ""}</small>
+                    <br/><br/>
+                    <Button bsStyle="default"
+                            bsSize="small"
+                            fill
+                            onClick={(e) => { this.irParticipants(); }}>Participantes</Button>
 
+                    <Button onClick={(e) => { this.abrirEditGroup(); }} style={{ border: "0", backgroundColor: "transparent", color: "red", float: "right" }}>Editar Grupo</Button>
 
                 </div>
 

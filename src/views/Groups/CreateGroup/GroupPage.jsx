@@ -187,6 +187,10 @@ class GroupPage extends React.Component {
                                     this.groupService.convidarParticipante(this.state.group.id, idUsuario,
                                         () => {
                                             alert("Convites enviados com sucesso!");
+                                            this.setState({
+                                                page: "3",
+                                                photo: ""
+                                            });
                                         },
                                         (erro) => {
                                             console.log("Erro!");
@@ -222,6 +226,7 @@ class GroupPage extends React.Component {
                                    
                                 }
                             }}
+                            grupoId={this.state.group.id}
                             convidados={this.state.convidadosLista}
                         />
 

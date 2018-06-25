@@ -42,7 +42,6 @@ export default class GroupRoute extends Component {
                                                                                     user={this.props.user}/>}
                                                                                     solicitar={this.props.solicitar} user={this.props.user}/>/>
 
-
             </Switch>
 
         </div>

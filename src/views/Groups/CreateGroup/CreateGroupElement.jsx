@@ -133,7 +133,7 @@ export default class CreateGroupElement extends React.Component {
         let campoConvidados = null;
 
         if (this.props.convidados.length > 0) {
-            console.log(this.props.convidados);
+    
             campoConvidados =
                 <div>
                     {this.props.convidados.map((usuario) => {
@@ -294,7 +294,7 @@ export default class CreateGroupElement extends React.Component {
                             <tr/>
                             <ControlLabel><strong>Descriçao: </strong>{this.state.group.descricao}</ControlLabel>
                             <tr/>
-                            <ControlLabel><strong>Categoria: </strong>{this.state.categoria.nome}</ControlLabel>
+                            <ControlLabel><strong>Categoria: </strong>{}</ControlLabel>
                             <tr/>
                             <ControlLabel><strong>Privacidade: </strong>{this.state.group.tipoPrivacidade}
                             </ControlLabel>

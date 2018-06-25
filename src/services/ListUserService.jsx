@@ -47,7 +47,7 @@ class ListUserService extends ServicoRest{
 
     }
 
-    /*
+    
     pesquisarPaginadoNaoEstaGrupo(nome, pagina, idGrupo, sucesso, erro) {
         let trataFetch = (resultado) => {
             if (resultado.ok) {
@@ -59,17 +59,14 @@ class ListUserService extends ServicoRest{
             }
         };
 
-        fetch("/api/usuarios/pesquisar/nome?contem=" + nome + "&pagina=" + pagina + "naoParticipa=" + idGrupo, {
+        fetch("/api/usuarios/pesquisar/nome/grupo?contem=" + nome + "&pagina=" + pagina +"&idGrupo=" + idGrupo, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
             }),
             method: "GET"
         }).then(trataFetch);
     }
-*/
 }
-
-
 
 let listUserService = new ListUserService();
 

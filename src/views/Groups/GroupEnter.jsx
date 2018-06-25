@@ -41,7 +41,6 @@ class GroupEnter extends Component {
 
 
     listarParticipantes() {
-        // console.log(this.state.id);
         this.GroupService.listarParticipantes(this.state.id, 0,
             (resultado) => {
                 console.log(resultado);

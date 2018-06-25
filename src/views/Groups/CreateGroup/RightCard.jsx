@@ -49,6 +49,7 @@ class RightCard extends React.Component {
                                     this.props.adicionaConvidado(usuario);
                                 }}
                                 convidados={this.props.convidados}
+                                grupoId={this.props.grupo}
                             />
                         </div>
                         <button onClick={(e) => {
