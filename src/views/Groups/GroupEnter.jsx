@@ -78,7 +78,7 @@ class GroupEnter extends Component {
 
     }
 
-    verificarSolicitante(id, solicitantesGrupo) {
+    static verificarSolicitante(id, solicitantesGrupo) {
 
         for (let i = 0; i < solicitantesGrupo.length; i++) {
             if (id === solicitantesGrupo[i].id) {
@@ -91,31 +91,29 @@ class GroupEnter extends Component {
     }
 
     botaoSolicitar() {
+        if (this.state.grupo.tipoPrivacidade.toLowerCase() !== "privado") {
+            if (GroupEnter.verificarSolicitante(this.state.idUsuario,
+                this.state.grupo.solicitantesGrupo)) {
 
-        if (this.verificarSolicitante(this.state.idUsuario,
-            this.state.grupo.solicitantesGrupo)) {
+                let botoes = [];
 
-            let botoes = [];
-
-            let botao = <Link to={{
-                pathname: '/home'
-            }}>
-                <Button
-                    className="btnSaveif"
-                    pullRight
-                    fill
-                    type="submit"
-                    onClick={() => {
-                        this.confirmar()
-                    }}>
-                    Solicitar Inscrição
-                </Button></Link>;
-
-            botoes.push(botao);
-
-            return botoes;
+                let botao = <Link to={{
+                    pathname: '/home'
+                }}>
+                    <Button
+                        className="btnSaveif"
+                        pullRight
+                        fill
+                        type="submit"
+                        onClick={() => {
+                            this.confirmar()
+                        }}>
+                        Solicitar Inscrição
+                    </Button></Link>;
+                botoes.push(botao);
+                return botoes;
+            }
         }
-
     }
 
     render() {
