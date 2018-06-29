@@ -10,7 +10,6 @@ class Participants extends React.Component {
         super(props);
         
         this.groupService = new GroupService();
-
         this.state = {
             pagina: "",
             idGrupo: this.props.id
