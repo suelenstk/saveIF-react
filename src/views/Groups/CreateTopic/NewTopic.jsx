@@ -235,7 +235,8 @@ export default class NewTopic extends React.Component {
 
                                 {this.state.coordenador ?
                                     <Button
-                                        bsStyle="danger"
+                                        style={{width: "100%"}}
+                                        className="btnSaveif"
                                         pullRight
                                         fill
                                         block

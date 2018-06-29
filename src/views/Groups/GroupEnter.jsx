@@ -101,7 +101,7 @@ class GroupEnter extends Component {
                 pathname: '/home'
             }}>
                 <Button
-                    bsStyle="danger"
+                    className="btnSaveif"
                     pullRight
                     fill
                     type="submit"

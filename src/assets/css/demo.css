@@ -604,10 +604,10 @@ a, p, .alert-info a {
     background-color: #ED3846;
     border-color: #ED3846;
     margin: 10px 0;
-    font-weight: bold;
     opacity: 1;
     color: #FFFFFF;
-    font-size: 12pt;
+    font-size: 11pt;
+    float: right;
 }
 
 .btnSaveif:hover, .btnSaveif:active, .btnSaveif:active:hover,

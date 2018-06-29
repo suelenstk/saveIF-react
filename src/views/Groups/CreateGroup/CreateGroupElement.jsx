@@ -47,7 +47,7 @@ export default class CreateGroupElement extends React.Component {
 
     convidarUsuarios() {
         let i = 0;
-        let idsUsuarios=[];
+        let idsUsuarios = [];
         while (i < this.props.convidados.length) {
             idsUsuarios[i] = this.props.convidados[i].id;
             i++;
@@ -133,7 +133,7 @@ export default class CreateGroupElement extends React.Component {
         let campoConvidados = null;
 
         if (this.props.convidados.length > 0) {
-    
+
             campoConvidados =
                 <div>
                     {this.props.convidados.map((usuario) => {
@@ -266,10 +266,9 @@ export default class CreateGroupElement extends React.Component {
                         </FormGroup>
                         {erroGrupo}
                         <Button
-                            bsStyle="danger"
+                            className="btnSaveif"
                             pullRight
                             fill
-
                             onClick={() => {
                                 this.createGroup()
                             }}

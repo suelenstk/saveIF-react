@@ -284,10 +284,9 @@ class GroupView extends Component {
                                 content={
                                     <from>
                                         <Button
-                                            bsStyle="danger"
+                                            className="btnSaveif"
                                             pullRight
                                             fill
-
                                             onClick={(e) => {
                                                 this.abrirNovoPost();
                                             }}

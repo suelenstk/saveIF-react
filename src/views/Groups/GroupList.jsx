@@ -76,7 +76,7 @@ export default class GroupList extends Component {
             <Link to={{pathname: `/${rota}`}} key="">
 
                 <Button
-                    bsStyle="danger"
+                    className="btnSaveif"
                     pullRight
                     fill
                     type="submit"
