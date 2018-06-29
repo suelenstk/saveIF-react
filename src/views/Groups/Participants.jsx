@@ -4,17 +4,19 @@ import ListParticipants from './ListParticipants';
 import GroupService from './GroupService';
 import InviteUsers from '../../components/InviteUsers/InviteUsers';
 
-export default class Participants extends React.Component {
+class Participants extends React.Component {
 
-    constructor(props) {
+    constructor(props) {     
         super(props);
+        
+        this.groupService = new GroupService();
+
         this.state = {
             pagina: "",
-            id: this.props.id
-        };
-
-        this.groupService = new GroupService();
-        this.listarParticipantes();
+            idGrupo: this.props.id
+        }; 
+        
+        this.listarParticipantes();  
     }
 
     componentWillReceiveProps(proximoEstado) {
@@ -28,7 +30,7 @@ export default class Participants extends React.Component {
     }
 
     listarParticipantes() {
-        this.groupService.listarParticipantes(this.state.id, 0,
+        this.groupService.listarParticipantes(this.state.idGrupo, 0,
             (resultado) => {
                 console.log(resultado);
                 this.setarItem(resultado);
@@ -44,8 +46,8 @@ export default class Participants extends React.Component {
        
             return (
                 <div>
-                <InviteUsers idGrupo={this.state.id}/>
+                <InviteUsers idGrupo={this.state.idGrupo}/>
                 </div>
             );
     }
-}
+} export default Participants;

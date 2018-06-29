@@ -83,6 +83,24 @@ export default class GroupService extends ServicoRest {
 
         });
     }
+    
+    removerParticipante(idGrupo, idUsuario, sucesso, erro) {
+       fetch(`api/grupos/${idGrupo}/remover/${idUsuario}`, {
+            method: "DELETE",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization(),
+                'Content-Type': 'application/json'
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso();
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
 
     solicitar(id, idUsuario, sucesso, erro) {
         fetch(`api/grupos/${id}/solicitar/${idUsuario}`, {

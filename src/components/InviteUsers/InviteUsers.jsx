@@ -13,12 +13,24 @@ export default class InviteUsers extends React.Component {
     constructor(props) {
         super(props);
 
+        this.groupService = new GroupService();
+        
         this.state = {
             convidadosLista: [],
-            idGrupo: this.props.idGrupo,
-            pagina: ""
+            pagina: "",
+            idGrupo: this.props.idGrupo
         };
-        this.groupService = new GroupService();
+
+        this.groupService.listarGrupoEspecifico(this.props.idGrupo,
+                (resultado) => {
+                    this.setState({grupo: resultado});
+                },
+                (erro) => {
+                    console.log("Erro:");
+                    console.log(erro);
+                }
+            )
+
         this.listarParticipantes();
 
     }
@@ -85,7 +97,7 @@ export default class InviteUsers extends React.Component {
             idsUsuarios[i] = this.state.convidadosLista[i].id;
             i++;
         }
-        this.groupService.convidarParticipante(this.state.idGrupo, idsUsuarios,
+        this.groupService.convidarParticipante(this.state.grupo.id, idsUsuarios,
             (sucesso) => {
                 alert("Convites enviados com sucesso!");
                 let convidados=[];
@@ -105,7 +117,7 @@ export default class InviteUsers extends React.Component {
         if (this.state.pagina) {
             campoParticipantes = <div>
                 <p>Integrantes</p>
-                <ListParticipants pagina={this.state.pagina} icone={'pe-7s-close-circle'}/>
+                <ListParticipants idGrupo={this.state.idGrupo} pagina={this.state.pagina} icone='pe-7s-close-circle'/>
             </div>
         }
 
