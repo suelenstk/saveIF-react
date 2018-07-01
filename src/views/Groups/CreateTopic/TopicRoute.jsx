@@ -22,6 +22,7 @@ class RotaTopicos extends Component {
     render() {
         return <NewTopic
             grupo={this.props.grupo}
+            coordenador={this.props.coordenador}
             erroTopico={this.props.erroTopico}
             inserir={this.props.inserir}
             topic={this.props.topic}
@@ -42,6 +43,7 @@ export default class TopicRoute extends Component {
                             {...props}
                             inserir={this.props.inserir}
                             grupo={this.props.grupo}
+                            coordenador={this.props.coordenador}
                             erroTopico={this.props.erroTopico}
                             topic={this.props.topic}
                         />

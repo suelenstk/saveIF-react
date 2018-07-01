@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import avatar from "../../assets/img/faces/face-3.jpg";
 import UserChip from "../../elements/UserChip/UserChip"
 import GroupService from './GroupService';
-import servicoLogin from "../../login/ServicoLogin";
 
 class ListParticipants extends Component {
 
@@ -10,28 +9,29 @@ class ListParticipants extends Component {
         super(props);
         this.state = {chip: true, flagParticipante: false, idGrupo: this.props.idGrupo, coordenador: false};
         this.groupService = new GroupService();
-        
+
         //this.verificarCoordenador();
     }
-   /*
-    verificarCoordenador() {
-        this.state.grupo.coordenadoresGrupo.map((usuario) => {
-            if (this.props.idUsua === servicoLogin.getUsuario()) {
-                this.state.coordenador = true;
-            }
-        });
-    }*/
-   
+
+    /*
+     verificarCoordenador() {
+         this.state.grupo.coordenadoresGrupo.map((usuario) => {
+             if (this.props.idUsua === servicoLogin.getUsuario()) {
+                 this.state.coordenador = true;
+             }
+         });
+     }*/
+
     removeGrupo(usuario) {
         this.groupService.removerParticipante(this.state.idGrupo, usuario.id,
             (sucesso) => {
                 alert("Usuário (a) " + usuario.nome + " removido (a) com sucesso!");
-                window.location.reload ();
+                window.location.reload();
             },
             (erro) => {
                 console.log("Erro!");
                 console.log(erro);
-                alert (erro.message);
+                alert(erro.message);
             }
         );
     }
@@ -47,17 +47,17 @@ class ListParticipants extends Component {
                         nome={usuario.nome}
                         avatar={avatar}
                         alt={usuario.nome}
-                        class="addUserbtn" 
+                        class="addUserbtn"
                         largura="30%"
                         icone={this.props.icone}
                         colorIcon={this.state.colorIcon}
                         evento={() => {
                             this.removeGrupo(usuario)
-                        }}                
+                        }}
                     />
-                })}      
+                })}
             </div>
-            
+
 
         } else {
             return <div></div>

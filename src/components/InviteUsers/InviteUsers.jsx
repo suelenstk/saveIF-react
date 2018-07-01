@@ -1,7 +1,7 @@
 import React from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
-import { Card } from '../../components/Card/Card';
-import { UserChip } from '../../elements/UserChip/UserChip';
+import {Col, Grid, Row} from 'react-bootstrap';
+import {Card} from '../../components/Card/Card';
+import {UserChip} from '../../elements/UserChip/UserChip';
 import ServicoLogin from '../../login/ServicoLogin';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import UserSearch from "../../components/UserSearch/UserSearch";
@@ -14,7 +14,7 @@ export default class InviteUsers extends React.Component {
         super(props);
 
         this.groupService = new GroupService();
-        
+
         this.state = {
             convidadosLista: [],
             pagina: "",
@@ -22,21 +22,21 @@ export default class InviteUsers extends React.Component {
         };
 
         this.groupService.listarGrupoEspecifico(this.props.idGrupo,
-                (resultado) => {
-                    this.setState({grupo: resultado});
-                },
-                (erro) => {
-                    console.log("Erro:");
-                    console.log(erro);
-                }
-            )
+            (resultado) => {
+                this.setState({grupo: resultado});
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        );
 
         this.listarParticipantes();
 
     }
 
     componentWillReceiveProps(proximoEstado) {
-        this.setState({ group: proximoEstado.group });
+        this.setState({group: proximoEstado.group});
     }
 
     setarItem(paginaResultado) {
@@ -68,7 +68,6 @@ export default class InviteUsers extends React.Component {
             this.setState({
                 convidadosLista: convidados
             });
-
         }
     }
 
@@ -98,9 +97,9 @@ export default class InviteUsers extends React.Component {
             i++;
         }
         this.groupService.convidarParticipante(this.state.grupo.id, idsUsuarios,
-            (sucesso) => {
+            () => {
                 alert("Convites enviados com sucesso!");
-                let convidados=[];
+                let convidados = [];
                 this.setState({
                     convidadosLista: convidados
                 });
@@ -136,7 +135,7 @@ export default class InviteUsers extends React.Component {
                                     key={usuario.id}
                                     nome={usuario.nome}
                                     avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
-                                        ServicoLogin.getAuthorizationGet()}
+                                    ServicoLogin.getAuthorizationGet()}
                                     alt={usuario.nome}
                                     class="addUserbtn"
                                     icone="pe-7s-close-circle"
@@ -145,7 +144,7 @@ export default class InviteUsers extends React.Component {
                                     }}
                                 />
                             })}
-                            <br /><br />
+                            <br/><br/>
                             <Button
                                 bsStyle="danger"
                                 pullRight
@@ -156,8 +155,8 @@ export default class InviteUsers extends React.Component {
                                 }}
                             >
                                 Convidar
-                    </Button>
-                            <div className="clearfix" />
+                            </Button>
+                            <div className="clearfix"/>
                         </div>
                     }
                 />
@@ -166,7 +165,7 @@ export default class InviteUsers extends React.Component {
                 <Card
                     title="Convidados"
                     content={
-                        <div style={{ margin: "20px" }}>
+                        <div style={{margin: "20px"}}>
                             <p>Nenhum usuário adicionado!</p>
                         </div>
                     }
@@ -179,7 +178,7 @@ export default class InviteUsers extends React.Component {
                     <Col md={8}>
                         <Row>
                             {campoParticipantes}
-                            <br />
+                            <br/>
                             {campoConvidados}
                         </Row>
                     </Col>

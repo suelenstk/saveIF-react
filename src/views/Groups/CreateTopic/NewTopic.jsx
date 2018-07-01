@@ -8,7 +8,6 @@ import TopicService from './TopicService';
 import {Link} from 'react-router-dom';
 import Pager from "react-bootstrap/es/Pager";
 import UserChip from "../../../elements/UserChip/UserChip";
-import servicoLogin from "../../../login/ServicoLogin";
 
 export default class NewTopic extends React.Component {
 
@@ -26,25 +25,15 @@ export default class NewTopic extends React.Component {
             msgErro: "",
             erroTopico: this.props.erroTopico,
             grupo: this.props.grupo,
-            coordenador: false
+            coordenador: this.props.coordenador
         };
-        this.verificarCoordenador();
         this.topicService = new TopicService();
         this.listarTopicos(0);
-    }
-
-    verificarCoordenador() {
-        this.state.grupo.coordenadoresGrupo.map((usuario) => {
-            if (usuario.id === servicoLogin.getUsuario()) {
-                this.state.coordenador = true;
-            }
-        });
     }
 
     listarTopicos(pagina) {
         this.topicService.listarTopicosGrupo(this.state.grupo.id, pagina,
             (resultado) => {
-                //console.log(resultado);
                 this.setarTopico(resultado);
             },
             (erro) => {
@@ -61,7 +50,13 @@ export default class NewTopic extends React.Component {
     }
 
     componentWillReceiveProps(proximoEstado) {
-        this.setState({topic: proximoEstado.topic});
+        this.setState({
+            topic: proximoEstado.topic,
+            erroTopico: proximoEstado.erroTopico,
+            grupo: proximoEstado.grupo,
+            coordenador: proximoEstado.coordenador
+        });
+        this.listarTopicos(this.state.pagina);
     }
 
     setNome(valor) {
@@ -118,10 +113,8 @@ export default class NewTopic extends React.Component {
 
         } else if (this.state.topic.nome) {
             this.props.inserir(this.state.topic,
-                (sucesso) => {
-                    console.log(sucesso);
+                () => {
                     this.listarTopicos(this.state.pagina);
-                    console.log("Topico criado! e atualizado??");
                 }
             );
             this.setConfigNovoTopico();
@@ -130,7 +123,7 @@ export default class NewTopic extends React.Component {
         }
     }
 
-    verTopico(id, topico) {
+    static verTopico(id, topico) {
         return (topico.nome === 'Geral') ? `MyGroups/${id}/geral` : `MyGroups/${id}/posts/${topico.id}`;
     }
 
@@ -193,14 +186,15 @@ export default class NewTopic extends React.Component {
                                 <Table responsive>
                                     {this.state.topico.content.map((topico) => {
                                         return <Link key={topico.id}
-                                                     to={{pathname: `/${this.verTopico(this.state.grupo.id, topico)}`}}>
+                                                     to={{pathname: `/${NewTopic.verTopico(this.state.grupo.id, topico)}`}}>
                                             <UserChip
                                                 value={this.state.grupo.id}
                                                 key={this.state.grupo.id}
                                                 nome={topico.nome}
                                                 alt={topico.nome}
-                                                topico="pe-7s-folder"
+                                                topico={topico.dataFinalizacao ? "pe-7s-check" : "pe-7s-folder"}
                                                 largura="30%"
+                                                resolvido={!!topico.dataFinalizacao}
                                             />
                                         </Link>
                                     })}

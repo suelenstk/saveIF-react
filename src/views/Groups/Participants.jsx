@@ -1,21 +1,19 @@
 import React from 'react';
-import {Col, ControlLabel, FormControl, FormGroup, HelpBlock, Modal, Radio, Row} from 'react-bootstrap';
-import ListParticipants from './ListParticipants';
 import GroupService from './GroupService';
 import InviteUsers from '../../components/InviteUsers/InviteUsers';
 
 class Participants extends React.Component {
 
-    constructor(props) {     
+    constructor(props) {
         super(props);
-        
+
         this.groupService = new GroupService();
         this.state = {
             pagina: "",
             idGrupo: this.props.id
-        }; 
-        
-        this.listarParticipantes();  
+        };
+
+        this.listarParticipantes();
     }
 
     componentWillReceiveProps(proximoEstado) {
@@ -42,11 +40,13 @@ class Participants extends React.Component {
     }
 
     render() {
-       
-            return (
-                <div>
+
+        return (
+            <div>
                 <InviteUsers idGrupo={this.state.idGrupo}/>
-                </div>
-            );
+            </div>
+        );
     }
-} export default Participants;
+}
+
+export default Participants;

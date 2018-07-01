@@ -35,19 +35,38 @@ class GroupView extends Component {
             tipoAlert: "",
             msgAlert: "",
             participantes: false,
-            grupo: this.groupService.listarGrupoEspecifico(this.props.id,
-                (resultado) => {
-                    this.setState({grupo: resultado});
-                    (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
-                },
-                (erro) => {
-                    console.log("Erro:");
-                    console.log(erro);
-                }
-            )
+            grupo: this.buscaGrupo()
         };
+    }
 
-        // (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
+    componentWillReceiveProps(proximoEstado) {
+        this.setState(
+            (estado) => estado.topico.id = proximoEstado.idt
+        );
+        this.buscaGrupo();
+    }
+
+    buscaGrupo() {
+        this.groupService.listarGrupoEspecifico(this.props.id,
+            (resultado) => {
+                this.setState({grupo: resultado});
+                this.verificarCoordenador();
+                (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        )
+    }
+
+    verificarCoordenador() {
+        this.state.coordenador = false;
+        this.state.grupo.coordenadoresGrupo.map((usuario) => {
+            if (usuario.id === servicoLogin.getUsuario()) {
+                this.state.coordenador = true;
+            }
+        });
     }
 
     setarItem(paginaResultado) {
@@ -75,6 +94,19 @@ class GroupView extends Component {
         });
     }
 
+    marcarTopicoResolvido() {
+        this.topicService.marcarTopicoResolvido(
+            this.state.grupo.id, this.state.topico.id,
+            () => {
+                this.listarPostEspecifico(this.state.paginaAtual);
+            },
+            (erro) => {
+                console.log("Erro:");
+                console.log(erro);
+            }
+        )
+    }
+
     loading(value) {
         this.setState({
             loading: value
@@ -82,6 +114,7 @@ class GroupView extends Component {
     }
 
     listar(pagina) {
+        this.setState({topicoGeral: true});
         this.postService.listarPostGeral(this.props.id, pagina,
             (resultado) => {
                 //console.log(resultado);
@@ -97,7 +130,6 @@ class GroupView extends Component {
     listarPostEspecifico(pagina) {
         this.postService.listarPostEspecifico(this.state.grupo.id, this.state.topico.id, pagina,
             (resultado) => {
-                console.log(resultado);
                 this.setarItem(resultado);
             },
             (erro) => {
@@ -111,7 +143,6 @@ class GroupView extends Component {
     listarTopicoEspecifico() {
         this.topicService.listarTopicosEspecifico(this.state.topico.id,
             (resultado) => {
-                console.log(resultado);
                 this.setarTopico(resultado);
             },
             (erro) => {
@@ -119,7 +150,6 @@ class GroupView extends Component {
                 console.log(erro);
             }
         );
-
     }
 
     setarGrupo(resultado) {
@@ -127,7 +157,6 @@ class GroupView extends Component {
             grupo: resultado
         });
     }
-
 
     listarGrupo() {
         this.groupService.listarGrupoEspecifico(this.state.grupo.id,
@@ -186,10 +215,9 @@ class GroupView extends Component {
 
     }
 
-    data(date) {
+    static data(date) {
         if (date !== undefined) {
             let dateParts = date.split("-");
-
             return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
         } else {
             return "";
@@ -224,11 +252,38 @@ class GroupView extends Component {
     }
 
     render() {
-
         if (this.state.participantes) {
             return this.state.participantes;
         }
         let aviso = null;
+        let resolvido = <div>
+            <br/><br/>
+        </div>;
+
+        if (this.state.topico.dataFinalizacao) {
+            resolvido = <Alert bsStyle="success" id="res">
+                Tópico Resolvido
+                {/*<i className="pe-7s-check"/>*/}
+            </Alert>
+        } else if (this.state.coordenador) {
+            if (this.state.topico.id) {
+                resolvido = <div>
+                    <Button
+                        onClick={(e) => {
+                            this.marcarTopicoResolvido();
+                        }}
+                        className="btnResolvido"
+                    >
+                        Marcar tópico como resolvido
+                    </Button>
+                    <br/><br/>
+                </div>
+            } else {
+                resolvido = <div>
+                    <br/><br/>
+                </div>
+            }
+        }
 
         if (this.state.msgAlert !== "") {
 
@@ -241,7 +296,7 @@ class GroupView extends Component {
             </Alert>
         }
 
-        if (!this.state.grupo) {
+        if (!this.state.grupo || this.state.coordenador == null) {
             return <div/>;
         } else return (
             <div className="content">
@@ -251,24 +306,30 @@ class GroupView extends Component {
                     <h1 style={{fontSize: '30px'}}>{this.state.grupo.nome} - {(this.state.topico.id) ?
                         this.state.topico.nome : "Geral"}</h1>
 
+
                     <small>{(this.state.topico.id && this.state.topico.criadorTopico) ?
                         "Criador do Tópico: " + this.state.topico.criadorTopico.nome + ", Data: "
-                        + this.data(this.state.topico.dataCriacao) :
-                        +(this.state.grupo.donoGrupo !== undefined) ? "Data: " + this.data(this.state.grupo.dataCriacao)
+                        + GroupView.data(this.state.topico.dataCriacao) :
+                        +(this.state.grupo.donoGrupo !== undefined) ? "Data: " + GroupView.data(this.state.grupo.dataCriacao)
                             + " - Dono do Grupo: " + this.state.grupo.donoGrupo.nome : ""}</small>
-                    <br/><br/>
-                    <Button bsStyle="default"
-                            bsSize="small"
-                            fill
-                            onClick={(e) => {
-                                this.irParticipants();
-                            }}>
+                    <br/>
+                    {resolvido}
+                    <Button
+                        bsStyle="default"
+                        bsSize="small"
+                        fill
+                        onClick={(e) => {
+                            this.irParticipants();
+                        }}
+                    >
                         Participantes
                     </Button>
 
-                    <Button onClick={(e) => {
-                        this.abrirEditGroup();
-                    }} style={{border: "0", backgroundColor: "transparent", color: "red", float: "right"}}
+                    <Button
+                        onClick={(e) => {
+                            this.abrirEditGroup();
+                        }}
+                        style={{border: "0", backgroundColor: "transparent", color: "red", float: "right"}}
                     >
                         Editar Grupo
                     </Button>
@@ -283,27 +344,29 @@ class GroupView extends Component {
                                 title="Postagens"
                                 content={
                                     <from>
-                                        <Button
-                                            className="btnSaveif"
-                                            pullRight
-                                            fill
-                                            onClick={(e) => {
-                                                this.abrirNovoPost();
-                                            }}
-                                        >
-                                            Novo Post
-                                        </Button>
+                                        {!this.state.topico.dataFinalizacao ?
+                                            <Button
+                                                className="btnSaveif"
+                                                pullRight
+                                                fill
+                                                onClick={(e) => {
+                                                    this.abrirNovoPost();
+                                                }}
+                                            >
+                                                Novo Post
+                                            </Button>
+                                            : ""}
 
                                         <PostList posts={this.state.pagina}/>
 
                                         <div className="clearfix"/>
-
                                     </from>
                                 }
                             />
                         </Col>
                         <TopicCard
                             grupo={this.state.grupo}
+                            coordenador={this.state.coordenador}
                             mostraErro={(erro, tipo) => {
                                 this.setAlert(erro, tipo);
                             }}
@@ -316,7 +379,8 @@ class GroupView extends Component {
                     idGrupo={this.state.grupo.id}
                             />*/}
 
-                    {this.state.showEditGroup ? <EditGroup
+                    {this.state.showEditGroup ?
+                        <EditGroup
                             voltarEditGroup={() => {
                                 this.setState({showEditGroup: false});
                             }}
@@ -338,8 +402,7 @@ class GroupView extends Component {
                                 );
                             }}
                             group={this.state.grupo}
-                        />
-                        : ""}
+                        /> : ""}
 
                     <NewPost
                         voltar={() => {

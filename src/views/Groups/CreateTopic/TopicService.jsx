@@ -1,11 +1,10 @@
-
 import servicoLogin from "../../../login/ServicoLogin";
 
 export default class TopicService {
-        
+
     inserirEmGrupo(item, idGrupo, sucesso, erro) {
-        console.log(item);
-       
+        // console.log(item);
+
         fetch(`api/topicos/${idGrupo}`, {
             method: "POST",
             headers: new Headers({
@@ -22,18 +21,18 @@ export default class TopicService {
                 )
             }
 
-        });            
-        
+        });
+
     }
-    
-    listarTopicosGrupo(id,pagina,sucesso, erro) {
+
+    listarTopicosGrupo(id, pagina, sucesso, erro) {
 
 
         let trataFetch = (resultado) => {
 
             if (resultado.ok) {
                 resultado.json().then(sucesso)
-             
+
             } else {
                 resultado.json().then(
                     (resultadoErro) => erro(resultadoErro)
@@ -44,7 +43,6 @@ export default class TopicService {
         fetch(`api/grupos/${id}/topicos?pagina=` + pagina, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
-
             }),
             method: "GET"
         }).then(trataFetch);
@@ -57,7 +55,7 @@ export default class TopicService {
 
             if (resultado.ok) {
                 resultado.json().then(sucesso)
-              
+
             } else {
                 resultado.json().then(
                     (resultadoErro) => erro(resultadoErro)
@@ -73,7 +71,22 @@ export default class TopicService {
             method: "GET"
         }).then(trataFetch);
     }
-    
-    
+
+    marcarTopicoResolvido(idGrupo, idTopico, sucesso, erro) {
+        fetch(`api/grupos/${idGrupo}/topicos/${idTopico}/resolvido`, {
+            method: "PUT",
+            headers: new Headers({
+                'Authorization': servicoLogin.getAuthorization()
+            })
+        }).then((resultado) => {
+            if (resultado.ok) {
+                sucesso()
+            } else {
+                resultado.json().then(
+                    (resultadoErro) => erro(resultadoErro)
+                )
+            }
+        });
+    }
 
 }

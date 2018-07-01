@@ -624,7 +624,7 @@ a, p, .alert-info a {
     border-color: #ED3846;
 }
 
-.btnSecondAction:hover, .btnSecondAction:active, .btnSecondAction:active:hover {
+.btnSecondAction:hover, .btnSecondAction:active, .btnSecondAction:active:hover, .btnResolvido:hover, .btnResolvido:active, .btnResolvido:active:hover {
     background-color: #FFFFFF;
     color: #C0313C;
     border-color: #C0313C;
@@ -654,6 +654,29 @@ a, p, .alert-info a {
     font-weight: bold;
     opacity: 1;
     font-size: 12pt;
+}
+
+.btnResolvido {
+    background-color: #FFFFFF;
+    border-color: #ED3846;
+    border-width: 1px;
+    color: #ED3846;
+    padding: 5px 10px;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+#res {
+    margin-top: 10px;
+    border-color: #3c763d;
+    border-width: 1px;
+    padding: 5px 10px;
+    opacity: 1;
+    color: #3c763d;
+    background-color: #dff0d8;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
 }
 
 .btnLoginGoogle, .btnLoginGoogle:focus {
@@ -699,6 +722,10 @@ a, p, .alert-info a {
     border-radius: 25px;
     background-color: #f1f1f1;
     margin-bottom: 6px;
+}
+
+#resolvido {
+    color: #3c763d;
 }
 
 .chip img {
