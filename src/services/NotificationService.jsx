@@ -15,7 +15,7 @@ class NotificationService {
             }
         };
 
-        fetch(`/api/usuarios/${id}/notificacoes`, {
+        fetch(`/api/usuarios/${id}/notificacoes?pagina=`+ pagina, {
             headers: new Headers({
                 'Authorization': servicoLogin.getAuthorization(),
 
