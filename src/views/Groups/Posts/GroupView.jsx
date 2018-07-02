@@ -158,18 +158,18 @@ class GroupView extends Component {
         });
     }
 
-    listarGrupo() {
-        this.groupService.listarGrupoEspecifico(this.state.grupo.id,
-            (resultado) => {
-                console.log(resultado);
-                this.setarGrupo(resultado);
-            },
-            (erro) => {
-                console.log("Erro:");
-                console.log(erro);
-            }
-        );
-    }
+    // listarGrupo() {
+    //     this.groupService.listarGrupoEspecifico(this.state.grupo.id,
+    //         (resultado) => {
+    //             console.log(resultado);
+    //             this.setarGrupo(resultado);
+    //         },
+    //         (erro) => {
+    //             console.log("Erro:");
+    //             console.log(erro);
+    //         }
+    //     );
+    // }
 
     setAlert(msg, tipo) {
         this.setState({
@@ -224,26 +224,26 @@ class GroupView extends Component {
         }
     }
 
-    editarComCategorias(id, item, idCategoria, sucesso, erro) {
-        console.log(item);
-        fetch(`api/grupos/${id}/${idCategoria}`, {
-            method: "PUT",
-            headers: new Headers({
-                'Authorization': servicoLogin.getAuthorization(),
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify(item)
-        }).then((resultado) => {
-            if (resultado.ok) {
-                sucesso();
-            } else {
-                resultado.json().then(
-                    (resultadoErro) => erro(resultadoErro)
-                )
-            }
-
-        });
-    }
+    // editarComCategorias(id, item, idCategoria, sucesso, erro) {
+    //     console.log(item);
+    //     fetch(`api/grupos/${id}/${idCategoria}`, {
+    //         method: "PUT",
+    //         headers: new Headers({
+    //             'Authorization': servicoLogin.getAuthorization(),
+    //             'Content-Type': 'application/json'
+    //         }),
+    //         body: JSON.stringify(item)
+    //     }).then((resultado) => {
+    //         if (resultado.ok) {
+    //             sucesso();
+    //         } else {
+    //             resultado.json().then(
+    //                 (resultadoErro) => erro(resultadoErro)
+    //             )
+    //         }
+    //
+    //     });
+    // }
 
     irParticipants() {
         this.setState({
@@ -269,7 +269,7 @@ class GroupView extends Component {
             if (this.state.topico.id) {
                 resolvido = <div>
                     <Button
-                        onClick={(e) => {
+                        onClick={() => {
                             this.marcarTopicoResolvido();
                         }}
                         className="btnResolvido"
@@ -318,21 +318,22 @@ class GroupView extends Component {
                         bsStyle="default"
                         bsSize="small"
                         fill
-                        onClick={(e) => {
+                        onClick={() => {
                             this.irParticipants();
                         }}
                     >
                         Participantes
                     </Button>
-
-                    <Button
-                        onClick={(e) => {
-                            this.abrirEditGroup();
-                        }}
-                        style={{border: "0", backgroundColor: "transparent", color: "red", float: "right"}}
-                    >
-                        Editar Grupo
-                    </Button>
+                    {this.state.coordenador ?
+                        <Button
+                            onClick={() => {
+                                this.abrirEditGroup();
+                            }}
+                            style={{border: "0", backgroundColor: "transparent", color: "red", float: "right"}}
+                        >
+                            Editar Grupo
+                        </Button> : ""
+                    }
 
                 </div>
 
@@ -349,7 +350,7 @@ class GroupView extends Component {
                                                 className="btnSaveif"
                                                 pullRight
                                                 fill
-                                                onClick={(e) => {
+                                                onClick={() => {
                                                     this.abrirNovoPost();
                                                 }}
                                             >
