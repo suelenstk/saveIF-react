@@ -62,7 +62,6 @@ class ListParticipants extends Component {
     render() {
         if (this.props.pagina.content) {
             console.log(this.props.pagina);
-
             if (this.props.coordenadoresGrupo) {
                 return <div className="content">
                     {this.props.pagina.content.map((usuario) => {
@@ -92,6 +91,25 @@ class ListParticipants extends Component {
                             eventoDisplay2={coordena}
                         />
                     })}
+                </div>
+            } else {
+                return <div className="content">
+                    {this.props.pagina.content.map((usuario) => {
+                        return <UserChip
+                            value={usuario.id}
+                            key={usuario.id}
+                            nome={usuario.nome}
+                            avatar={avatar}
+                            alt={usuario.nome}
+                            class="addUserbtn"
+                            largura="30%"
+                            icone={this.props.icone}
+                            colorIcon={this.state.colorIcon}
+                            evento={() => {
+                                this.removeGrupo(usuario)
+                            }}
+                        />
+                })}
                 </div>
             }
 
