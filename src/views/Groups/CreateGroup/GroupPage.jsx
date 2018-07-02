@@ -76,27 +76,6 @@ class GroupPage extends React.Component {
         });
     }
 
-    // editarComCategorias(id, item, idCategoria, sucesso, erro) {
-    //     console.log(item);
-    //     fetch(`api/grupos/${id}/${idCategoria}`, {
-    //         method: "PUT",
-    //         headers: new Headers({
-    //             'Authorization': servicoLogin.getAuthorization(),
-    //             'Content-Type': 'application/json'
-    //         }),
-    //         body: JSON.stringify(item)
-    //     }).then((resultado) => {
-    //         if (resultado.ok) {
-    //             sucesso();
-    //         } else {
-    //             resultado.json().then(
-    //                 (resultadoErro) => erro(resultadoErro)
-    //             )
-    //         }
-    //
-    //     });
-    // }
-
     btnIrParaGrupo() {
         this.setState({
             concluded: <Redirect to={"/MyGroups/" + this.state.group.id + "/geral"}/>

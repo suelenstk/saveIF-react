@@ -1,15 +1,18 @@
 import React from 'react';
 import {Col, Image, Row} from 'react-bootstrap';
 import Card from '../../../components/Card/Card';
-import anexoTeste from '../../../img/anexoTeste.JPG';
 import InfiniteScroll from "react-infinite-scroll-component";
 import {UserChip} from '../../../elements/UserChip/UserChip';
 import ServicoLogin from '../../../login/ServicoLogin';
+import doc from "../../../assets/img/doc.png";
+import ppt from "../../../assets/img/ppt.png";
+import pdf from "../../../assets/img/pdf.png";
+import outro from "../../../assets/img/outro.png";
 
 
 const imgStyle = {
     float: 'right',
-    marginRight: '55px',
+    marginRight: '10px'
 };
 
 let posts = Array.from({length: 10});
@@ -22,15 +25,12 @@ export default class PostList extends React.Component {
         super(props);
         this.state = {           
             items: Array.from({length: 10}),
-            hasMore: true
+            hasMore: true,
+            file: null
         };
-        
-        //console.log(posts);
     }
 
     data(date) {
-        //console.log(date);
-
         let dateParts = date.split("-");
 
         return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
@@ -68,6 +68,16 @@ export default class PostList extends React.Component {
          </div>
     }
 
+    mostraArquivo (arquivo) {
+        let extensao = arquivo.nomeAnexo.split(".")[arquivo.nomeAnexo.split(".").length - 1];
+        return extensao === "png" || extensao === "tiff" || extensao === "jpg" || extensao === "jpeg" || extensao === "bmp" ?
+        <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} responsive width={50}/></a>
+        : extensao === "doc" || extensao === "docx" ? <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={doc} responsive width={50}/></a>
+        : extensao === "ppt" || extensao === "pptx" ? <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={ppt} responsive width={50}/></a>
+        : extensao === "pdf" ? <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={pdf} responsive width={50}/></a> 
+        : <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={outro} responsive width={50}/></a> 
+    }
+//this.posts[index].anexoPost.nomeAnexo.split(".")[this.posts[index].anexoPost.nomeAnexo.split(".").length - 1]
 
     render() {
 
@@ -75,8 +85,9 @@ export default class PostList extends React.Component {
 
         if (posts !== "") {
             if(this.posts.length !== 0){
+     
             return <Row>
-
+                
                 <Col md={12}>
                     <InfiniteScroll
                         dataLength={this.state.items.length}
@@ -97,28 +108,26 @@ export default class PostList extends React.Component {
                                             <Col lg={12} md={12} sm={12} xs={12}>
                                                 <div style={imgStyle}>
                                                     {(this.posts[index].anexoPost) ?
-                                                        <Image src={anexoTeste} responsive width={30}/> : ""}
-                                                    {/*<p style={{textAling:'center'}}>{post.anexoPost.nomeAnexo}</p>*/}
+                                                        <div>
+                                                            {this.mostraArquivo(this.posts[index].anexoPost)} 
+                                                            <p style={{width: '80px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{this.posts[index].anexoPost.nomeAnexo}</p>                
+                                                        </div>
+                                                        : ""
+                                                        }
                                                 </div>
-                                                <p className="h5">{this.posts[index].texto}</p>
+                                                <p style={{width: '480px', textAlign: 'justify'}}>{this.posts[index].texto}</p>
                                                 <small>Postado por:
                                                 {this.exibirAutor(this.posts[index].autorPost)}
                                                 Data da postagem: {this.data(this.posts[index].dataPostagem)}.</small>
-                                            </Col>
-                                            
-                                          
+                                            </Col>    
                                         </Row>       
                                     }
-
                                 />
                             } else {
                                 return <div key={index}/>
                             }
-
-
                         })}
-                    </InfiniteScroll>
-                    
+                    </InfiniteScroll>    
                     
                 </Col>
             </Row>

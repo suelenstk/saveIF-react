@@ -287,7 +287,6 @@ class GroupView extends Component {
                                             bsStyle="danger"
                                             pullRight
                                             fill
-
                                             onClick={(e) => {
                                                 this.abrirNovoPost();
                                             }}

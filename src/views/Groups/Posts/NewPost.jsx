@@ -48,7 +48,6 @@ export default class NewPost extends React.Component {
         );
     }
 
-
     setExtensaoArquivo(extensao, arquivo) {
         this.setState({
             extensaoArquivo: extensao,

@@ -188,27 +188,23 @@ export default class GroupList extends Component {
 
                                     <Col lg={12} xs={12} className="text-center">
 
-                                        <p style={{fontWeight: "bold"}}>
+
+                                {/*Sugestão modificações*/}
+                                        <p style={{}}>
                                             Grupo {grupo.tipoPrivacidade}<i
                                             className={this.testarIcone(grupo.tipoPrivacidade)}
                                             title={this.descricao(grupo.tipoPrivacidade)}
                                             style={{
-                                                fontWeight: "bold",
                                                 color: this.mudarCor(grupo.tipoPrivacidade),
                                                 marginLeft: 5
-                                            }}/>
-                                        </p>
-
-                                        <p style={{fontWeight: "bold"}}>
+                                            }}/><br/>
                                             {(this.verificarUsuario(this.props.user, grupo.integrantesGrupo) && this.props.rota !== "MyGroups") ?
                                                 "Você é integrante desse grupo" :
                                                 (this.verificarUsuario(this.props.user, grupo.solicitantesGrupo) ?
                                                     "Você já solicitou a participação neste grupo" :
                                                     "")}</p>
-
-
                                         {this.botaoVerMais(grupo)}
-
+                    
                                         <br/><br/>
 
                                     </Col>
