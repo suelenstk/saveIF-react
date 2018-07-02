@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { FormControl, FormGroup } from 'react-bootstrap';
+import {FormControl, FormGroup} from 'react-bootstrap';
 import InputGroup from "react-bootstrap/es/InputGroup";
-import { Card } from '../../components/Card/Card.jsx';
-import { UserChip } from '../../elements/UserChip/UserChip';
+import {Card} from '../../components/Card/Card.jsx';
+import {UserChip} from '../../elements/UserChip/UserChip';
 import ServicoLogin from '../../login/ServicoLogin';
 import Button from "react-bootstrap/es/Button";
 import listUserService from "../../services/ListUserService";
@@ -45,15 +45,15 @@ class UserSearch extends React.Component {
     pesquisar(pagina) {
         listUserService.pesquisarPaginadoNaoEstaGrupo(
             this.state.nome, pagina, this.state.idGrupo,
-            (sucesso) => {        
-                this.setState({ listaUsuario: sucesso });
+            (sucesso) => {
+                this.setState({listaUsuario: sucesso});
                 this.removeUsuarioLista();
             },
             (erro) => {
                 console.log(erro);
             }
         );
-        this.setState({ pagina: pagina });
+        this.setState({pagina: pagina});
     }
 
     sleep(tempo) {
@@ -64,8 +64,8 @@ class UserSearch extends React.Component {
     // entretanto, isso obriga ele a fazer muitas requisicoes.
     // Podemos remove-lo, caso o desempenho seja mais vantajoso.
     setNome(nome) {
-        this.setState({ nome: nome });
-        this.setState({ pagina: 0 });
+        this.setState({nome: nome});
+        this.setState({pagina: 0});
         this.sleep(200).then(() => {
             this.pesquisar(this.state.pagina);
         });
@@ -81,7 +81,7 @@ class UserSearch extends React.Component {
         let i = 0;
         if (this.state.listaUsuario.totalPages && this.props.convidados) {
             while (i < this.props.convidados.length) {
-                this.state.listaUsuario.content.map((usuario, index, array) => this.props.convidados[i].id == usuario.id ? array.splice(index, 1) : "");
+                this.state.listaUsuario.content.map((usuario, index, array) => this.props.convidados[i].id === usuario.id ? array.splice(index, 1) : "");
                 i++;
             }
         }
@@ -108,7 +108,7 @@ class UserSearch extends React.Component {
                             key={usuario.id}
                             nome={usuario.nome}
                             avatar={`/api/usuarios/` + usuario.id + `/imagem?` +
-                                ServicoLogin.getAuthorizationGet()}
+                            ServicoLogin.getAuthorizationGet()}
                             alt={usuario.nome}
                             class="addUserbtn"
                             icone="pe-7s-add-user"
@@ -121,7 +121,7 @@ class UserSearch extends React.Component {
                 </div>
         } else {
             campoUsuario =
-                <div style={{ margin: "20px" }}>
+                <div style={{margin: "20px"}}>
                     <p>Nenhum usuário encontrado!</p>
                 </div>
         }
@@ -130,7 +130,7 @@ class UserSearch extends React.Component {
             <Card
                 title="Pesquisar usuários"
                 content={
-                    <div style={{ overflow: "auto", height: "415px" }}>
+                    <div style={{overflow: "auto", height: "415px"}}>
                         <form onSubmit={(event) => {
                             event.preventDefault();
                             this.pesquisar(0)
@@ -139,7 +139,7 @@ class UserSearch extends React.Component {
                                 <InputGroup>
                                     <InputGroup.Button>
                                         <Button className="btnSearch" type="submit">
-                                            <i className="fa fa-search" />
+                                            <i className="fa fa-search"/>
                                         </Button>
                                     </InputGroup.Button>
                                     <FormControl

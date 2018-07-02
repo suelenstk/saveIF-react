@@ -10,9 +10,8 @@ export default class TopicCard extends Component {
         this.state = {
             topic: {},
             lista: {},
-            grupo: this.props.grupo,
+            grupo: this.props.grupo
         };
-
         this.topicService = new TopicService();
     }
 
@@ -24,6 +23,7 @@ export default class TopicCard extends Component {
         return (
             <TopicRoute
                 grupo={this.state.grupo}
+                coordenador={this.props.coordenador}
                 erroTopico={this.state.erro}
                 inserir={(topic, sucesso) => {
                     this.topicService.inserirEmGrupo(topic, this.state.grupo.id,

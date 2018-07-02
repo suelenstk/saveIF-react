@@ -64,7 +64,8 @@ class Recover extends React.Component {
             (sucesso) => {
                 this.setState({cadastro: false});
                 //alert("Usuário cadastrado com sucesso!");
-                this.setState({sucesso: <Redirect to="/"/>});
+                this.setState({sucesso: true,
+                    avisoUsuario:""});
             },
             (erro) => {
                 //console.log("Erro!");
@@ -77,6 +78,8 @@ class Recover extends React.Component {
     } 
     
     confirmar(){
+        
+      if(this.state.usuario.email){
         if(this.state.usuario.novaSenha && this.state.confirmarSenha){
             if (this.state.usuario.novaSenha === this.state.confirmarSenha) {               
                 this.alterarSenha();                            
@@ -84,6 +87,13 @@ class Recover extends React.Component {
                 this.setState({confirmaSenha: "",
                                avisoUsuario:"As senhas digitadas não coincidem!"});
             }          
+        }else{
+            this.setState({confirmaSenha:"", 
+                avisoUsuario:"campos senha e nova senha devem ser preenchidos!"});
+        }
+        }else{
+            this.setState({confirmaSenha:"",
+                avisoUsuario:"Campo E-mail não pode ficar em branco!"});
         }
     }
     
@@ -106,12 +116,13 @@ class Recover extends React.Component {
         
         if (this.state.sucesso){
             
-            
-              $msg = (<Alert bsStyle="success">
-                    Senha alterada com sucesso!
-              </Alert>);
-            
+            $msg = (<Alert bsStyle="success">
+                    Senha alterada com sucesso!;
+                    <i className="pe-7s-check Id Idt-jump-in"/>
+                    </Alert>);
         }
+            
+         
         
         return (
             <div className="wrapper">
@@ -141,7 +152,7 @@ class Recover extends React.Component {
                                                         type="text"
                                                         value={(this.state.usuario.email === "Email")?"":this.state.usuario.email}
                                                         onChange={(e) => this.setUsuario("email",e.target.value)} 
-                                                        placeholder="Digite seu E-mail"
+                                                        placeholder="Digite seu E-mail"   
                                                         required
                                                         disabled={alterar}
                                                     />
@@ -155,6 +166,7 @@ class Recover extends React.Component {
                                                         value={this.state.codigo}
                                                         onChange={(e) => this.setCodigo(e.target.value)}
                                                         placeholder="Código de Verificação"
+                                                        maxlenght="20"
                                                         required
                                                     />
                                                 </FormGroup>
@@ -204,7 +216,7 @@ class Recover extends React.Component {
                         </Row>
                     </Grid>
                 </div>
-                {this.state.sucesso}
+                {(this.state.sucesso)?setTimeout(function(){ window.location.href = "/", 2000}):""}
             </div>
         );
         

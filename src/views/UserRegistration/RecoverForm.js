@@ -53,7 +53,8 @@ export default class RecoverForm extends React.Component {
     enviar(){
        
       this.setErrorEmail("","");
-
+      
+      if(this.state.email){
         this.UserService.consultarEmail(
             this.state.email,
             (sucesso) => {
@@ -74,7 +75,9 @@ export default class RecoverForm extends React.Component {
             }
         );
             
-            
+      }else{
+          this.setErrorEmail("error","Campo E-mail não pode ficar em branco!");
+      }
     }
     
     inserirCodigo(usuario){
@@ -132,7 +135,7 @@ export default class RecoverForm extends React.Component {
                     <form>
 
                         <FormGroup controlId="formControlsText">
-                            <ControlLabel>Digite E-mail para ser enviado:</ControlLabel>
+                            <ControlLabel>Digite o E-mail para ser gerado e enviado um código de recuperação:</ControlLabel>
                             <FormControl
                                 type="text"
                                 placeholder="E-mail"

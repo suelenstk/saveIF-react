@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Col, FormControl, FormGroup, Grid, Row} from 'react-bootstrap';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
 import logo from '../../assets/img/logoMaior.png';
-import google from '../../assets/img/sign-in-with-google.svg';
 import servicoLogin from "../../login/ServicoLogin";
 import ControlLabel from "react-bootstrap/es/ControlLabel";
 import HelpBlock from "react-bootstrap/es/HelpBlock";
@@ -115,7 +114,7 @@ class Login extends Component {
                                         <br/>
                                     </div>
                                     <Button
-                                        style={{width: "100%"}}
+                                        style={{width: "100%", fontWeight: "bold", fontSize: "12pt"}}
                                         className="btnSaveif"
                                         block
                                         fill
@@ -123,12 +122,12 @@ class Login extends Component {
                                     >
                                         Entrar
                                     </Button>
-                                    <Button
-                                        className="btnLoginGoogle"
-                                        block
-                                    >
-                                        <img src={google} alt="Logo google" className="google"/>Login com Google
-                                    </Button>
+                                    {/*<Button*/}
+                                    {/*className="btnLoginGoogle"*/}
+                                    {/*block*/}
+                                    {/*>*/}
+                                    {/*<img src={google} alt="Logo google" className="google"/>Login com Google*/}
+                                    {/*</Button>*/}
                                     <div>
                                         <br/>
                                         <p>

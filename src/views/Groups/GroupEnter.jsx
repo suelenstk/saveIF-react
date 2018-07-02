@@ -3,9 +3,9 @@ import {Col, Grid, Image, Row} from 'react-bootstrap';
 import ListParticipants from './ListParticipants.jsx';
 import Card from '../../components/Card/Card';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
-import {Link} from 'react-router-dom';
 import GroupService from './GroupService';
 import ServicoLogin from '../../login/ServicoLogin';
+import Alert from "react-bootstrap/es/Alert";
 
 class GroupEnter extends Component {
 
@@ -20,11 +20,9 @@ class GroupEnter extends Component {
             pagina: ""
         };
 
-        //console.log(this.props.id);
         this.GroupService = new GroupService();
         this.listarGrupo();
         this.listarParticipantes();
-
     }
 
     setarItem(paginaResultado) {
@@ -43,7 +41,6 @@ class GroupEnter extends Component {
     listarParticipantes() {
         this.GroupService.listarParticipantes(this.state.id, 0,
             (resultado) => {
-                console.log(resultado);
                 this.setarItem(resultado);
             },
             (erro) => {
@@ -56,8 +53,8 @@ class GroupEnter extends Component {
     listarGrupo() {
         this.GroupService.listarGrupoEspecifico(this.state.id,
             (resultado) => {
-                // console.log(resultado);
                 this.setarGrupo(resultado);
+                this.verificarSolicitante();
             },
             (erro) => {
                 console.log("Erro:");
@@ -66,103 +63,74 @@ class GroupEnter extends Component {
         );
     }
 
-    //simulação da solicitação
     confirmar() {
-        //insere a id do usuário solicitante
-        //this.state.grupo.solicitantesGrupo[0] = {id:this.state.idUsuario}
-
-        //alert(this.state.grupo.solicitantesGrupo[0].id);
-        //alert(this.state.solicitar);
-        //manda para atualzar no banco de dados
         this.state.solicitar(this.state.id, this.state.idUsuario);
-
+        this.setState({solicitante: true});
     }
 
-    verificarSolicitante(id, solicitantesGrupo) {
-
-        for (let i = 0; i < solicitantesGrupo.length; i++) {
-            if (id === solicitantesGrupo[i].id) {
-                return false;
+    verificarSolicitante() {
+        let resultado = false;
+        for (let i = 0; i < this.state.grupo.solicitantesGrupo.length; i++) {
+            if (this.state.idUsuario === this.state.grupo.solicitantesGrupo[i].id) {
+                resultado = true;
             }
         }
-
-        return true;
-
-    }
-
-    botaoSolicitar() {
-
-        if (this.verificarSolicitante(this.state.idUsuario,
-            this.state.grupo.solicitantesGrupo)) {
-
-            let botoes = [];
-
-            let botao = <Link to={{
-                pathname: '/home'
-            }}>
-                <Button
-                    bsStyle="danger"
-                    pullRight
-                    fill
-                    type="submit"
-                    onClick={() => {
-                        this.confirmar()
-                    }}>
-                    Solicitar Inscrição
-                </Button></Link>;
-
-            botoes.push(botao);
-
-            return botoes;
-        }
-
+        this.setState({solicitante: resultado});
     }
 
     render() {
+        let btnSolicitacao = "";
+        if (this.state.grupo.tipoPrivacidade) {
+            if (this.state.grupo.tipoPrivacidade.toLowerCase() !== "privado") {
+                if (!this.state.solicitante) {
+                    btnSolicitacao = <Button
+                        className="btnSaveif"
+                        pullRight
+                        fill
+                        type="submit"
+                        onClick={() => {
+                            this.confirmar()
+                        }}>
+                        Solicitar Inscrição
+                    </Button>;
+                } else {
+                    btnSolicitacao = <Alert bsStyle="success" id="res" style={{float: "right"}}>
+                        Solicitação enviada, aguardando resposta.
+                    </Alert>;
+                }
+            }
+        }
 
         if (this.state.grupo.nome !== "")
             return (
                 <div className="content">
-
                     <Grid fluid>
                         <Row>
                             <Col md={12}>
-
                                 <Card
                                     ctAllGroups
-
                                     content={
                                         <Row>
                                             <Image src={"/api/grupos/" + this.props.id + "/imagem?" +
                                             ServicoLogin.getAuthorizationGet()} responsive width="450"/>
                                             <Col lg={12} md={12} sm={12} xs={12}>
-
                                                 <h2>{this.state.grupo.nome}</h2>
                                                 <br/>
-
                                                 <h5>Descrição</h5>
-
                                                 <p style={{marginLeft: 20}}>{this.state.grupo.descricao}</p>
                                                 <br/>
                                                 <h5>Categorias</h5>
                                                 <p style={{marginLeft: 20}}>{this.state.grupo.categoria.nome}</p>
                                                 <br/>
-
                                                 <h5>Tipo de privacidade</h5>
                                                 <p style={{marginLeft: 20}}>{this.state.grupo.tipoPrivacidade}</p>
                                                 <br/>
-
                                                 <h5>Participantes</h5>
-
                                                 <ListParticipants pagina={this.state.pagina}/>
-
-                                                {this.botaoSolicitar()}
-
+                                                {btnSolicitacao}
                                                 <br/><br/>
                                                 <hr/>
-
                                             </Col>
-
                                         </Row>
                                     }
                                 />

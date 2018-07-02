@@ -268,7 +268,6 @@ class UserRegistration extends React.Component {
                                             <Button
                                                 disabled={this.state.avisoUsuario !== ""}
                                                 className="btnSaveif"
-                                                style={{float: "right"}}
                                                 fill
                                                 type="submit"
                                             >
