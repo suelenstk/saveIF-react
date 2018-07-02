@@ -18,7 +18,8 @@ export default class InviteUsers extends React.Component {
         this.state = {
             convidadosLista: [],
             pagina: "",
-            idGrupo: this.props.idGrupo
+            idGrupo: this.props.idGrupo,
+            coordenadoresGrupo: ""
         };
 
         this.groupService.listarGrupoEspecifico(this.props.idGrupo,
@@ -32,6 +33,7 @@ export default class InviteUsers extends React.Component {
         );
 
         this.listarParticipantes();
+        this.listaCoordenadores();
 
     }
 
@@ -111,12 +113,23 @@ export default class InviteUsers extends React.Component {
         );
     }
 
+    listaCoordenadores() {
+        this.groupService.listarCoordenadores(this.state.idGrupo,
+            (sucesso) => {
+                this.setState({coordenadoresGrupo: sucesso});
+            },
+            (erro) => {
+                console.log(erro);
+            }
+        );
+    }
+
     render() {
         let campoParticipantes = null;
         if (this.state.pagina) {
             campoParticipantes = <div>
                 <p>Integrantes</p>
-                <ListParticipants idGrupo={this.state.idGrupo} pagina={this.state.pagina} icone='pe-7s-close-circle'/>
+                <ListParticipants idGrupo={this.state.idGrupo} pagina={this.state.pagina} icone='pe-7s-close-circle' coordenadoresGrupo= {this.state.coordenadoresGrupo}/>
             </div>
         }
 

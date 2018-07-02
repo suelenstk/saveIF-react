@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ProfileView from './ProfileView';
+import { Dropdown} from 'react-bootstrap';
+import { UserOptions } from '../UserOptions/UserOptions';
 
 export class UserChip extends Component {
 
@@ -46,7 +48,42 @@ export class UserChip extends Component {
                         }}
                     >
                     <i className={this.props.icone}/>  
-                    </span> : ""}
+                    </span>
+                :
+                    (this.props.icone1) ? 
+                        <span className={this.props.class} > 
+
+                            <Dropdown pullRight style={{padding:"0", marginTop:"35%"}}>
+                                <Dropdown.Toggle noCaret style={{border:"none", padding: "0", margin:"0"}}>
+                                    <i className="pe-7s-more"/>                            
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu style={{border:"none"}} >
+                                    <UserOptions
+                                        usuario={this.props.usuario}
+                                        evento={this.props.evento1}
+                                        icone={this.props.icone1}
+                                        nomeEvento={this.props.nomeEvento1}
+                                    />
+                                    {(this.props.eventoDisplay2) ?
+                                        <UserOptions
+                                            usuario={this.props.usuario}
+                                            evento={this.props.evento2}
+                                            icone={this.props.icone2}
+                                            nomeEvento={this.props.nomeEvento2}                                            
+                                        />
+                                    :
+                                        ""
+                                    }
+
+                                </Dropdown.Menu>
+                            </Dropdown>
+
+                        </span>
+                        
+                    :
+                        ""
+                }
 
                 {(this.props.usuario) ?
                     <ProfileView
