@@ -43,8 +43,7 @@ export default class PostList extends React.Component {
                 this.setState({hasMore: false});
                 return;
         }
-            
-        
+
             // a fake async api call like which sends
             // 20 more records in .5 secs
             setTimeout(() => {
@@ -68,16 +67,15 @@ export default class PostList extends React.Component {
          </div>
     }
 
-    mostraArquivo (arquivo) {
-        let extensao = arquivo.nomeAnexo.split(".")[arquivo.nomeAnexo.split(".").length - 1];
+    mostraArquivo (post) {
+        let extensao = post.anexoPost.nomeAnexo.split(".")[post.anexoPost.nomeAnexo.split(".").length - 1];
         return extensao === "png" || extensao === "tiff" || extensao === "jpg" || extensao === "jpeg" || extensao === "bmp" ?
-        <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} responsive width={50}/></a>
-        : extensao === "doc" || extensao === "docx" ? <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={doc} responsive width={50}/></a>
-        : extensao === "ppt" || extensao === "pptx" ? <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={ppt} responsive width={50}/></a>
-        : extensao === "pdf" ? <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={pdf} responsive width={50}/></a> 
-        : <a href={"/api/posts/" + arquivo.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={arquivo.nomeAnexo}><Image src={outro} responsive width={50}/></a> 
+        <a href={"/api/posts/" + post.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={post.anexoPost.nomeAnexo}><Image src={"/api/posts/" + post.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} responsive width={50}/></a>
+        : extensao === "doc" || extensao === "docx" ? <a href={"/api/posts/" + post.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={post.anexoPost.nomeAnexo}><Image src={doc} responsive width={50}/></a>
+        : extensao === "ppt" || extensao === "pptx" ? <a href={"/api/posts/" + post.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={post.anexoPost.nomeAnexo}><Image src={ppt} responsive width={50}/></a>
+        : extensao === "pdf" ? <a href={"/api/posts/" + post.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={post.anexoPost.nomeAnexo}><Image src={pdf} responsive width={50}/></a> 
+        : <a href={"/api/posts/" + post.id + "/anexo?" + ServicoLogin.getAuthorizationGet()} download={post.anexoPost.nomeAnexo}><Image src={outro} responsive width={50}/></a> 
     }
-//this.posts[index].anexoPost.nomeAnexo.split(".")[this.posts[index].anexoPost.nomeAnexo.split(".").length - 1]
 
     render() {
 
@@ -109,7 +107,7 @@ export default class PostList extends React.Component {
                                                 <div style={imgStyle}>
                                                     {(this.posts[index].anexoPost) ?
                                                         <div>
-                                                            {this.mostraArquivo(this.posts[index].anexoPost)} 
+                                                            {this.mostraArquivo(this.posts[index])} 
                                                             <p style={{width: '80px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{this.posts[index].anexoPost.nomeAnexo}</p>                
                                                         </div>
                                                         : ""
