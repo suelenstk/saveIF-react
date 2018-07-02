@@ -19,8 +19,7 @@ class Groups extends Component {
                     <GroupRoute
                         solicitar={(id, idUsuario) => {
                             this.groupService.solicitar(id, idUsuario,
-                                (item) => {
-                                    alert("Solicitação efetuada com sucesso!");
+                                () => {
                                 },
                                 (erro) => {
                                     console.log("Erro!");

@@ -50,6 +50,7 @@ class GroupView extends Component {
         this.groupService.listarGrupoEspecifico(this.props.id,
             (resultado) => {
                 this.setState({grupo: resultado});
+                console.log(resultado);
                 this.verificarCoordenador();
                 (this.state.topico.id) ? this.listarPostEspecifico(this.state.paginaAtual) : this.listar(this.state.paginaAtual);
             },
@@ -61,10 +62,10 @@ class GroupView extends Component {
     }
 
     verificarCoordenador() {
-        this.state.coordenador = false;
+        this.setState({coordenador: false});
         this.state.grupo.coordenadoresGrupo.map((usuario) => {
             if (usuario.id === servicoLogin.getUsuario()) {
-                this.state.coordenador = true;
+                this.setState({coordenador: true});
             }
         });
     }
@@ -152,25 +153,6 @@ class GroupView extends Component {
         );
     }
 
-    setarGrupo(resultado) {
-        this.setState({
-            grupo: resultado
-        });
-    }
-
-    // listarGrupo() {
-    //     this.groupService.listarGrupoEspecifico(this.state.grupo.id,
-    //         (resultado) => {
-    //             console.log(resultado);
-    //             this.setarGrupo(resultado);
-    //         },
-    //         (erro) => {
-    //             console.log("Erro:");
-    //             console.log(erro);
-    //         }
-    //     );
-    // }
-
     setAlert(msg, tipo) {
         this.setState({
             msgAlert: msg,
@@ -223,27 +205,6 @@ class GroupView extends Component {
             return "";
         }
     }
-
-    // editarComCategorias(id, item, idCategoria, sucesso, erro) {
-    //     console.log(item);
-    //     fetch(`api/grupos/${id}/${idCategoria}`, {
-    //         method: "PUT",
-    //         headers: new Headers({
-    //             'Authorization': servicoLogin.getAuthorization(),
-    //             'Content-Type': 'application/json'
-    //         }),
-    //         body: JSON.stringify(item)
-    //     }).then((resultado) => {
-    //         if (resultado.ok) {
-    //             sucesso();
-    //         } else {
-    //             resultado.json().then(
-    //                 (resultadoErro) => erro(resultadoErro)
-    //             )
-    //         }
-    //
-    //     });
-    // }
 
     irParticipants() {
         this.setState({

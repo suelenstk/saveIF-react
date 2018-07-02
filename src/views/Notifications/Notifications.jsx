@@ -46,7 +46,8 @@ class Notifications extends React.Component {
             );
             let url = window.location.href;
             let currentPath = (url.split("http://localhost:3000/#")[url.split("http://localhost:3000/#").length - 1]).toLowerCase();
-            if (currentPath !== "/notifications") {
+            let currentPathHTTPS = (url.split("https://localhost:3000/#")[url.split("https://localhost:3000/#").length - 1]).toLowerCase();
+            if (currentPath !== "/notifications" && currentPathHTTPS !== "/notifications") {
                 break;
             }
             await this.sleep(1000);
